@@ -1,28 +1,43 @@
-// src/pages/CartPage.jsx
-import React from 'react';
+import React from "react";
+import "../styles/Cart.css";
+import { FaTrashAlt } from "react-icons/fa";
 
 export default function CartPage({ cart, setCart }) {
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+
   const handleRemove = (id) => {
-    const updatedCart = cart.filter((item) => item._id !== id);
-    setCart(updatedCart);
+    const updated = cart.filter((item) => item._id !== id);
+    setCart(updated);
   };
 
   return (
     <div className="cart-page">
-      <h2>Mon Panier</h2>
+      <h2>🛒 Mon Panier</h2>
+
       {cart.length === 0 ? (
-        <p>Votre panier est vide.</p>
+        <p className="empty">Votre panier est vide.</p>
       ) : (
-        cart.map((item) => (
-          <div key={item._id} className="cart-item">
-            <img src={item.imageUrl} alt={item.name} style={{ width: 100 }} />
-            <div>
-              <h3>{item.name}</h3>
-              <p>{item.price} Dt</p>
-              <button onClick={() => handleRemove(item._id)}>Supprimer</button>
-            </div>
+        <>
+          <div className="cart-grid">
+            {cart.map((item) => (
+              <div key={item._id} className="cart-item">
+                <img src={item.imageUrl} alt={item.name} />
+                <div className="info">
+                  <h4>{item.name}</h4>
+                  <p className="price">{item.price} Dt</p>
+                </div>
+                <button className="remove-btn" onClick={() => handleRemove(item._id)}>
+                  <FaTrashAlt />
+                </button>
+              </div>
+            ))}
           </div>
-        ))
+
+          <div className="cart-total">
+            <h3>Total : {total.toFixed(2)} Dt</h3>
+            <button className="checkout-btn">Passer la commande</button>
+          </div>
+        </>
       )}
     </div>
   );

@@ -1,11 +1,16 @@
 // App.jsx
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+
+// 📦 Composants
 import Navbar from "./components/Navbar";
 import Slider from "./components/Slider";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+// 📄 Pages
 import Home from "./pages/Home";
+import ShopPage from "./pages/ShopPage"; // anciennement ProductsPage
 import CartPage from "./pages/CartPage";
-import ProductsPage from "./pages/ProductsPage";
 import OrdersPage from "./pages/OrdersPage";
 import ClientAuth from "./pages/ClientAuth";
 import WishlistPage from "./pages/WishlistPage";
@@ -13,9 +18,13 @@ import ProductDetail from "./pages/ProductDetail";
 import TastingList from "./pages/TastingList";
 import ContactPage from "./pages/ContactPage";
 import Welcome from "./pages/Welcome";
-import ProtectedRoute from "./components/ProtectedRoute";
+
+// 🔔 Notifications
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+// 🎨 CSS
+import "./styles/Cart.css";
 
 function App() {
   const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem("cart")) || []);
@@ -55,11 +64,8 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-
-        {/* Authentification */}
         <Route path="/login" element={<ClientAuth />} />
 
-        {/* Route protégée pour la page bienvenue */}
         <Route
           path="/bienvenue"
           element={
@@ -69,19 +75,17 @@ function App() {
           }
         />
 
-        {/* Pages protégées */}
         <Route
-  path="/produits"
-  element={
-    <ProductsPage
-      cart={cart}
-      wishlist={wishlist}
-      onAddToCart={handleAddToCart}
-      onAddToWishlist={handleAddToWishlist}
-    />
-  }
-/>
-
+          path="/produits"
+          element={
+            <ShopPage
+              cart={cart}
+              wishlist={wishlist}
+              onAddToCart={handleAddToCart}
+              onAddToWishlist={handleAddToWishlist}
+            />
+          }
+        />
 
         <Route
           path="/produits/:id"
