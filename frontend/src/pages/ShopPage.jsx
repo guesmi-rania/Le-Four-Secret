@@ -1,12 +1,13 @@
-// src/pages/ShopPage.jsx
+// ShopPage.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaHeart, FaRegHeart, FaBalanceScale } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-export default function ShopPage({ onAddToCart }) {
+export default function ShopPage({ onAddToCart, wishlist, compareList, onToggleWishlist, onAddToCompare }) {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -72,22 +73,65 @@ export default function ShopPage({ onAddToCart }) {
           <p>Loading products...</p>
         ) : (
           <div className="shop-grid">
-            {filteredProducts.map((product) => (
-              <div key={product._id} className="shop-card">
-                <div className="badge">{Math.floor(Math.random() * 30) + 5}%</div>
-                <img src={product.imageUrl} alt={product.name} />
-                <p className="category">{product.category}</p>
-                <h4>{product.name}</h4>
-                <p className="by">By Douceurs du Chef</p>
-                <div className="price-box">
-                  <span className="price">{product.price} Dt</span>
-                  <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
+            {filteredProducts.map((product, index) => {
+              const isInWishlist = wishlist.some(item => item._id === product._id);
+              const isInCompare = compareList.some(item => item._id === product._id);
+              const badgeText = product.isNew
+                ? "Nouveau"
+                : product.isBest
+                ? "Top Vente"
+                : `${Math.floor(Math.random() * 30) + 5}%`;
+
+              const badgeClass =
+                product.isNew ? "badge badge-new"
+                : product.isBest ? "badge badge-best"
+                : "badge";
+
+              return (
+                <div
+                  key={product._id}
+                  className="shop-card"
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                >
+                  <div className={badgeClass}>{badgeText}</div>
+
+                  <Link to={`/produits/${product._id}`} className="product-link">
+                    <img src={product.imageUrl} alt={product.name} />
+                    <h4>{product.name}</h4>
+                  </Link>
+
+                  <p className="category">{product.category}</p>
+                  <p className="by">By Douceurs du Chef</p>
+                  <div className="price-box">
+                    <span className="price">{product.price} Dt</span>
+                    <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
+                  </div>
+
+                  <div className="product-actions">
+                    <button
+                      className="wishlist-btn"
+                      onClick={() => onToggleWishlist(product)}
+                      aria-label="Ajouter aux favoris"
+                    >
+                      {isInWishlist ? <FaHeart color="red" /> : <FaRegHeart />}
+                    </button>
+
+                    <button
+                      className="compare-btn"
+                      onClick={() => onAddToCompare(product)}
+                      disabled={isInCompare}
+                      aria-label="Ajouter à la comparaison"
+                    >
+                      <FaBalanceScale />
+                    </button>
+
+                    <button className="add-btn" onClick={() => onAddToCart(product)}>
+                      <FaShoppingCart /> Add
+                    </button>
+                  </div>
                 </div>
-                <button className="add-btn" onClick={() => onAddToCart(product)}>
-                  <FaShoppingCart /> Add
-                </button>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
