@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
-import { FaShoppingCart, FaHeart, FaRegHeart, FaBalanceScale } from "react-icons/fa";
+import { FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-export default function ShopPage({ onAddToCart, wishlist, compareList, onToggleWishlist, onAddToCompare }) {
+export default function ShopPage({
+  onAddToCart,
+  wishlist,
+  compareList,
+  onToggleWishlist,
+  onAddToCompare,
+}) {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -19,7 +25,7 @@ export default function ShopPage({ onAddToCart, wishlist, compareList, onToggleW
         const res = await axios.get(`${BASE_URL}/api/products`);
         setProducts(res.data);
         setFilteredProducts(res.data);
-        const uniqueCategories = [...new Set(res.data.map(p => p.category))];
+        const uniqueCategories = [...new Set(res.data.map((p) => p.category))];
         setCategories(uniqueCategories);
       } catch (error) {
         alert("Erreur lors du chargement des produits");
@@ -39,9 +45,10 @@ export default function ShopPage({ onAddToCart, wishlist, compareList, onToggleW
   };
 
   const handleCategoryClick = (category) => {
-    const filtered = category === "all"
-      ? products
-      : products.filter((p) => p.category === category);
+    const filtered =
+      category === "all"
+        ? products
+        : products.filter((p) => p.category === category);
     setFilteredProducts(filtered);
   };
 
@@ -73,11 +80,18 @@ export default function ShopPage({ onAddToCart, wishlist, compareList, onToggleW
         ) : (
           <div className="shop-grid">
             {filteredProducts.map((product) => {
-              const isInWishlist = wishlist.some(item => item._id === product._id);
-              const isInCompare = compareList.some(item => item._id === product._id);
+              const isInWishlist = wishlist.some(
+                (item) => item._id === product._id
+              );
+              const isInCompare = compareList.some(
+                (item) => item._id === product._id
+              );
+
               return (
                 <div key={product._id} className="shop-card">
-                  <div className="badge">{Math.floor(Math.random() * 30) + 5}%</div>
+                  <div className="badge">
+                    {Math.floor(Math.random() * 30) + 5}%
+                  </div>
 
                   <Link to={`/produits/${product._id}`} className="product-link">
                     <img src={product.imageUrl} alt={product.name} />
@@ -88,11 +102,17 @@ export default function ShopPage({ onAddToCart, wishlist, compareList, onToggleW
                   <p className="by">By Douceurs du Chef</p>
                   <div className="price-box">
                     <span className="price">{product.price} Dt</span>
-                    <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
+                    <span className="old-price">
+                      {(product.price * 1.2).toFixed(2)} Dt
+                    </span>
                   </div>
 
                   <div className="product-actions">
-                    <div className="left-buttons">
+                    <button className="add-btn" onClick={() => onAddToCart(product)}>
+                      <FaShoppingCart /> Add
+                    </button>
+
+                    <div className="right-buttons">
                       <button
                         className="wishlist-btn"
                         onClick={() => onToggleWishlist(product)}
@@ -107,16 +127,12 @@ export default function ShopPage({ onAddToCart, wishlist, compareList, onToggleW
                         disabled={isInCompare}
                         aria-label="Ajouter à la comparaison"
                       >
-                        <FaBalanceScale />
+                        Compare
                       </button>
                     </div>
-
-                    <button className="add-btn" onClick={() => onAddToCart(product)}>
-                      <FaShoppingCart /> Add
-                    </button>
                   </div>
                 </div>
-              )
+              );
             })}
           </div>
         )}
