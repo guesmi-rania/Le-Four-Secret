@@ -1,4 +1,3 @@
-// ShopPage.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
@@ -73,27 +72,12 @@ export default function ShopPage({ onAddToCart, wishlist, compareList, onToggleW
           <p>Loading products...</p>
         ) : (
           <div className="shop-grid">
-            {filteredProducts.map((product, index) => {
+            {filteredProducts.map((product) => {
               const isInWishlist = wishlist.some(item => item._id === product._id);
               const isInCompare = compareList.some(item => item._id === product._id);
-              const badgeText = product.isNew
-                ? "Nouveau"
-                : product.isBest
-                ? "Top Vente"
-                : `${Math.floor(Math.random() * 30) + 5}%`;
-
-              const badgeClass =
-                product.isNew ? "badge badge-new"
-                : product.isBest ? "badge badge-best"
-                : "badge";
-
               return (
-                <div
-                  key={product._id}
-                  className="shop-card"
-                  style={{ animationDelay: `${index * 0.05}s` }}
-                >
-                  <div className={badgeClass}>{badgeText}</div>
+                <div key={product._id} className="shop-card">
+                  <div className="badge">{Math.floor(Math.random() * 30) + 5}%</div>
 
                   <Link to={`/produits/${product._id}`} className="product-link">
                     <img src={product.imageUrl} alt={product.name} />
@@ -108,29 +92,31 @@ export default function ShopPage({ onAddToCart, wishlist, compareList, onToggleW
                   </div>
 
                   <div className="product-actions">
-                    <button
-                      className="wishlist-btn"
-                      onClick={() => onToggleWishlist(product)}
-                      aria-label="Ajouter aux favoris"
-                    >
-                      {isInWishlist ? <FaHeart color="red" /> : <FaRegHeart />}
-                    </button>
+                    <div className="left-buttons">
+                      <button
+                        className="wishlist-btn"
+                        onClick={() => onToggleWishlist(product)}
+                        aria-label="Ajouter aux favoris"
+                      >
+                        {isInWishlist ? <FaHeart color="red" /> : <FaRegHeart />}
+                      </button>
 
-                    <button
-                      className="compare-btn"
-                      onClick={() => onAddToCompare(product)}
-                      disabled={isInCompare}
-                      aria-label="Ajouter à la comparaison"
-                    >
-                      <FaBalanceScale />
-                    </button>
+                      <button
+                        className="compare-btn"
+                        onClick={() => onAddToCompare(product)}
+                        disabled={isInCompare}
+                        aria-label="Ajouter à la comparaison"
+                      >
+                        <FaBalanceScale />
+                      </button>
+                    </div>
 
                     <button className="add-btn" onClick={() => onAddToCart(product)}>
                       <FaShoppingCart /> Add
                     </button>
                   </div>
                 </div>
-              );
+              )
             })}
           </div>
         )}

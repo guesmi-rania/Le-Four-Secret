@@ -1,99 +1,72 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import { FaHeart, FaRegHeart, FaStar, FaArrowLeft, FaBalanceScale } from "react-icons/fa";
+import "../styles/ProductDetail.css";
+import { FaShoppingCart, FaHeart, FaRegHeart, FaBalanceScale } from "react-icons/fa";
 
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
-export default function ProductDetail({ onAddToCart, wishlist, onToggleWishlist, onAddToCompare, compareList }) {
+export default function ProductDetail({ onAddToCart, onAddToWishlist, onAddToCompare, wishlist = [], compareList = [] }) {
   const { id } = useParams();
-  const navigate = useNavigate();
-
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/products/${id}`)
-      .then(res => {
+    async function fetchProduct() {
+      try {
+        const res = await axios.get(`${BASE_URL}/api/products/${id}`);
         setProduct(res.data);
-        setSelectedImage(res.data.images?.[0] || null);
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      } catch (err) {
+        console.error("Produit non trouvé", err);
+        setNotFound(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProduct();
   }, [id]);
 
-  if (loading) return <p>Chargement...</p>;
-  if (!product) return <p>Produit non trouvé</p>;
+  const isInWishlist = wishlist.some(item => item._id === id);
+  const isInCompare = compareList.some(item => item._id === id);
 
-  const isInWishlist = wishlist.some(item => item._id === product._id);
-  const isInCompare = compareList.some(item => item._id === product._id);
+  if (loading) return <div className="product-detail">Chargement...</div>;
+  if (notFound || !product) return <div className="product-detail">❌ Produit non trouvé</div>;
 
   return (
     <div className="product-detail">
-      <button className="back-btn" onClick={() => navigate("/produits")}>
-        <FaArrowLeft /> Retour
-      </button>
+      <div className="detail-card">
+        <img src={product.imageUrl} alt={product.name} className="detail-image" />
+        <div className="detail-info">
+          <h2>{product.name}</h2>
+          <p className="category">{product.category}</p>
+          <p className="by">Par Douceurs du Chef</p>
 
-      <div className="product-main">
-        <div className="gallery">
-          {product.images && product.images.length > 1 && (
-            <div className="thumbnails">
-              {product.images.map((img, i) => (
-                <img
-                  key={i}
-                  src={img}
-                  alt={`Miniature ${i + 1}`}
-                  className={selectedImage === img ? "selected" : ""}
-                  onClick={() => setSelectedImage(img)}
-                />
-              ))}
-            </div>
-          )}
-          <img className="main-image" src={selectedImage || product.images?.[0]} alt={product.name} />
-        </div>
-
-        <div className="product-info">
-          <h1>{product.name}</h1>
-
-          <div className="rating">
-            {[1,2,3,4,5].map(star => (
-              <FaStar
-                key={star}
-                color={star <= Math.round(product.rating || 0) ? "#FFD700" : "#ccc"}
-              />
-            ))}
-            <span> ({product.ratingCount || 0} avis)</span>
+          <div className="price-box">
+            <span className="price">{product.price} Dt</span>
+            <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
           </div>
 
-          <p className="price">{product.price.toFixed(2)} €</p>
-          <p className="description">{product.description}</p>
-
-          <label>
-            Quantité :
-            <input
-              type="number"
-              min="1"
-              max={product.stock || 100}
-              value={quantity}
-              onChange={e => setQuantity(Math.max(1, Math.min(product.stock || 100, Number(e.target.value))))}
-            />
-          </label>
-
-          <div className="actions">
-            <button onClick={() => onAddToCart(product, quantity)}>
-              Ajouter au panier
-            </button>
-
-            <button onClick={() => onToggleWishlist(product)}>
+          <div className="detail-actions">
+            <button
+              className="wishlist-btn"
+              onClick={() => onAddToWishlist(product)}
+              aria-label="Ajouter aux favoris"
+            >
               {isInWishlist ? <FaHeart color="red" /> : <FaRegHeart />}
-              <span>Favoris</span>
             </button>
 
-            <button onClick={() => onAddToCompare(product)} disabled={isInCompare}>
+            <button
+              className="compare-btn"
+              onClick={() => onAddToCompare(product)}
+              disabled={isInCompare}
+              aria-label="Ajouter à la comparaison"
+            >
               <FaBalanceScale />
-              <span>{isInCompare ? "Déjà en comparaison" : "Comparer"}</span>
+            </button>
+
+            <button className="add-btn" onClick={() => onAddToCart(product)}>
+              <FaShoppingCart /> Ajouter au panier
             </button>
           </div>
         </div>
