@@ -71,18 +71,17 @@ function App() {
 
         {/* Pages protégées */}
         <Route
-          path="/produits"
-          element={
-            <ProtectedRoute>
-              <ProductsPage
-                cart={cart}
-                wishlist={wishlist}
-                onAddToCart={handleAddToCart}
-                onAddToWishlist={handleAddToWishlist}
-              />
-            </ProtectedRoute>
-          }
-        />
+  path="/produits"
+  element={
+    <ProductsPage
+      cart={cart}
+      wishlist={wishlist}
+      onAddToCart={handleAddToCart}
+      onAddToWishlist={handleAddToWishlist}
+    />
+  }
+/>
+
 
         <Route
           path="/produits/:id"
