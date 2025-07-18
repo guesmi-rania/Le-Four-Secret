@@ -1,11 +1,12 @@
 .slider-container {
   position: relative;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 40px auto 0 auto; /* ici margin-top 40px, bottom 0, left/right auto centré */
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+
 
 .slide {
   display: none;
