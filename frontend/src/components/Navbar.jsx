@@ -1,161 +1,237 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../styles/Navbar.css";
+import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import {
-  FaUserCircle,
-  FaShoppingBag,
-  FaRegHeart,
-  FaBars,
-  FaTimes,
   FaChevronDown,
+  FaSearch,
+  FaUserCircle,
+  FaHeart,
+  FaShoppingBag,
   FaSignOutAlt,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaTag,
+  FaBars,
 } from "react-icons/fa";
 import logo from "../assets/loglou.png";
 import Categories from "./Categories";
+import "../styles/Navbar.css";
 
-function Navbar({ cart = [], wishlist = [] }) {
+const statesList = [
+  "Alabama", "Alaska", "Arizona", "California", "Colorado",
+  "New Jersey", "New York", "Texas", "Washington"
+];
+
+const Navbar = ({ cart = [], wishlist = [] }) => {
   const [showCategories, setShowCategories] = useState(false);
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  const [locationSearch, setLocationSearch] = useState("");
   const [firstName, setFirstName] = useState(null);
-  const navigate = useNavigate();
+  const locationRef = useRef();
 
-  // Chargement du prénom depuis localStorage
   useEffect(() => {
     const storedClient = JSON.parse(localStorage.getItem("client"));
     if (storedClient?.name) {
-      const prenom = storedClient.name.split(" ")[0];
-      setFirstName(prenom);
+      setFirstName(storedClient.name.split(" ")[0]);
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("client");
-    localStorage.removeItem("token");
-    setFirstName(null);
-    navigate("/login");
-  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (locationRef.current && !locationRef.current.contains(event.target)) {
+        setShowLocationDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const filteredStates = statesList.filter(state =>
+    state.toLowerCase().includes(locationSearch.toLowerCase())
+  );
 
   return (
-    <>
-      <div className="banner">
-        <p>🎉 Découvrez notre nouvelle boutique en ligne ! 🎂 Livraison de pâtisseries artisanales.</p>
+    <header className="navbar">
+      {/* Top Bar */}
+      <div className="top-bar">
+        <span>🎉 Découvrez notre nouvelle boutique en ligne ! 🎂 Livraison de pâtisseries artisanales.</span>
+        <div className="top-links">
+          <Link to="/checkout">Checkout</Link>
+          <Link to="/cart">Cart</Link>
+          <Link to="/faq">FAQ</Link>
+          <Link to="/about">About Us</Link>
+        </div>
       </div>
 
-      <header className="navbar-container">
-        <div className="navbar-wrapper">
-          {/* Gauche */}
-          <div className="navbar-left">
-            <Link to="/" className="logo-link">
-              <img src={logo} alt="Logo Mr. Chef" />
-            </Link>
+      {/* Main Nav */}
+      <div className="main-nav">
+        <Link to="/" className="logo">
+          <img src={logo} alt="Logo Mr. Chef" />
+          Lotfi
+        </Link>
 
-            <div className="categories-dropdown">
-              <button onClick={() => setShowCategories(!showCategories)}>
-                <FaBars className="menu-icon" /> Toutes les catégories <FaChevronDown />
-              </button>
-              {showCategories && (
-                <div className="categories-list open">
-                  <Categories onClickCategory={() => setShowCategories(false)} />
-                </div>
-              )}
-            </div>
-
-            <nav className="menu-links">
-              <Link to="/produits">Produits</Link>
-              <Link to="/dégustation">Dégustation</Link>
-              <Link to="/pieces-montees">Pièces Montées</Link>
-              <Link to="/contact">Contact</Link>
-            </nav>
-          </div>
-
-          {/* Droite */}
-          <div className="navbar-right">
-            {firstName ? (
-              <div className="top-item user-info">
-                <FaUserCircle className="icon" />
-                <div className="user-text">
-                  <span className="top-bold">Mon compte</span>
-                  <span className="welcome-message">Bienvenue {firstName}</span>
-                </div>
-                <button className="logout-btn" onClick={handleLogout} aria-label="Déconnexion">
-                  <FaSignOutAlt className="logout-icon" />
-                </button>
-              </div>
-            ) : (
-              <div className="top-item">
-                <FaUserCircle className="icon" />
-                <Link to="/login" className="top-bold">Mon compte</Link>
-              </div>
-            )}
-
-            <Link to="/wishlist" className="top-item" style={{ position: "relative" }}>
-              <FaRegHeart className="icon" />
-              {wishlist.length > 0 && <span className="cart-badge">{wishlist.length}</span>}
-            </Link>
-
-            <Link to="/panier" className="top-item" style={{ position: "relative" }}>
-              <FaShoppingBag className="icon" />
-              {cart.length > 0 && <span className="cart-badge">{cart.length}</span>}
-            </Link>
-          </div>
-
-          {/* Menu burger mobile */}
-          <div className="menu-toggle" onClick={() => setShowSidebar(!showSidebar)}>
-            {showSidebar ? <FaTimes className="menu-icon" /> : <FaBars className="menu-icon" />}
-          </div>
+        <div className="search-bar">
+          <FaBars
+            className="menu-icon"
+            onClick={() => setShowCategories(!showCategories)}
+            aria-label="Toggle categories"
+            style={{ cursor: "pointer" }}
+          />
+          <input type="text" placeholder="Search for product..." />
+          <button aria-label="Search"><FaSearch /></button>
         </div>
 
-        {/* Menu mobile */}
-        {showSidebar && (
-          <div className="mobile-menu">
-            <nav className="menu-links">
-              <Link to="/produits" onClick={() => setShowSidebar(false)}>Produits</Link>
-              <Link to="/dégustation" onClick={() => setShowSidebar(false)}>Dégustation</Link>
-              <Link to="/pieces-montees" onClick={() => setShowSidebar(false)}>Pièces Montées</Link>
-              <Link to="/contact" onClick={() => setShowSidebar(false)}>Contact</Link>
-            </nav>
+        <div className="nav-icons">
+          {firstName ? (
+            <div className="icon-item user-info">
+              <FaUserCircle />
+              <span>Bienvenue {firstName}</span>
+              <button
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.reload();
+                }}
+                className="logout-btn"
+                aria-label="Déconnexion"
+              >
+                <FaSignOutAlt />
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="icon-item">
+              <FaUserCircle />
+              <span>Mon compte</span>
+            </Link>
+          )}
 
-            {firstName ? (
-              <div className="top-item user-info">
-                <FaUserCircle className="icon" />
-                <div className="user-text">
-                  <span className="top-bold">Mon compte</span>
-                  <span className="welcome-message">Bienvenue {firstName}</span>
-                </div>
-                <button
-                  className="logout-btn"
-                  onClick={() => {
-                    handleLogout();
-                    setShowSidebar(false);
-                  }}
-                  aria-label="Déconnexion"
-                >
-                  <FaSignOutAlt className="logout-icon" />
-                </button>
-              </div>
-            ) : (
-              <div className="top-item">
-                <FaUserCircle className="icon" />
-                <Link to="/login" className="top-bold" onClick={() => setShowSidebar(false)}>
-                  Mon compte
-                </Link>
+          <Link to="/wishlist" className="icon-item">
+            <FaHeart />
+            <span>Wishlist</span>
+            {wishlist.length > 0 && <span className="badge">{wishlist.length}</span>}
+          </Link>
+
+          <Link to="/cart" className="icon-item">
+            <FaShoppingBag />
+            <span>Cart</span>
+            {cart.length > 0 && <span className="badge">{cart.length}</span>}
+          </Link>
+        </div>
+      </div>
+
+      {/* Info Bar */}
+      <div className="info-bar">
+        <nav className="info-menu-links" style={{ position: "relative" }}>
+          {/* Bouton Categories */}
+          <button
+            className="categories-toggle-btn"
+            onClick={() => setShowCategories(!showCategories)}
+            aria-expanded={showCategories}
+            aria-haspopup="true"
+            aria-label="Toggle categories"
+          >
+            Categories <FaChevronDown />
+          </button>
+
+          <Link to="/">Home</Link>
+          <Link to="/shop">Shop</Link>
+          <Link to="/product">Product</Link>
+          <Link to="/pages">Pages</Link>
+          <Link to="/contact">Contact</Link>
+          <Link to="/templates">Templates</Link>
+
+          {/* Liste des catégories sous le bouton Categories */}
+          {showCategories && (
+            <div
+              className="categories-list"
+              style={{
+                position: "absolute",
+                top: "40px",
+                left: 0,
+                backgroundColor: "white",
+                boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                borderRadius: "8px",
+                padding: "15px 20px",
+                zIndex: 3000,
+                width: "300px",
+                color: "#222", // texte en noir
+              }}
+            >
+              <Categories onClickCategory={() => setShowCategories(false)} />
+            </div>
+          )}
+        </nav>
+
+        <div className="info-right">
+          <div className="info-item location" ref={locationRef}>
+            <FaMapMarkerAlt className="info-icon" />
+            <div className="info-text">
+              <span>Your Location</span>
+              <strong
+                className="location-select"
+                onClick={() => setShowLocationDropdown(!showLocationDropdown)}
+                tabIndex={0}
+                role="button"
+                aria-expanded={showLocationDropdown}
+              >
+                Select a Location <FaChevronDown />
+              </strong>
+            </div>
+            {showLocationDropdown && (
+              <div className="location-dropdown">
+                <h4>Choose your Delivery Location</h4>
+                <p>Enter your address and we will specify the offer for your area.</p>
+                <input
+                  type="text"
+                  placeholder="Search your area"
+                  value={locationSearch}
+                  onChange={e => setLocationSearch(e.target.value)}
+                  autoFocus
+                />
+                <ul>
+                  {filteredStates.length > 0 ? (
+                    filteredStates.map(state => (
+                      <li
+                        key={state}
+                        tabIndex={0}
+                        onClick={() => {
+                          alert(`You selected ${state}`);
+                          setShowLocationDropdown(false);
+                          setLocationSearch("");
+                        }}
+                      >
+                        {state}
+                      </li>
+                    ))
+                  ) : (
+                    <li>Aucun résultat</li>
+                  )}
+                </ul>
               </div>
             )}
-
-            <Link to="/wishlist" className="top-item" onClick={() => setShowSidebar(false)}>
-              <FaRegHeart className="icon" />
-              {wishlist.length > 0 && <span className="cart-badge">{wishlist.length}</span>}
-            </Link>
-
-            <Link to="/panier" className="top-item" onClick={() => setShowSidebar(false)}>
-              <FaShoppingBag className="icon" />
-              {cart.length > 0 && <span className="cart-badge">{cart.length}</span>}
-            </Link>
           </div>
-        )}
-      </header>
-    </>
+
+          <div className="info-item discount">
+            <FaTag className="info-icon" />
+            <div className="info-text">
+              <span>Only This Weekend</span>
+              <Link to="/discount" className="discount-link">
+                Super Discount
+              </Link>
+            </div>
+          </div>
+
+          <div className="info-item call">
+            <FaPhoneAlt className="info-icon" />
+            <div className="info-text">
+              <span>Call Anytime</span>
+              <a href="tel:2809003434" className="phone-number">
+                280 900 3434
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
   );
-}
+};
 
 export default Navbar;
