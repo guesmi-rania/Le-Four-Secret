@@ -152,7 +152,7 @@ a {
 
 /* Info bar */
 .info-bar {
-  background-color: #6c40bd;
+  background-color: #ffffff;
   color: white;
   padding: 14px 22px;
   display: flex;
@@ -179,8 +179,8 @@ a {
 
 /* Bouton Categories */
 .categories-toggle-btn {
-  background: transparent;
-  border: 2px solid #1e90ff;
+  background:  #00BCD4;
+  border: 3px solid #00BCD4;
   color: white;
   font-weight: 700;
   font-size: 14px;
@@ -188,28 +188,24 @@ a {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
+  padding: 5px 15px;
   border-radius: 6px;
   user-select: none;
   transition: background-color 0.3s, color 0.3s;
 }
 
-.categories-toggle-btn:hover {
-  background-color: #1e90ff;
-  color: white;
-  text-decoration: none;
-}
+
 
 /* Liens dans la barre violette */
 .info-menu-links a {
-  color: white;
+  color: rgb(41, 40, 40);
   text-decoration: none;
   transition: color 0.3s ease;
   font-size: 14px;
 }
 
 .info-menu-links a:hover {
-  color: #d9b3ff;
+  color: #5be2fa;
   text-decoration: underline;
 }
 
@@ -244,12 +240,12 @@ a {
   flex-direction: column;
   line-height: 1.1;
   font-size: 13px;
-  color: white;
+  color: rgb(41, 40, 40);
 }
 
 /* Lien discount spécifique */
 .discount-link {
-  color: #d9b3ff;
+  color: #5be2fa;
   font-weight: 700;
   text-decoration: none;
 }
@@ -263,7 +259,7 @@ a {
   position: absolute;
   top: 32px;
   left: 0;
-  width: 300px;
+  width: 500px;
   background: white;
   color: #333;
   padding: 15px 20px;

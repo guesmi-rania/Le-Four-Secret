@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   FaChevronDown,
@@ -26,23 +26,12 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const [locationSearch, setLocationSearch] = useState("");
   const [firstName, setFirstName] = useState(null);
-  const locationRef = useRef();
 
   useEffect(() => {
     const storedClient = JSON.parse(localStorage.getItem("client"));
     if (storedClient?.name) {
       setFirstName(storedClient.name.split(" ")[0]);
     }
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (locationRef.current && !locationRef.current.contains(event.target)) {
-        setShowLocationDropdown(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const filteredStates = statesList.filter(state =>
@@ -76,7 +65,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
             aria-label="Toggle categories"
             style={{ cursor: "pointer" }}
           />
-          <input type="text" placeholder="Search for product..." />
+          <input type="text" placeholder="Rechercher un produit..." />
           <button aria-label="Search"><FaSearch /></button>
         </div>
 
@@ -119,26 +108,24 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
 
       {/* Info Bar */}
       <div className="info-bar">
-        <nav className="info-menu-links" style={{ position: "relative" }}>
-          {/* Bouton Categories */}
+        <nav className="info-menu-links">
+          {/* Bouton Categories (toujours visible) */}
           <button
             className="categories-toggle-btn"
             onClick={() => setShowCategories(!showCategories)}
             aria-expanded={showCategories}
             aria-haspopup="true"
-            aria-label="Toggle categories"
+            aria-label="Afficher les catégories"
           >
-            Categories <FaChevronDown />
+            Tous Catégories <FaChevronDown />
           </button>
 
-          <Link to="/">Home</Link>
-          <Link to="/shop">Shop</Link>
-          <Link to="/product">Product</Link>
-          <Link to="/pages">Pages</Link>
+          <Link to="/">Accueil</Link>
+          <Link to="/product">Produits</Link>
+          <Link to="/pages">Astuces & Dégustation</Link>
           <Link to="/contact">Contact</Link>
-          <Link to="/templates">Templates</Link>
 
-          {/* Liste des catégories sous le bouton Categories */}
+          {/* Liste déroulante catégories */}
           {showCategories && (
             <div
               className="categories-list"
@@ -152,7 +139,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
                 padding: "15px 20px",
                 zIndex: 3000,
                 width: "300px",
-                color: "#222", // texte en noir
+                color: "#222",
               }}
             >
               <Categories onClickCategory={() => setShowCategories(false)} />
@@ -161,10 +148,10 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
         </nav>
 
         <div className="info-right">
-          <div className="info-item location" ref={locationRef}>
+          <div className="info-item location">
             <FaMapMarkerAlt className="info-icon" />
             <div className="info-text">
-              <span>Your Location</span>
+              <span>Votre emplacement</span>
               <strong
                 className="location-select"
                 onClick={() => setShowLocationDropdown(!showLocationDropdown)}
@@ -172,16 +159,17 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
                 role="button"
                 aria-expanded={showLocationDropdown}
               >
-                Select a Location <FaChevronDown />
+                Sélectionnez un emplacement <FaChevronDown />
               </strong>
             </div>
+
             {showLocationDropdown && (
               <div className="location-dropdown">
-                <h4>Choose your Delivery Location</h4>
-                <p>Enter your address and we will specify the offer for your area.</p>
+                <h4>Choisissez votre lieu de livraison</h4>
+                <p>Entrez votre adresse et nous préciserons l’offre pour votre région.</p>
                 <input
                   type="text"
-                  placeholder="Search your area"
+                  placeholder="Rechercher votre région"
                   value={locationSearch}
                   onChange={e => setLocationSearch(e.target.value)}
                   autoFocus
@@ -193,7 +181,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
                         key={state}
                         tabIndex={0}
                         onClick={() => {
-                          alert(`You selected ${state}`);
+                          alert(`Vous avez choisi : ${state}`);
                           setShowLocationDropdown(false);
                           setLocationSearch("");
                         }}
@@ -212,9 +200,9 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
           <div className="info-item discount">
             <FaTag className="info-icon" />
             <div className="info-text">
-              <span>Only This Weekend</span>
+              <span>Ce week-end uniquement</span>
               <Link to="/discount" className="discount-link">
-                Super Discount
+                Super réduction
               </Link>
             </div>
           </div>
@@ -222,9 +210,9 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
           <div className="info-item call">
             <FaPhoneAlt className="info-icon" />
             <div className="info-text">
-              <span>Call Anytime</span>
-              <a href="tel:2809003434" className="phone-number">
-                280 900 3434
+              <span>Appelez à tout moment</span>
+              <a href="tel:+21620828055" className="phone-number">
+                +216 20 828 055
               </a>
             </div>
           </div>
