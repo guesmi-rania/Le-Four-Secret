@@ -75,16 +75,22 @@ img {
 }
 
 .top-links a:hover {
-  color: #007bff;
+  color: #00b8c5;
 }
 
 
-/* NAVBAR SEPARATOR */
+
+/* Pour un style spécifique au séparateur dans la navbar */
 .navbar-separator {
   border: none;
-  border-top: 1px solid #ccc;
-  margin: 0 0 20px 0;
+  border-top: 1px solid #dbdbdb;
+  margin: 10px 0; /* Ajuste la marge selon besoin, 10px est un bon compromis */
+  height: 1px;
+  padding: 0;
+  width: 100%;
 }
+
+
 
 /* MAIN NAV */
 .main-nav {
@@ -114,15 +120,24 @@ img {
 .search-bar {
   display: flex;
   align-items: center;
-  background-color: #ffffff;
-  border-radius: 30px;
-  padding: 8px 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  width: 100%;
-  max-width: 500px;
-  gap: 10px;
-  margin: 0 20px;
+  width: 100%;           /* Prend toute la largeur possible */
+  max-width: 600px;      /* Tu peux ajuster cette valeur selon besoin */
+  border: 1.5px solid #ccc; /* Bordure grise claire */
+  border-radius: 8px; /* bords légèrement arrondis */
+  border: 1.5px solid #ccc;  padding: 6px 10px;     /* Un peu de padding intérieur */
+  background-color: #fff;
 }
+
+.search-input {
+  flex: 1;               /* Prend tout l'espace disponible */
+  border: none;          /* Pas de bordure interne */
+  outline: none;         /* Pas de contour au focus */
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 0;      /* Assure que le champ est aussi carré */
+  background-color: transparent;
+}
+
 
 .menu-icon {
   font-size: 20px;
@@ -130,15 +145,7 @@ img {
   cursor: pointer;
 }
 
-.search-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 8px 12px;
-  font-size: 14px;
-  border-radius: 30px;
-  background-color: transparent;
-}
+
 
 .search-button {
   background-color: #00BCD4;
@@ -162,7 +169,11 @@ img {
   display: flex;
   gap: 25px;
   align-items: center;
+  justify-content: flex-end;
+  margin-left: 100px;
+  padding-right: 0px; /* augmente cette valeur pour plus d'espace */
 }
+
 
 .icon-item {
   position: relative;
@@ -182,7 +193,7 @@ img {
 }
 
 .icon-item:hover {
-  color: #007bff;
+  color: #0ea1c5;
 }
 
 .badge {

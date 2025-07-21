@@ -73,7 +73,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
         />
         <input
           type="text"
-          placeholder="Rechercher un produit..."
+          placeholder="Rechercher un produits , catégories ..."
           className="search-input"
         />
         <button className="search-button" aria-label="Rechercher">
@@ -132,7 +132,8 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
   Tous Catégories <FaChevronDown style={{ marginLeft: "6px" }} />
 </button>
 
-          <Link to="/product">Produits</Link>
+
+          <Link to="/produits">Produits</Link>
           <Link to="/pages">Astuces & Dégustation</Link>
           <Link to="/contact">Contact</Link>
 

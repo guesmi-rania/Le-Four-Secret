@@ -97,16 +97,16 @@ function App() {
           </ProtectedRoute>
         } />
 
-        <Route path="/produits" element={
-          <ShopPage
-            cart={cart}
-            wishlist={wishlist}
-            compareList={compareList}
-            onAddToCart={handleAddToCart}
-            onToggleWishlist={handleToggleWishlist}
-            onAddToCompare={handleAddToCompare}
-          />
-        } />
+<Route path="/produits" element={
+  <ShopPage
+    cart={cart}
+    wishlist={wishlist}
+    compareList={compareList}
+    onAddToCart={handleAddToCart}
+    onToggleWishlist={handleToggleWishlist}
+    onAddToCompare={handleAddToCompare}
+  />
+} />
 
         <Route path="/produits/:id" element={
           <ProtectedRoute>
