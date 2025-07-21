@@ -11,6 +11,7 @@ import {
   FaPhoneAlt,
   FaTag,
   FaBars,
+  FaThLarge,
 } from "react-icons/fa";
 import logo from "../assets/loglou.png";
 import Categories from "./Categories";
@@ -40,87 +41,97 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
 
   return (
     <header className="navbar">
-      {/* Top Bar */}
-      <div className="top-bar">
-        <span>🎉 Découvrez notre nouvelle boutique en ligne ! 🎂 Livraison de pâtisseries artisanales.</span>
-        <div className="top-links">
-          <Link to="/checkout">Checkout</Link>
-          <Link to="/cart">Cart</Link>
-          <Link to="/faq">FAQ</Link>
-          <Link to="/about">About Us</Link>
-        </div>
+    {/* Top Bar */}
+    <div className="top-bar">
+  <div className="top-bar-container">
+    <p className="top-bar-text">
+      Livraison disponible tous les jours <span className="blue-time">de 7h00 à 23h00</span>.
+    </p>
+    <div className="top-links">
+      <Link to="/checkout">Checkout</Link>
+      <Link to="/cart">Cart</Link>
+      <Link to="/faq">FAQ</Link>
+      <Link to="/about">About Us</Link>
+    </div>
+  </div>
+</div>
+
+    <hr className="navbar-separator" />
+
+    {/* Main Nav */}
+    <div className="main-nav container">
+      <Link to="/" className="logo">
+        <img src={logo} alt="Logo Mr. Chef" />
+        <span>Lotfi</span>
+      </Link>
+
+      <div className="search-bar">
+        <FaBars
+          className="menu-icon"
+          onClick={() => setShowCategories(prev => !prev)}
+          aria-label="Afficher les catégories"
+        />
+        <input
+          type="text"
+          placeholder="Rechercher un produit..."
+          className="search-input"
+        />
+        <button className="search-button" aria-label="Rechercher">
+          <FaSearch />
+        </button>
       </div>
 
-      {/* Main Nav */}
-      <div className="main-nav">
-        <Link to="/" className="logo">
-          <img src={logo} alt="Logo Mr. Chef" />
-          Lotfi
+      <div className="nav-icons">
+        {firstName ? (
+          <div className="icon-item user-info">
+            <FaUserCircle />
+            <span>Bienvenue {firstName}</span>
+            <button
+              onClick={() => {
+                localStorage.clear();
+                window.location.reload();
+              }}
+              className="logout-btn"
+              aria-label="Déconnexion"
+            >
+              <FaSignOutAlt />
+            </button>
+          </div>
+        ) : (
+          <Link to="/login" className="icon-item">
+            <FaUserCircle />
+            <span>Mon compte</span>
+          </Link>
+        )}
+
+        <Link to="/wishlist" className="icon-item">
+          <FaHeart />
+          <span>Wishlist</span>
+          {wishlist.length > 0 && <span className="badge">{wishlist.length}</span>}
         </Link>
 
-        <div className="search-bar">
-          <FaBars
-            className="menu-icon"
-            onClick={() => setShowCategories(!showCategories)}
-            aria-label="Toggle categories"
-            style={{ cursor: "pointer" }}
-          />
-          <input type="text" placeholder="Rechercher un produit..." />
-          <button aria-label="Search"><FaSearch /></button>
-        </div>
-
-        <div className="nav-icons">
-          {firstName ? (
-            <div className="icon-item user-info">
-              <FaUserCircle />
-              <span>Bienvenue {firstName}</span>
-              <button
-                onClick={() => {
-                  localStorage.clear();
-                  window.location.reload();
-                }}
-                className="logout-btn"
-                aria-label="Déconnexion"
-              >
-                <FaSignOutAlt />
-              </button>
-            </div>
-          ) : (
-            <Link to="/login" className="icon-item">
-              <FaUserCircle />
-              <span>Mon compte</span>
-            </Link>
-          )}
-
-          <Link to="/wishlist" className="icon-item">
-            <FaHeart />
-            <span>Wishlist</span>
-            {wishlist.length > 0 && <span className="badge">{wishlist.length}</span>}
-          </Link>
-
-          <Link to="/cart" className="icon-item">
-            <FaShoppingBag />
-            <span>Cart</span>
-            {cart.length > 0 && <span className="badge">{cart.length}</span>}
-          </Link>
-        </div>
+        <Link to="/cart" className="icon-item">
+          <FaShoppingBag />
+          <span>Cart</span>
+          {cart.length > 0 && <span className="badge">{cart.length}</span>}
+        </Link>
       </div>
-
+    </div>
       {/* Info Bar */}
       <div className="info-bar">
         <nav className="info-menu-links">
           {/* Bouton Categories (toujours visible) */}
           <button
-            className="categories-toggle-btn"
-            onClick={() => setShowCategories(!showCategories)}
-            aria-expanded={showCategories}
-            aria-haspopup="true"
-            aria-label="Afficher les catégories"
-          >
-            Tous Catégories <FaChevronDown />
-          </button>
+  className="categories-toggle-btn"
+  onClick={() => setShowCategories(!showCategories)}
+  aria-expanded={showCategories}
+  aria-haspopup="true"
+  aria-label="Afficher les catégories"
+>
+  <FaThLarge style={{ marginRight: "6px" }} />
+  Tous Catégories <FaChevronDown style={{ marginLeft: "6px" }} />
+</button>
 
-          <Link to="/">Accueil</Link>
           <Link to="/product">Produits</Link>
           <Link to="/pages">Astuces & Dégustation</Link>
           <Link to="/contact">Contact</Link>
@@ -218,6 +229,8 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
           </div>
         </div>
       </div>
+      <hr className="navbar-separator" />
+
     </header>
   );
 };

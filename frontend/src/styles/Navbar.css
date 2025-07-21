@@ -1,4 +1,4 @@
-/* Reset */
+/* RESET */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,23 +11,82 @@ a {
   color: inherit;
 }
 
-/* Top bar */
-.top-bar {
-  background: #f8f8f8;
-  font-size: 13px;
-  padding: 6px 20px;
+/* BASE STYLES */
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* NAVBAR WRAPPER */
+.navbar {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.top-links a {
-  margin-left: 15px;
-  color: #555;
+/* TOP BAR */
+.top-bar {
+  background: #ffffff;
+  font-size: 13px;
+  padding: 6px 20px;
+  color: #686666;
+}
+
+.top-bar-container {
+  max-width: 1200px;
+  margin: 0 auto; /* Centre le contenu */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.top-bar-text {
+  font-size: 13px;
+  color: #777;
+  margin: 0;
+}
+
+.blue-time {
+  color: #00BCD4;
   font-weight: 500;
 }
 
-/* Main nav */
+.top-links a {
+  margin-left: 15px;
+  color: #686666;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.top-links a:hover {
+  color: #007bff;
+}
+
+
+/* NAVBAR SEPARATOR */
+.navbar-separator {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 0 0 20px 0;
+}
+
+/* MAIN NAV */
 .main-nav {
   background: white;
   padding: 12px 20px;
@@ -51,37 +110,54 @@ a {
   margin-right: 8px;
 }
 
-/* Search bar */
+/* SEARCH BAR */
 .search-bar {
-  flex: 1;
   display: flex;
   align-items: center;
-  max-width: 600px;
-  gap: 8px;
+  background-color: #ffffff;
+  border-radius: 30px;
+  padding: 8px 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 500px;
+  gap: 10px;
+  margin: 0 20px;
 }
 
 .menu-icon {
   font-size: 20px;
-  cursor: pointer;
-  color: #4caf50;
-}
-
-.search-bar input {
-  flex-grow: 1;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.search-bar button {
-  background: #eee;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 8px 12px;
+  color: #333;
   cursor: pointer;
 }
 
-/* Nav icons */
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 30px;
+  background-color: transparent;
+}
+
+.search-button {
+  background-color: #00BCD4;
+  border: none;
+  color: #F3F4F6;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #014b5e;
+}
+
+/* NAV ICONS */
 .nav-icons {
   display: flex;
   gap: 25px;
@@ -102,14 +178,18 @@ a {
 
 .icon-item svg {
   font-size: 24px;
-  color: #4caf50;
+  color: #00BCD4;
+}
+
+.icon-item:hover {
+  color: #007bff;
 }
 
 .badge {
   position: absolute;
   top: -6px;
   right: -10px;
-  background: #f44336;
+  background: #00BCD4;
   color: white;
   font-size: 12px;
   font-weight: 700;
@@ -118,6 +198,7 @@ a {
   user-select: none;
 }
 
+/* USER INFO */
 .user-info {
   display: flex;
   align-items: center;
@@ -127,59 +208,18 @@ a {
 .logout-btn {
   background: transparent;
   border: none;
-  color: #f44336;
+  color: #00BCD4;
   font-size: 20px;
   cursor: pointer;
 }
 
 .logout-btn:hover {
-  color: #d32f2f;
+  color: #005763;
 }
 
-/* Categories dropdown container (dans Navbar) */
-.categories-list {
-  position: absolute;
-  top: 40px;
-  left: 0;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  border-radius: 8px;
-  padding: 15px 20px;
-  z-index: 3000;
-  width: 300px;
-  color: #222; /* Texte noir */
-}
-
-/* Info bar */
-.info-bar {
-  background-color: #ffffff;
-  color: white;
-  padding: 14px 22px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 13px;
-  flex-wrap: wrap;
-  gap: 30px;
-}
-
-/* Conteneur des liens de navigation (avec Categories bouton en premier) */
-.info-menu-links {
-  display: flex;
-  gap: 20px;
-  font-weight: 600;
-  justify-content: flex-start;
-  align-items: center;
-  flex: none;
-  min-width: 0;
-  max-width: 700px;
-  margin-left: 0;
-  position: relative;
-}
-
-/* Bouton Categories */
+/* CATEGORIES BUTTON */
 .categories-toggle-btn {
-  background:  #00BCD4;
+  background: #00BCD4;
   border: 3px solid #00BCD4;
   color: white;
   font-weight: 700;
@@ -194,14 +234,50 @@ a {
   transition: background-color 0.3s, color 0.3s;
 }
 
+/* CATEGORIES LIST */
+.categories-list {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 15px 20px;
+  z-index: 3000;
+  width: 300px;
+  color: #222;
+}
 
+/* INFO BAR */
+.info-bar {
+  background-color: #ffffff;
+  color: white;
+  padding: 14px 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  flex-wrap: wrap;
+  gap: 30px;
+}
 
-/* Liens dans la barre violette */
+/* INFO MENU LINKS */
+.info-menu-links {
+  display: flex;
+  gap: 20px;
+  font-weight: 600;
+  justify-content: flex-start;
+  align-items: center;
+  flex: none;
+  max-width: 700px;
+  margin-left: 0;
+  position: relative;
+}
+
 .info-menu-links a {
   color: rgb(41, 40, 40);
-  text-decoration: none;
-  transition: color 0.3s ease;
   font-size: 14px;
+  transition: color 0.3s ease;
 }
 
 .info-menu-links a:hover {
@@ -209,7 +285,7 @@ a {
   text-decoration: underline;
 }
 
-/* Partie droite de la barre violette */
+/* INFO RIGHT */
 .info-right {
   display: flex;
   gap: 25px;
@@ -220,21 +296,17 @@ a {
   margin-left: 100px;
 }
 
-/* Chaque bloc info (location, discount, call) */
 .info-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  cursor: default;
 }
 
-/* Icônes à droite, gris clair et un peu plus gros */
 .info-icon {
   color: #ccc;
   font-size: 20px;
 }
 
-/* Texte en deux lignes dans les infos à droite */
 .info-text {
   display: flex;
   flex-direction: column;
@@ -243,18 +315,16 @@ a {
   color: rgb(41, 40, 40);
 }
 
-/* Lien discount spécifique */
 .discount-link {
   color: #5be2fa;
   font-weight: 700;
-  text-decoration: none;
 }
 
 .discount-link:hover {
   text-decoration: underline;
 }
 
-/* Dropdown location */
+/* LOCATION DROPDOWN */
 .location-dropdown {
   position: absolute;
   top: 32px;
@@ -312,7 +382,7 @@ a {
   outline: none;
 }
 
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 991px) {
   .categories-list {
     width: 90vw;
