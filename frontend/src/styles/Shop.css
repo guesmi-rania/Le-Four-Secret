@@ -182,11 +182,11 @@
   color: #2563eb;
 }
 
-/* === Button Add === */
+/* === Button Add (bleu ciel comme capture) === */
 .add-btn {
-  background-color: #16a34a; /* vert */
-  color: white;
-  border: none;
+  background-color: #e0f2fe; /* Bleu ciel très clair */
+  color: #0284c7; /* Bleu principal */
+  border: 2px solid #bae6fd;
   padding: 10px 18px;
   border-radius: 8px;
   cursor: pointer;
@@ -197,17 +197,19 @@
   justify-content: center;
   width: 100%;
   font-weight: 600;
-  box-shadow: 0 4px 8px rgb(22 163 74 / 0.4);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(2, 132, 199, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 }
 
 .add-btn:hover {
-  background-color: #15803d; /* vert plus foncé */
-  box-shadow: 0 6px 12px rgb(21 128 61 / 0.6);
+  background-color: #bae6fd;
+  color: #0369a1;
+  box-shadow: 0 6px 12px rgba(2, 132, 199, 0.4);
 }
 
 .add-btn svg {
   font-size: 20px;
+  color: #0284c7;
 }
 
 /* Remove link styles */
