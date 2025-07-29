@@ -148,7 +148,6 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
           <div className="top-links">
             <Link to="/checkout">Checkout</Link>
             <Link to="/cart">Cart</Link>
-            <Link to="/faq">FAQ</Link>
             <Link to="/about">About Us</Link>
           </div>
         </div>
