@@ -8,15 +8,11 @@ import "../styles/Home.css";
 function Home() {
   return (
     <div className="home-page">
-
       <div className="main-content">
       </div>
-
       <hr className="section-separator" />
-
       <CategoryExplore />
       <hr className="section-separator" />
-
       <div className="below-sections">
         <RecipeShowcase />
         <hr className="section-separator" />

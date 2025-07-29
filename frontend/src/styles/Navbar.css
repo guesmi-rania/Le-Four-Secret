@@ -26,6 +26,9 @@ img {
   width: 100%;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 
 /* CONTAINER */
@@ -48,7 +51,7 @@ img {
 
 .top-bar-container {
   max-width: 1200px;
-  margin: 0 auto; /* Centre le contenu */
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -78,19 +81,14 @@ img {
   color: #00b8c5;
 }
 
-
-
-/* Pour un style spécifique au séparateur dans la navbar */
 .navbar-separator {
   border: none;
   border-top: 1px solid #dbdbdb;
-  margin: 10px 0; /* Ajuste la marge selon besoin, 10px est un bon compromis */
+  margin: 10px 0;
   height: 1px;
   padding: 0;
   width: 100%;
 }
-
-
 
 /* MAIN NAV */
 .main-nav {
@@ -120,32 +118,29 @@ img {
 .search-bar {
   display: flex;
   align-items: center;
-  width: 100%;           /* Prend toute la largeur possible */
-  max-width: 600px;      /* Tu peux ajuster cette valeur selon besoin */
-  border: 1.5px solid #ccc; /* Bordure grise claire */
-  border-radius: 8px; /* bords légèrement arrondis */
-  border: 1.5px solid #ccc;  padding: 6px 10px;     /* Un peu de padding intérieur */
+  width: 100%;
+  max-width: 600px;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  padding: 6px 10px;
   background-color: #fff;
 }
 
 .search-input {
-  flex: 1;               /* Prend tout l'espace disponible */
-  border: none;          /* Pas de bordure interne */
-  outline: none;         /* Pas de contour au focus */
+  flex: 1;
+  border: none;
+  outline: none;
   padding: 8px 12px;
   font-size: 14px;
-  border-radius: 0;      /* Assure que le champ est aussi carré */
   background-color: transparent;
 }
-
 
 .menu-icon {
   font-size: 20px;
   color: #333;
   cursor: pointer;
+  margin-right: 10px;
 }
-
-
 
 .search-button {
   background-color: #00BCD4;
@@ -171,9 +166,8 @@ img {
   align-items: center;
   justify-content: flex-end;
   margin-left: 100px;
-  padding-right: 0px; /* augmente cette valeur pour plus d'espace */
+  padding-right: 0px;
 }
-
 
 .icon-item {
   position: relative;
@@ -209,7 +203,6 @@ img {
   user-select: none;
 }
 
-/* USER INFO */
 .user-info {
   display: flex;
   align-items: center;
@@ -245,7 +238,6 @@ img {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* CATEGORIES LIST */
 .categories-list {
   position: absolute;
   top: 40px;
@@ -272,7 +264,6 @@ img {
   gap: 30px;
 }
 
-/* INFO MENU LINKS */
 .info-menu-links {
   display: flex;
   gap: 20px;
@@ -296,7 +287,6 @@ img {
   text-decoration: underline;
 }
 
-/* INFO RIGHT */
 .info-right {
   display: flex;
   gap: 25px;
@@ -335,7 +325,6 @@ img {
   text-decoration: underline;
 }
 
-/* LOCATION DROPDOWN */
 .location-dropdown {
   position: absolute;
   top: 32px;
@@ -393,23 +382,35 @@ img {
   outline: none;
 }
 
+/* MOBILE MENU BUTTON */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  color: #00BCD4;
+  cursor: pointer;
+}
+
 /* RESPONSIVE */
 @media (max-width: 991px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .main-nav,
+  .nav-icons,
+  .info-bar,
+  .info-right,
+  .info-menu-links {
+    display: none;
+  }
+
   .categories-list {
     width: 90vw;
     left: 5vw;
   }
 
-  .main-nav {
-    flex-wrap: wrap;
-  }
-
   .search-bar {
     max-width: 100%;
-  }
-
-  .nav-icons {
-    gap: 15px;
   }
 }
 
