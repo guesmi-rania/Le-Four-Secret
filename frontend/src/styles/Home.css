@@ -1,12 +1,14 @@
+/* === 🌐 Global Styles === */
 .home-page {
   font-family: 'Poppins', sans-serif;
   padding: 0;
   margin: 0;
   background-color: #ffffff;
   color: #333;
+  font-size: 16px;
 }
 
-/* Contenu principal (accueil, slider, etc.) */
+/* === 🖼️ Section Principale (Slider + Texte) === */
 .main-content {
   display: flex;
   align-items: center;
@@ -27,7 +29,7 @@
   width: 100%;
   border-radius: 16px;
   object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .welcome-text {
@@ -39,56 +41,55 @@
 .welcome-text h1 {
   font-size: 2.8rem;
   color: #d35400;
+  margin-bottom: 20px;
 }
 
 .welcome-text p {
   font-size: 1.1rem;
-  margin: 20px 0;
+  margin-bottom: 25px;
   color: #555;
 }
 
 .cta-button {
+  display: inline-block;
   padding: 12px 24px;
   background-color: #e67e22;
   color: white;
   border: none;
   border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 1rem;
-  transition: background 0.3s;
+  text-decoration: none;
+  transition: background 0.3s ease;
 }
 
 .cta-button:hover {
   background-color: #d35400;
 }
 
-/* Séparateurs entre sections */
-
+/* === 📏 Séparateurs === */
 .section-separator {
   border: none;
   border-top: 1px solid #dbdbdb;
-  margin: 10px 0; /* Ajuste la marge selon besoin, 10px est un bon compromis */
+  margin: 30px 0;
   height: 1px;
-  padding: 0;
   width: 100%;
 }
 
-/* Sections suivantes */
 .below-sections {
   padding: 20px 60px;
 }
 
-
-/* === 📱 Responsive 768px === */
+/* === 📱 Responsive - Tablette (≤768px) === */
 @media screen and (max-width: 768px) {
   .main-content {
     flex-direction: column;
-    padding: 20px;
+    padding: 30px 20px;
     text-align: center;
   }
 
-  .welcome-text {
+  .welcome-text,
+  .welcome-text h1 {
     text-align: center;
   }
 
@@ -100,7 +101,7 @@
     font-size: 1rem;
     padding: 10px 20px;
     width: 100%;
-    max-width: 250px;
+    max-width: 260px;
   }
 
   .below-sections {
@@ -112,15 +113,14 @@
   }
 
   .home-page {
-    font-size: 14px;
+    font-size: 15px;
   }
 }
 
-
-/* === 📱 Responsive 480px === */
+/* === 📱 Responsive - Mobile (≤480px) === */
 @media screen and (max-width: 480px) {
   .main-content {
-    padding: 15px;
+    padding: 20px 15px;
   }
 
   .slider-section {
@@ -145,6 +145,6 @@
   }
 
   .home-page {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
