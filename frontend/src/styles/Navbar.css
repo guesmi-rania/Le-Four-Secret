@@ -418,3 +418,101 @@ img {
     height: 40px;
   }
 }
+/* ✅ Style de base */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.logo {
+  height: 40px;
+}
+
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
+}
+
+/* ✅ Icône panier */
+.cart-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* ✅ Menu mobile (caché par défaut) */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 250px;
+  height: 100vh;
+  background-color: #fff;
+  padding: 20px;
+  transition: left 0.3s ease;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+  z-index: 20;
+}
+
+.mobile-menu.open {
+  left: 0;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 40px;
+}
+
+.mobile-menu ul li {
+  margin: 15px 0;
+  font-size: 18px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+/* ✅ Arrière-plan flouté quand le menu est ouvert */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0,0,0,0.4);
+  z-index: 15;
+  display: none;
+}
+
+.menu-overlay.open {
+  display: block;
+}
+
+/* ✅ Responsive */
+@media screen and (max-width: 768px) {
+  .menu-icon {
+    display: block;
+  }
+
+  .nav-links, .categories {
+    display: none !important;
+  }
+  .close-menu {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    margin-bottom: 15px;
+    align-self: flex-end;
+  }
+  
+  .cart-icon {
+    display: block;
+  }
+}
