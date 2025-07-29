@@ -417,7 +417,9 @@ img {
   .logo img {
     height: 40px;
   }
-}/* ========== MOBILE NAVBAR ========== */
+}
+
+/* MOBILE NAVBAR */
 
 /* Cacher desktop navbar sur mobile */
 @media (max-width: 991px) {
@@ -439,16 +441,44 @@ img {
     z-index: 4000;
   }
 
-  /* Hamburger button */
+  /* Hamburger button base */
   .hamburger {
+    width: 30px;
+    height: 22px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background: transparent;
     border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #00BCD4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 0;
+    z-index: 5100;
+  }
+
+  /* Les 3 barres */
+  .hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #00BCD4;
+    border-radius: 2px;
+    transition: all 0.4s ease;
+    transform-origin: 4px 2px;
+  }
+
+  /* Animation quand le menu est ouvert */
+  .hamburger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+  }
+
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  .hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
   }
 
   /* Logo in mobile */
@@ -521,20 +551,6 @@ img {
     color: #00BCD4;
   }
 
-  .mobile-menu .categories li {
-    padding: 10px 0;
-    cursor: pointer;
-    color: #00BCD4;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .mobile-menu .categories li:hover {
-    color: #014b5e;
-  }
-
   /* MENU OVERLAY */
   .menu-overlay {
     position: fixed;
@@ -556,3 +572,4 @@ img {
     display: none;
   }
 }
+

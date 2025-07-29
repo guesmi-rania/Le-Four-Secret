@@ -1,7 +1,8 @@
 /* Categories.css */
 
 /* Conteneur de la liste des catégories */
-.categories-list, .categories-dropdown {
+.categories-list,
+.categories-dropdown {
   position: absolute;
   top: 40px;
   left: 0;
@@ -14,6 +15,11 @@
   padding: 10px 0;
   font-family: 'Poppins', sans-serif;
   color: #222; /* Texte noir */
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
 }
 
 /* Liste */
@@ -56,4 +62,43 @@
   font-size: 1.3rem;
   flex-shrink: 0;
   color: #00bcd4;
+}
+
+/* Style catégories dans mobile menu */
+.mobile-menu .categories {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.mobile-menu .categories li {
+  padding: 12px 15px;
+  cursor: pointer;
+  color: #00BCD4;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ajout d'une petite icône flèche */
+.mobile-menu .categories li::after {
+  content: '›'; /* chevron simple */
+  font-size: 18px;
+  color: #00a9b7;
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu .categories li:hover {
+  background-color: #00BCD4;
+  color: white;
+}
+
+.mobile-menu .categories li:hover::after {
+  color: white;
+  transform: translateX(5px);
 }
