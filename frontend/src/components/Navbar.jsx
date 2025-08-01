@@ -78,55 +78,106 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
 
       {/* MOBILE MENU DRAWER */}
       <nav
-        className={`mobile-menu ${mobileMenuOpen ? "open" : ""}`}
-        aria-hidden={!mobileMenuOpen}
+  className={`mobile-menu ${mobileMenuOpen ? "open" : ""}`}
+  aria-hidden={!mobileMenuOpen}
+>
+  {/* Liens principaux */}
+  <ul className="mobile-nav-links">
+    <li>
+      <Link to="/" onClick={closeMobileMenu}>
+        Accueil
+      </Link>
+    </li>
+    <li>
+      <Link to="/produits" onClick={closeMobileMenu}>
+        Produits
+      </Link>
+    </li>
+    <li>
+      <Link to="/pages" onClick={closeMobileMenu}>
+        Astuces & Dégustation
+      </Link>
+    </li>
+    <li>
+      <Link to="/contact" onClick={closeMobileMenu}>
+        Contact
+      </Link>
+    </li>
+  </ul>
+
+  {/* User info / Connexion */}
+  <div className="mobile-user-section">
+    {firstName ? (
+      <div className="mobile-user-info">
+        <FaUserCircle size={24} color="#00BCD4" />
+        <span>Bienvenue {firstName}</span>
+        <button
+          onClick={() => {
+            localStorage.clear();
+            window.location.reload();
+          }}
+          aria-label="Déconnexion"
+          className="mobile-logout-btn"
+        >
+          <FaSignOutAlt size={20} color="#00BCD4" />
+        </button>
+      </div>
+    ) : (
+      <Link
+        to="/login"
+        className="mobile-login-link"
+        onClick={closeMobileMenu}
       >
-        <ul className="mobile-nav-links">
-          <li>
-            <Link to="/" onClick={closeMobileMenu}>
-              Accueil
-            </Link>
-          </li>
-          <li>
-            <Link to="/produits" onClick={closeMobileMenu}>
-              Produits
-            </Link>
-          </li>
-          <li>
-            <Link to="/pages" onClick={closeMobileMenu}>
-              Astuces & Dégustation
-            </Link>
-          </li>
-          <li>
-            <Link to="/contact" onClick={closeMobileMenu}>
-              Contact
-            </Link>
-          </li>
-        </ul>
+        <FaUserCircle size={24} color="#00BCD4" />
+        <span>Mon compte</span>
+      </Link>
+    )}
+  </div>
 
-        <div className="mobile-categories-section">
-          <button
-            className="categories-toggle-btn"
-            onClick={() => setShowCategories((prev) => !prev)}
-            aria-expanded={showCategories}
-            aria-haspopup="true"
-          >
-            <FaThLarge style={{ marginRight: "6px" }} />
-            Toutes les catégories <FaChevronDown style={{ marginLeft: "6px" }} />
-          </button>
+  {/* Wishlist + Cart */}
+  <div className="mobile-icons-section">
+    <Link to="/wishlist" className="mobile-icon-link" onClick={closeMobileMenu}>
+      <FaHeart size={24} color="#00BCD4" />
+      <span>Wishlist</span>
+      {wishlist.length > 0 && (
+        <span className="badge mobile-badge">{wishlist.length}</span>
+      )}
+    </Link>
 
-          {showCategories && (
-            <div className="mobile-categories-list">
-              <Categories
-                onClickCategory={() => {
-                  setShowCategories(false);
-                  closeMobileMenu();
-                }}
-              />
-            </div>
-          )}
-        </div>
-      </nav>
+    <Link to="/cart" className="mobile-icon-link" onClick={closeMobileMenu}>
+      <FaShoppingBag size={24} color="#00BCD4" />
+      <span>Panier</span>
+      {cart.length > 0 && (
+        <span className="badge mobile-badge">{cart.length}</span>
+      )}
+    </Link>
+  </div>
+
+  {/* Bouton catégories */}
+  <div className="mobile-categories-section">
+    <button
+      className="categories-toggle-btn"
+      onClick={() => setShowCategories((prev) => !prev)}
+      aria-expanded={showCategories}
+      aria-haspopup="true"
+    >
+      <FaThLarge style={{ marginRight: "6px" }} />
+      Toutes les catégories <FaChevronDown style={{ marginLeft: "6px" }} />
+    </button>
+
+    {showCategories && (
+      <div className="mobile-categories-list">
+        <Categories
+          onClickCategory={() => {
+            setShowCategories(false);
+            closeMobileMenu();
+          }}
+        />
+      </div>
+    )}
+  </div>
+</nav>
+
 
       {/* MOBILE MENU OVERLAY */}
       {mobileMenuOpen && (
@@ -148,6 +199,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
           <div className="top-links">
             <Link to="/checkout">Checkout</Link>
             <Link to="/cart">Cart</Link>
+            <Link to="/faq">FAQ</Link>
             <Link to="/about">About Us</Link>
           </div>
         </div>
