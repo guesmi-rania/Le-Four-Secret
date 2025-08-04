@@ -1,3 +1,5 @@
+/* styles/Shop.css */
+
 .shop-page {
   display: flex;
   gap: 30px;
@@ -44,10 +46,10 @@
 }
 
 .shop-sidebar li:hover {
-  color: #16a34a;
+  color: #16a34a; /* vert */
 }
 
-/* === Product Grid === */
+/* === Products Section === */
 .shop-products {
   flex: 1;
 }
@@ -55,104 +57,121 @@
 .shop-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 20px;
+  gap: 24px;
 }
 
 /* === Product Card === */
 .shop-card {
   background-color: #fff;
   border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 15px 15px 25px 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   position: relative;
-  text-align: center;
-  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .shop-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
 
 .shop-card img {
   width: 100%;
   height: 180px;
   object-fit: contain;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  border-radius: 8px;
 }
 
 .badge {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 12px;
+  left: 12px;
   background-color: #22c55e;
   color: white;
   font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  user-select: none;
 }
 
 .category {
-  color: #999;
+  color: #888;
   font-size: 13px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  font-weight: 500;
 }
 
 .shop-card h4 {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 700;
   color: #111;
-  margin: 5px 0;
+  margin: 5px 0 8px 0;
+  min-height: 48px; /* uniform height */
 }
 
 .by {
   font-size: 13px;
   color: #777;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
+  font-style: italic;
 }
 
 .price-box {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 12px;
+  margin-bottom: 15px;
 }
 
 .price {
   color: #16a34a;
-  font-weight: bold;
-  font-size: 16px;
+  font-weight: 700;
+  font-size: 18px;
 }
 
 .old-price {
   color: #bbb;
   font-size: 14px;
   text-decoration: line-through;
+  align-self: center;
 }
 
 /* === Product Actions === */
 .product-actions {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 10px;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
 }
 
+/* Icônes verticales à droite */
 .right-buttons {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  align-items: flex-end;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
 }
 
-/* Buttons */
+/* Boutons icônes */
 .product-actions button {
   background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 14px;
-  padding: 6px 10px;
+  font-size: 16px;
+  padding: 6px;
   transition: transform 0.2s ease, color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .product-actions button:disabled {
@@ -161,55 +180,54 @@
 }
 
 .product-actions button:hover:not(:disabled) {
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
+/* Wishlist bouton coeur */
 .wishlist-btn {
-  color: #e11d48;
-  font-weight: bold;
+  color: #ef4444; /* rouge vif */
 }
 
 .wishlist-btn:hover {
-  color: #be123c;
+  color: #b91c1c; /* rouge foncé */
 }
 
+/* Compare bouton */
 .compare-btn {
-  color: #3b82f6;
-  font-weight: bold;
+  color: #3b82f6; /* bleu vif */
 }
 
 .compare-btn:hover:not(:disabled) {
-  color: #2563eb;
+  color: #1e40af; /* bleu foncé */
 }
 
-/* === Button Add (bleu ciel comme capture) === */
+/* === Bouton Ajouter au panier en vert avec icône panier === */
 .add-btn {
-  background-color: #e0f2fe; /* Bleu ciel très clair */
-  color: #0284c7; /* Bleu principal */
-  border: 2px solid #bae6fd;
-  padding: 10px 18px;
-  border-radius: 8px;
+  background-color: #22c55e; /* vert vif */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   justify-content: center;
-  width: 100%;
-  font-weight: 600;
-  box-shadow: 0 4px 8px rgba(2, 132, 199, 0.2);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  box-shadow: 0 5px 15px rgba(34, 197, 94, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  flex-grow: 1;
 }
 
 .add-btn:hover {
-  background-color: #bae6fd;
-  color: #0369a1;
-  box-shadow: 0 6px 12px rgba(2, 132, 199, 0.4);
+  background-color: #16a34a;
+  box-shadow: 0 8px 25px rgba(22, 163, 74, 0.6);
 }
 
 .add-btn svg {
-  font-size: 20px;
-  color: #0284c7;
+  font-size: 22px;
+  color: white;
 }
 
 /* Remove link styles */
@@ -235,8 +253,8 @@
   }
 
   .product-actions {
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    gap: 12px;
   }
 
   .right-buttons {
