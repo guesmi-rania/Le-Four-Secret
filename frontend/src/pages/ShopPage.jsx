@@ -80,24 +80,25 @@ export default function ShopPage({
   return (
     <div className="shop-page">
       <div className="shop-sidebar">
-        <h3>Search</h3>
-        <input
-          type="text"
-          value={search}
-          onChange={handleSearch}
-          placeholder="Search products..."
-        />
+  <h3>Recherche</h3>
+  <input
+    type="text"
+    value={search}
+    onChange={handleSearch}
+    placeholder="Rechercher un produit..."
+  />
 
-        <h3>Product Categories</h3>
-        <ul>
-          <li onClick={() => handleCategoryClick("all")}>All</li>
-          {categories.map((cat, i) => (
-            <li key={i} onClick={() => handleCategoryClick(cat)}>
-              {cat}
-            </li>
-          ))}
-        </ul>
-      </div>
+  <h3>Catégories</h3>
+  <ul>
+    <li onClick={() => handleCategoryClick("all")}>Toutes</li>
+    {categories.map((cat, i) => (
+      <li key={i} onClick={() => handleCategoryClick(cat)}>
+        {cat}
+      </li>
+    ))}
+  </ul>
+</div>
+
 
       <div className="shop-products">
         {loading ? (
@@ -133,32 +134,34 @@ export default function ShopPage({
                   </div>
 
                   <div className="product-actions">
-                    <button
-                      className="add-btn"
-                      onClick={() => onAddToCart(product)}
-                    >
-                      <FaShoppingCart /> Add
-                    </button>
+  <button
+    className="add-btn"
+    onClick={() => onAddToCart(product)}
+    aria-label="Ajouter au panier"
+  >
+    <FaShoppingCart /> Ajouter au panier
+  </button>
 
-                    <div className="right-buttons">
-                      <button
-                        className="wishlist-btn"
-                        onClick={() => onToggleWishlist(product)}
-                        aria-label="Ajouter aux favoris"
-                      >
-                        {isInWishlist ? <FaHeart color="red" /> : <FaRegHeart />}
-                      </button>
+  <div className="right-buttons">
+    <button
+      className="wishlist-btn"
+      onClick={() => onToggleWishlist(product)}
+      aria-label="Ajouter aux favoris"
+    >
+      {isInWishlist ? <FaHeart /> : <FaRegHeart />}
+    </button>
 
-                      <button
-                        className="compare-btn"
-                        onClick={() => onAddToCompare(product)}
-                        disabled={isInCompare}
-                        aria-label="Ajouter à la comparaison"
-                      >
-                        Compare
-                      </button>
-                    </div>
-                  </div>
+    <button
+      className="compare-btn"
+      onClick={() => onAddToCompare(product)}
+      disabled={isInCompare}
+      aria-label="Ajouter à la comparaison"
+    >
+      ⚖
+    </button>
+  </div>
+</div>
+
                 </div>
               );
             })}
