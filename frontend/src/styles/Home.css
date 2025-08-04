@@ -1,0 +1,147 @@
+
+/* === 🌐 Global Styles === */
+.home-page {
+  font-family: 'Poppins', sans-serif;
+  padding: 0;
+  margin: 0;
+  background-color: #ffffff;
+  color: #333;
+  font-size: 16px;
+}
+
+/* === 🖼️ Section Principale (Slider + Texte) === */
+.main-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 60px;
+  gap: 40px;
+  flex-wrap: wrap;
+  background: linear-gradient(to right, #fff, #ffffff);
+}
+
+.slider-section {
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
+}
+
+.slider-section img {
+  width: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-text {
+  flex: 1;
+  min-width: 280px;
+  text-align: left;
+}
+
+
+.welcome-text p {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  color: #555;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #d35400;
+}
+
+/* === 📏 Séparateurs === */
+.section-separator {
+  border: none;
+  border-top: 1px solid #dbdbdb;
+  margin: 30px 0;
+  height: 1px;
+  width: 100%;
+}
+
+.below-sections {
+  padding: 20px 60px;
+}
+
+/* === 📱 Responsive - Tablette (≤768px) === */
+@media screen and (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+    padding: 30px 20px;
+    text-align: center;
+  }
+
+  .welcome-text,
+  .welcome-text h1 {
+    text-align: center;
+  }
+
+  .welcome-text h1 {
+    font-size: 2rem;
+  }
+
+  .cta-button {
+    font-size: 1rem;
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .below-sections {
+    padding: 15px;
+  }
+
+  .section-separator {
+    margin: 20px 0;
+  }
+
+  .home-page {
+    font-size: 15px;
+  }
+}
+
+/* === 📱 Responsive - Mobile (≤480px) === */
+@media screen and (max-width: 480px) {
+  .main-content {
+    padding: 20px 15px;
+  }
+
+  .slider-section {
+    max-width: 100%;
+  }
+
+  .welcome-text h1 {
+    font-size: 1.6rem;
+  }
+
+  .welcome-text p {
+    font-size: 0.95rem;
+  }
+
+  .cta-button {
+    font-size: 0.9rem;
+    padding: 10px 16px;
+  }
+
+  .below-sections {
+    padding: 10px;
+  }
+
+  .home-page {
+    font-size: 14px;
+  }
+}
+  

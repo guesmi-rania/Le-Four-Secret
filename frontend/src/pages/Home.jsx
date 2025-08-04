@@ -3,29 +3,21 @@ import RecipeShowcase from "../components/RecipeShowcase";
 import AboutUs from "../components/AboutUs";
 import Footer from "../components/Footer";
 import CategoryExplore from "../components/CategoryExplore";
+import "../styles/Home.css";
 
 function Home() {
   return (
-    <div className="bg-white text-gray-800 font-poppins min-h-screen">
-      <div className="flex flex-wrap justify-between items-center px-6 py-10 gap-10">
-        {/* contenu à ajouter ici plus tard */}
+    <div className="home-page">
+      <div className="main-content">
       </div>
-
-      <hr className="border-t border-gray-300 my-6" />
-
+      <hr className="section-separator" />
       <CategoryExplore />
-
-      <hr className="border-t border-gray-300 my-6" />
-
-      <div className="px-6 pb-10 space-y-6">
+      <hr className="section-separator" />
+      <div className="below-sections">
         <RecipeShowcase />
-
-        <hr className="border-t border-gray-300 my-6" />
-
+        <hr className="section-separator" />
         <AboutUs />
-
-        <hr className="border-t border-gray-300 my-6" />
-
+        <hr className="section-separator" />
         <Footer />
       </div>
     </div>

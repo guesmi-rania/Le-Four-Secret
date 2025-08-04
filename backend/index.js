@@ -9,6 +9,7 @@ const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/adminRoutes');
 const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
+const categoriesRoutes = require("./routes/categories");
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
+app.use("/api/categories", categoriesRoutes);
 
 // Servir le frontend React buildé (dist dans public)
 app.use(express.static(path.join(__dirname, 'public', 'dist')));
