@@ -55,7 +55,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
 
   return (
     <header className="navbar">
-      {/* === MOBILE NAVBAR === */}
+      {/* MOBILE NAVBAR */}
       <div className="mobile-navbar">
         <button
           className="hamburger"
@@ -77,124 +77,76 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
       </div>
 
       {/* MOBILE MENU DRAWER */}
-      <nav
-  className={`mobile-menu ${mobileMenuOpen ? "open" : ""}`}
-  aria-hidden={!mobileMenuOpen}
->
-  {/* Liens principaux */}
-  <ul className="mobile-nav-links">
-    <li>
-      <Link to="/" onClick={closeMobileMenu}>
-        Accueil
-      </Link>
-    </li>
-    <li>
-      <Link to="/produits" onClick={closeMobileMenu}>
-        Produits
-      </Link>
-    </li>
-    <li>
-      <Link to="/pages" onClick={closeMobileMenu}>
-        Astuces & Dégustation
-      </Link>
-    </li>
-    <li>
-      <Link to="/contact" onClick={closeMobileMenu}>
-        Contact
-      </Link>
-    </li>
-  </ul>
+      <nav className={`mobile-menu ${mobileMenuOpen ? "open" : ""}`}>
+        <ul className="mobile-nav-links">
+          <li><Link to="/" onClick={closeMobileMenu}>Accueil</Link></li>
+          <li><Link to="/produits" onClick={closeMobileMenu}>Produits</Link></li>
+          <li><Link to="/pages" onClick={closeMobileMenu}>Astuces & Dégustation</Link></li>
+          <li><Link to="/contact" onClick={closeMobileMenu}>Contact</Link></li>
+        </ul>
 
-  {/* User info / Connexion */}
-  <div className="mobile-user-section">
-    {firstName ? (
-      <div className="mobile-user-info">
-        <FaUserCircle size={24} color="#00BCD4" />
-        <span>Bienvenue {firstName}</span>
-        <button
-          onClick={() => {
-            localStorage.clear();
-            window.location.reload();
-          }}
-          aria-label="Déconnexion"
-          className="mobile-logout-btn"
-        >
-          <FaSignOutAlt size={20} color="#00BCD4" />
-        </button>
-      </div>
-    ) : (
-      <Link
-        to="/login"
-        className="mobile-login-link"
-        onClick={closeMobileMenu}
-      >
-        <FaUserCircle size={24} color="#00BCD4" />
-        <span>Mon compte</span>
-      </Link>
-    )}
-  </div>
+        <div className="mobile-user-section">
+          {firstName ? (
+            <div className="mobile-user-info">
+              <FaUserCircle size={24} color="#00BCD4" />
+              <span>Bienvenue {firstName}</span>
+              <button
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.reload();
+                }}
+                className="mobile-logout-btn"
+              >
+                <FaSignOutAlt size={20} color="#00BCD4" />
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="mobile-login-link" onClick={closeMobileMenu}>
+              <FaUserCircle size={24} color="#00BCD4" />
+              <span>Mon compte</span>
+            </Link>
+          )}
+        </div>
 
-  {/* Wishlist + Cart */}
-  <div className="mobile-icons-section">
-    <Link to="/wishlist" className="mobile-icon-link" onClick={closeMobileMenu}>
-      <FaHeart size={24} color="#00BCD4" />
-      <span>Wishlist</span>
-      {wishlist.length > 0 && (
-        <span className="badge mobile-badge">{wishlist.length}</span>
-      )}
-    </Link>
+        <div className="mobile-icons-section">
+          <Link to="/wishlist" className="mobile-icon-link" onClick={closeMobileMenu}>
+            <FaHeart size={24} color="#00BCD4" />
+            <span>Wishlist</span>
+            {wishlist.length > 0 && <span className="badge mobile-badge">{wishlist.length}</span>}
+          </Link>
 
-    <Link to="/cart" className="mobile-icon-link" onClick={closeMobileMenu}>
-      <FaShoppingBag size={24} color="#00BCD4" />
-      <span>Panier</span>
-      {cart.length > 0 && (
-        <span className="badge mobile-badge">{cart.length}</span>
-      )}
-    </Link>
-  </div>
+          <Link to="/cart" className="mobile-icon-link" onClick={closeMobileMenu}>
+            <FaShoppingBag size={24} color="#00BCD4" />
+            <span>Panier</span>
+            {cart.length > 0 && <span className="badge mobile-badge">{cart.length}</span>}
+          </Link>
+        </div>
 
-  {/* Bouton catégories */}
-  <div className="mobile-categories-section">
-    <button
-      className="categories-toggle-btn"
-      onClick={() => setShowCategories((prev) => !prev)}
-      aria-expanded={showCategories}
-      aria-haspopup="true"
-    >
-      <FaThLarge style={{ marginRight: "6px" }} />
-      Toutes les catégories <FaChevronDown style={{ marginLeft: "6px" }} />
-    </button>
+        <div className="mobile-categories-section">
+          <button
+            className="categories-toggle-btn"
+            onClick={() => setShowCategories((prev) => !prev)}
+            aria-expanded={showCategories}
+          >
+            <FaThLarge style={{ marginRight: "6px" }} />
+            Toutes les catégories <FaChevronDown style={{ marginLeft: "6px" }} />
+          </button>
 
-    {showCategories && (
-      <div className="mobile-categories-list">
-        <Categories
-          onClickCategory={() => {
-            setShowCategories(false);
-            closeMobileMenu();
-          }}
-        />
-      </div>
-    )}
-  </div>
-</nav>
+          {showCategories && (
+            <div className="mobile-categories-list">
+              <Categories onClickCategory={closeMobileMenu} />
+            </div>
+          )}
+        </div>
+      </nav>
 
+      {mobileMenuOpen && <div className="menu-overlay" onClick={closeMobileMenu} />}
 
-      {/* MOBILE MENU OVERLAY */}
-      {mobileMenuOpen && (
-        <div
-          className="menu-overlay"
-          onClick={closeMobileMenu}
-          aria-hidden="true"
-        />
-      )}
-
-      {/* === DESKTOP NAVBAR === */}
-      {/* Top Bar */}
+      {/* DESKTOP NAVBAR */}
       <div className="top-bar">
         <div className="top-bar-container">
           <p className="top-bar-text">
-            Livraison disponible tous les jours{" "}
-            <span className="blue-time">de 7h00 à 23h00</span>.
+            Livraison disponible tous les jours <span className="blue-time">de 7h00 à 23h00</span>.
           </p>
           <div className="top-links">
             <Link to="/checkout">Checkout</Link>
@@ -207,7 +159,6 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
 
       <hr className="navbar-separator" />
 
-      {/* Main Nav */}
       <div className="main-nav container">
         <Link to="/" className="logo">
           <img src={logo} alt="Logo Mr. Chef" />
@@ -215,17 +166,13 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
         </Link>
 
         <div className="search-bar">
-          <FaBars
-            className="menu-icon"
-            onClick={() => setShowCategories((prev) => !prev)}
-            aria-label="Afficher les catégories"
-          />
+          <FaBars className="menu-icon" onClick={() => setShowCategories(!showCategories)} />
           <input
             type="text"
-            placeholder="Rechercher un produits , catégories ..."
+            placeholder="Rechercher un produit, catégories ..."
             className="search-input"
           />
-          <button className="search-button" aria-label="Rechercher">
+          <button className="search-button">
             <FaSearch />
           </button>
         </div>
@@ -241,7 +188,6 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
                   window.location.reload();
                 }}
                 className="logout-btn"
-                aria-label="Déconnexion"
               >
                 <FaSignOutAlt />
               </button>
@@ -267,15 +213,11 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
         </div>
       </div>
 
-      {/* Info Bar */}
       <div className="info-bar">
         <nav className="info-menu-links">
           <button
             className="categories-toggle-btn"
             onClick={() => setShowCategories(!showCategories)}
-            aria-expanded={showCategories}
-            aria-haspopup="true"
-            aria-label="Afficher les catégories"
           >
             <FaThLarge style={{ marginRight: "6px" }} />
             Tous Catégories <FaChevronDown style={{ marginLeft: "6px" }} />
@@ -300,9 +242,6 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
               <strong
                 className="location-select"
                 onClick={() => setShowLocationDropdown(!showLocationDropdown)}
-                tabIndex={0}
-                role="button"
-                aria-expanded={showLocationDropdown}
               >
                 Sélectionnez un emplacement <FaChevronDown />
               </strong>
@@ -324,7 +263,6 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
                     filteredStates.map((state) => (
                       <li
                         key={state}
-                        tabIndex={0}
                         onClick={() => {
                           alert(`Vous avez choisi : ${state}`);
                           setShowLocationDropdown(false);
@@ -346,9 +284,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
             <FaTag className="info-icon" />
             <div className="info-text">
               <span>Ce week-end uniquement</span>
-              <Link to="/discount" className="discount-link">
-                Super réduction
-              </Link>
+              <Link to="/discount" className="discount-link">Super réduction</Link>
             </div>
           </div>
 
