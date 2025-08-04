@@ -1,5 +1,4 @@
-/* styles/Shop.css */
-
+/* Shop.css */
 .shop-page {
   display: flex;
   gap: 30px;
@@ -8,9 +7,8 @@
   background-color: #f9f9f9;
 }
 
-/* === Sidebar === */
 .shop-sidebar {
-  width: 250px;
+  width: 270px;
   background-color: #fff;
   border-radius: 12px;
   padding: 20px;
@@ -19,37 +17,54 @@
 
 .shop-sidebar h3 {
   margin-bottom: 10px;
-  color: #333;
+  color: #111827;
   font-size: 18px;
+  border-bottom: 2px solid #16a34a;
+  padding-bottom: 4px;
 }
 
-.shop-sidebar input {
+.shop-sidebar input[type="text"],
+.shop-sidebar input[type="number"] {
   width: 100%;
   padding: 10px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  margin-bottom: 20px;
   font-size: 14px;
 }
 
-.shop-sidebar ul {
-  list-style: none;
-  padding: 0;
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
-.shop-sidebar li {
-  padding: 8px 0;
-  cursor: pointer;
+.checkbox-label {
+  font-size: 14px;
   color: #333;
-  font-weight: 500;
-  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.shop-sidebar li:hover {
-  color: #16a34a; /* vert */
+.price-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
-/* === Products Section === */
+.reset-btn {
+  background-color: #16a34a;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
 .shop-products {
   flex: 1;
 }
@@ -60,7 +75,6 @@
   gap: 24px;
 }
 
-/* === Product Card === */
 .shop-card {
   background-color: #fff;
   border-radius: 12px;
@@ -96,7 +110,6 @@
   padding: 5px 10px;
   border-radius: 8px;
   font-weight: 700;
-  letter-spacing: 0.05em;
   user-select: none;
 }
 
@@ -112,7 +125,7 @@
   font-weight: 700;
   color: #111;
   margin: 5px 0 8px 0;
-  min-height: 48px; /* uniform height */
+  min-height: 48px;
 }
 
 .by {
@@ -142,7 +155,6 @@
   align-self: center;
 }
 
-/* === Product Actions === */
 .product-actions {
   display: flex;
   justify-content: space-between;
@@ -151,7 +163,6 @@
   margin-top: auto;
 }
 
-/* Icônes verticales à droite */
 .right-buttons {
   display: flex;
   flex-direction: column;
@@ -161,7 +172,6 @@
   min-width: 42px;
 }
 
-/* Boutons icônes */
 .product-actions button {
   background: transparent;
   border: none;
@@ -183,27 +193,24 @@
   transform: scale(1.2);
 }
 
-/* Wishlist bouton coeur */
 .wishlist-btn {
-  color: #ef4444; /* rouge vif */
+  color: #ef4444;
 }
 
 .wishlist-btn:hover {
-  color: #b91c1c; /* rouge foncé */
+  color: #b91c1c;
 }
 
-/* Compare bouton */
 .compare-btn {
-  color: #3b82f6; /* bleu vif */
+  color: #3b82f6;
 }
 
 .compare-btn:hover:not(:disabled) {
-  color: #1e40af; /* bleu foncé */
+  color: #1e40af;
 }
 
-/* === Bouton Ajouter au panier en vert avec icône panier === */
 .add-btn {
-  background-color: #22c55e; /* vert vif */
+  background-color: #22c55e;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -230,13 +237,11 @@
   color: white;
 }
 
-/* Remove link styles */
 .product-link {
   text-decoration: none;
   color: inherit;
 }
 
-/* === Responsive === */
 @media (max-width: 768px) {
   .shop-page {
     flex-direction: column;
