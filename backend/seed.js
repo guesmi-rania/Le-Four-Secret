@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Category = require('./models/Category'); // ou le nom de ton modèle
-const data = require('./formattedData.json');
+const data = require('data.json');
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://raniaguesmi:AhfnzsUoS3gnIfNe@cluster2.stjl3ql.mongodb.net/recettes?retryWrites=true&w=majority&appName=Cluster2';
 
 mongoose.connect(MONGODB_URI)

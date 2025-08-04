@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
-// $📦 Composants
+// Composants & Pages
 import Navbar from "./components/Navbar";
 import Slider from "./components/Slider";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-// $📄 Pages
 import Home from "./pages/Home";
-import ShopPage from "./pages/ShopPage"; 
+import ShopPage from "./pages/ShopPage";
 import CartPage from "./pages/CartPage";
 import OrdersPage from "./pages/OrdersPage";
 import ClientAuth from "./pages/ClientAuth";
@@ -18,21 +17,22 @@ import TastingList from "./pages/TastingList";
 import ContactPage from "./pages/ContactPage";
 import Welcome from "./pages/Welcome";
 
-// $🔔 Notifications
+// Notifications
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// $🎨 CSS
+// Styles globaux
 import "./styles/Cart.css";
 
 function App() {
-  // $ State local storage pour cart, wishlist, compareList
+  // States synchronisés avec localStorage
   const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem("cart")) || []);
   const [wishlist, setWishlist] = useState(() => JSON.parse(localStorage.getItem("wishlist")) || []);
   const [compareList, setCompareList] = useState(() => JSON.parse(localStorage.getItem("compareList")) || []);
+
   const location = useLocation();
 
-  // $ Sync avec localStorage
+  // Synchroniser localStorage à chaque mise à jour
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -45,20 +45,19 @@ function App() {
     localStorage.setItem("compareList", JSON.stringify(compareList));
   }, [compareList]);
 
-  // $ Fonctions notifications
+  // Notifications
   const notifyAddCart = (name) => toast.success(`✅ ${name} ajouté au panier !`);
   const notifyAddWishlist = (name) => toast.info(`❤️ ${name} ajouté à la wishlist !`);
   const notifyRemoveWishlist = (name) => toast.info(`❌ ${name} retiré de la wishlist !`);
-  const notifyAlreadyWishlist = (name) => toast.warning(`⚠️ ${name} est déjà dans la wishlist !`);
   const notifyAddCompare = (name) => toast.info(`⚖️ ${name} ajouté à la comparaison !`);
 
-  // $ Gestion panier
+  // Gestion du panier
   const handleAddToCart = (product) => {
     setCart(prev => [...prev, product]);
     notifyAddCart(product.name);
   };
 
-  // $ Toggle wishlist (ajout / suppression)
+  // Toggle wishlist
   const handleToggleWishlist = (product) => {
     if (wishlist.find(item => item._id === product._id)) {
       setWishlist(prev => prev.filter(item => item._id !== product._id));
@@ -69,7 +68,7 @@ function App() {
     }
   };
 
-  // $ Ajouter à la comparaison (sans suppression)
+  // Ajouter à la comparaison
   const handleAddToCompare = (product) => {
     if (!compareList.find(item => item._id === product._id)) {
       setCompareList(prev => [...prev, product]);
@@ -77,16 +76,15 @@ function App() {
     }
   };
 
-  // $ Render JSX principal
   return (
     <>
-      {/* $ Navbar affichée sur toutes les pages */}
+      {/* Navbar sur toutes les pages */}
       <Navbar cart={cart} wishlist={wishlist} />
 
-      {/* $ Slider uniquement sur la page d'accueil */}
+      {/* Slider uniquement sur la page d'accueil */}
       {location.pathname === "/" && <Slider />}
 
-      {/* $ Routes principales */}
+      {/* Routes principales */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<ClientAuth />} />
@@ -97,28 +95,33 @@ function App() {
           </ProtectedRoute>
         } />
 
-<Route path="/produits" element={
-  <ShopPage
-    cart={cart}
-    wishlist={wishlist}
-    compareList={compareList}
-    onAddToCart={handleAddToCart}
-    onToggleWishlist={handleToggleWishlist}
-    onAddToCompare={handleAddToCompare}
-  />
-} />
-
-        <Route path="/produits/:id" element={
-          <ProtectedRoute>
-            <ProductDetail
+        <Route
+          path="/produits"
+          element={
+            <ShopPage
               onAddToCart={handleAddToCart}
-              onAddToWishlist={handleToggleWishlist}
               wishlist={wishlist}
               compareList={compareList}
+              onToggleWishlist={handleToggleWishlist}
               onAddToCompare={handleAddToCompare}
             />
-          </ProtectedRoute>
-        } />
+          }
+        />
+
+        <Route
+          path="/produits/:id"
+          element={
+            <ProtectedRoute>
+              <ProductDetail
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleToggleWishlist}
+                wishlist={wishlist}
+                compareList={compareList}
+                onAddToCompare={handleAddToCompare}
+              />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="/panier" element={<CartPage cart={cart} setCart={setCart} />} />
         <Route path="/wishlist" element={<WishlistPage wishlist={wishlist} setWishlist={setWishlist} />} />
@@ -133,7 +136,7 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
 
-      {/* $ Container pour les notifications toast */}
+      {/* Container pour notifications */}
       <ToastContainer position="bottom-right" autoClose={3000} />
     </>
   );

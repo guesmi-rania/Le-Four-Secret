@@ -20,20 +20,45 @@ export default function ShopPage({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchProducts() {
+    async function fetchCategories() {
       try {
-        const res = await axios.get(`${BASE_URL}/api/products`);
-        setProducts(res.data);
-        setFilteredProducts(res.data);
-        const uniqueCategories = [...new Set(res.data.map((p) => p.category))];
+        const res = await axios.get(`${BASE_URL}/api/categories`);
+        const categoriesData = res.data;
+
+        // Fusionner tous les produits de chaque sous-catégorie
+        const allProducts = [];
+
+        categoriesData.forEach((cat) => {
+          cat.subcategories.forEach((sub) => {
+            sub.products.forEach((prod) => {
+              allProducts.push({
+                _id: `${cat.category}-${sub.name}-${prod.name}`,
+                name: prod.name,
+                category: cat.category,
+                subcategory: sub.name,
+                price: Math.floor(Math.random() * 20 + 5), // prix aléatoire
+                imageUrl: `/images/products/${prod.name
+                  .toLowerCase()
+                  .replace(/[\s\(\)&]/g, "-")}.jpg`, // ex: donut-nutella.jpg
+              });
+            });
+          });
+        });
+
+        setProducts(allProducts);
+        setFilteredProducts(allProducts);
+
+        const uniqueCategories = [...new Set(allProducts.map((p) => p.category))];
         setCategories(uniqueCategories);
       } catch (error) {
+        console.error("Erreur fetchCategories:", error);
         alert("Erreur lors du chargement des produits");
       } finally {
         setLoading(false);
       }
     }
-    fetchProducts();
+
+    fetchCategories();
   }, []);
 
   const handleSearch = (e) => {
@@ -108,7 +133,10 @@ export default function ShopPage({
                   </div>
 
                   <div className="product-actions">
-                    <button className="add-btn" onClick={() => onAddToCart(product)}>
+                    <button
+                      className="add-btn"
+                      onClick={() => onAddToCart(product)}
+                    >
                       <FaShoppingCart /> Add
                     </button>
 

@@ -6,7 +6,13 @@ import { FaShoppingCart, FaHeart, FaRegHeart, FaBalanceScale } from "react-icons
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-export default function ProductDetail({ onAddToCart, onAddToWishlist, onAddToCompare, wishlist = [], compareList = [] }) {
+export default function ProductDetail({
+  onAddToCart,
+  onAddToWishlist,
+  onAddToCompare,
+  wishlist = [],
+  compareList = [],
+}) {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
