@@ -219,37 +219,39 @@
   color: #1e40af;
 }
 
-/* Add to cart button (compact) */
+/* Add to cart button — élargi et texte plus grand */
+/* Bouton "Ajouter au panier" compact comme la capture */
 .add-btn {
   background-color: #22c55e !important;
   color: white !important;
   border: none;
-  padding: 5px 8px;
+  padding: 4px 6px;       /* marges réduites */
   border-radius: 6px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 11px;        /* texte plus petit */
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;               /* espace réduit entre icône et texte */
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(34, 197, 94, 0.4);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  flex-grow: 0;
-  width: 90px;       /* largeur fixe */
-  min-width: 90px;   /* empêche de rétrécir */
+  box-shadow: 0 1px 4px rgba(34, 197, 94, 0.4);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  width: 75px;            /* largeur fixe compacte */
+  min-width: 75px;
   text-align: center;
+  white-space: nowrap;    /* évite le retour à la ligne */
 }
 
 .add-btn:hover {
   background-color: #16a34a !important;
-  box-shadow: 0 4px 10px rgba(22, 163, 74, 0.6);
+  box-shadow: 0 3px 8px rgba(22, 163, 74, 0.5);
 }
 
 .add-btn svg {
-  font-size: 14px;
+  font-size: 12px;        /* icône plus petite */
   color: white !important;
 }
+
 
 /* Product link */
 .product-link {
