@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
 import { FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
+import { IoIosGitCompare } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -176,13 +177,14 @@ export default function ShopPage({
                       </button>
 
                       <button
-                        className="compare-btn"
-                        onClick={() => onAddToCompare(product)}
-                        disabled={isInCompare}
-                        aria-label="Ajouter à la comparaison"
-                      >
-                        ⚖
-                      </button>
+  className="compare-btn"
+  onClick={() => onAddToCompare(product)}
+  disabled={isInCompare}
+  aria-label="Ajouter à la comparaison"
+>
+  <GoGitCompare size={20} />
+</button>
+
                     </div>
                   </div>
                 </div>

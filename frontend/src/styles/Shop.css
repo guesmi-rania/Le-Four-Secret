@@ -57,6 +57,7 @@
   margin-bottom: 20px;
 }
 
+/* Reset button */
 .reset-btn {
   background-color: #16a34a;
   color: white;
@@ -66,6 +67,7 @@
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.3s ease;
+  user-select: none;
 }
 
 .reset-btn:hover {
@@ -168,7 +170,7 @@
   align-self: center;
 }
 
-/* Actions */
+/* Actions container */
 .product-actions {
   display: flex;
   justify-content: space-between;
@@ -177,6 +179,7 @@
   margin-top: auto;
 }
 
+/* Right buttons wrapper */
 .right-buttons {
   display: flex;
   flex-direction: column;
@@ -186,6 +189,7 @@
   min-width: 42px;
 }
 
+/* Buttons base style */
 .product-actions button {
   background: transparent;
   border: none;
@@ -196,6 +200,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
 }
 
 .product-actions button:disabled {
@@ -207,68 +212,110 @@
   transform: scale(1.2);
 }
 
+/* Wishlist button with SVG background */
 .wishlist-btn {
-  color: #ef4444;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background-color: #f3f4f6;
+  position: relative;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .wishlist-btn:hover {
-  color: #b91c1c;
+  background-color: #fee2e2;
+  transform: scale(1.1);
 }
 
+/* SVG heart icon - empty */
+.wishlist-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: #ef4444;
+  pointer-events: none;
+}
+
+/* Compare button with arrows */
 .compare-btn {
-  color: #3b82f6;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border: none;
+  user-select: none;
+  transition: background-color 0.2s ease;
 }
 
 .compare-btn:hover:not(:disabled) {
-  color: #1e40af;
+  background-color: #1e40af;
 }
 
-/* Add to cart button compact */
+.compare-btn:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+
+.compare-btn .arrow-left,
+.compare-btn .arrow-right {
+  font-size: 18px;
+  user-select: none;
+}
+
+/* Add to cart button */
 .add-btn {
-  background-color: #22c55e !important;
-  color: white !important;
+  background-color: #22c55e;
+  color: white;
   border: none;
-  padding: 4px 6px;
-  border-radius: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 6px;
   justify-content: center;
-  box-shadow: 0 1px 4px rgba(34, 197, 94, 0.4);
+  box-shadow: 0 3px 8px rgba(34, 197, 94, 0.5);
+  user-select: none;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
-  width: 75px;
-  min-width: 75px;
-  height: 28px;
-  text-align: center;
-  white-space: nowrap;
+  min-width: 90px;
+  height: 36px;
 }
 
-.add-btn:hover {
-  background-color: #16a34a !important;
-  box-shadow: 0 3px 8px rgba(22, 163, 74, 0.5);
+.add-btn:hover,
+.add-btn:focus-visible {
+  background-color: #16a34a;
+  box-shadow: 0 5px 15px rgba(22, 163, 74, 0.7);
+  outline: none;
 }
 
+/* SVG cart icon inside add-btn */
 .add-btn svg {
-  font-size: 12px;
-  color: white !important;
+  width: 18px;
+  height: 18px;
+  fill: white;
+  flex-shrink: 0;
 }
 
-/* Buttons to the right (wishlist, compare) uniform */
+/* Buttons to the right uniform style */
 .right-buttons button {
   background-color: #f3f4f6;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px;
   border-radius: 6px;
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
