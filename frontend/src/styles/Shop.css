@@ -210,30 +210,30 @@
 }
 
 .add-btn {
-  background-color: #22c55e !important; /* Force le fond vert */
-  color: white !important; /* Force le texte en blanc */
+  background-color: #22c55e !important;
+  color: white !important;
   border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
+  padding: 6px 12px; /* ⬅️ réduit la largeur et la hauteur */
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 14px; /* ⬅️ réduit la taille du texte */
+  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px; /* ⬅️ espace réduit entre icône et texte */
   justify-content: center;
-  box-shadow: 0 5px 15px rgba(34, 197, 94, 0.4);
+  box-shadow: 0 3px 8px rgba(34, 197, 94, 0.4);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  flex-grow: 1;
+  flex-grow: 0; /* ⬅️ empêche le bouton de prendre toute la largeur */
 }
 
 .add-btn:hover {
   background-color: #16a34a !important;
-  box-shadow: 0 8px 25px rgba(22, 163, 74, 0.6);
+  box-shadow: 0 5px 12px rgba(22, 163, 74, 0.6);
 }
 
 .add-btn svg {
-  font-size: 22px;
+  font-size: 18px; /* ⬅️ réduit la taille de l’icône */
   color: white !important;
 }
 
