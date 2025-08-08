@@ -1,4 +1,6 @@
-/* Shop.css */
+/* ===========================
+   SHOP PAGE LAYOUT
+=========================== */
 .shop-page {
   display: flex;
   gap: 30px;
@@ -7,6 +9,7 @@
   background-color: #f9f9f9;
 }
 
+/* Sidebar */
 .shop-sidebar {
   width: 270px;
   background-color: #fff;
@@ -33,6 +36,7 @@
   font-size: 14px;
 }
 
+/* Filters */
 .checkbox-group {
   display: flex;
   flex-direction: column;
@@ -65,6 +69,7 @@
   font-weight: bold;
 }
 
+/* Product list */
 .shop-products {
   flex: 1;
 }
@@ -75,6 +80,7 @@
   gap: 24px;
 }
 
+/* Product card */
 .shop-card {
   background-color: #fff;
   border-radius: 12px;
@@ -100,6 +106,7 @@
   border-radius: 8px;
 }
 
+/* Badge */
 .badge {
   position: absolute;
   top: 12px;
@@ -113,6 +120,7 @@
   user-select: none;
 }
 
+/* Text styles */
 .category {
   color: #888;
   font-size: 13px;
@@ -135,6 +143,7 @@
   font-style: italic;
 }
 
+/* Price */
 .price-box {
   display: flex;
   justify-content: center;
@@ -155,6 +164,7 @@
   align-self: center;
 }
 
+/* Actions */
 .product-actions {
   display: flex;
   justify-content: space-between;
@@ -209,40 +219,45 @@
   color: #1e40af;
 }
 
+/* Add to cart button (compact) */
 .add-btn {
   background-color: #22c55e !important;
   color: white !important;
   border: none;
-  padding: 6px 12px; /* ⬅️ réduit la largeur et la hauteur */
-  border-radius: 8px;
+  padding: 5px 8px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 14px; /* ⬅️ réduit la taille du texte */
+  font-size: 12px;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 6px; /* ⬅️ espace réduit entre icône et texte */
+  gap: 4px;
   justify-content: center;
-  box-shadow: 0 3px 8px rgba(34, 197, 94, 0.4);
+  box-shadow: 0 2px 6px rgba(34, 197, 94, 0.4);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  flex-grow: 0; /* ⬅️ empêche le bouton de prendre toute la largeur */
+  flex-grow: 0;
+  width: 90px;       /* largeur fixe */
+  min-width: 90px;   /* empêche de rétrécir */
+  text-align: center;
 }
 
 .add-btn:hover {
   background-color: #16a34a !important;
-  box-shadow: 0 5px 12px rgba(22, 163, 74, 0.6);
+  box-shadow: 0 4px 10px rgba(22, 163, 74, 0.6);
 }
 
 .add-btn svg {
-  font-size: 18px; /* ⬅️ réduit la taille de l’icône */
+  font-size: 14px;
   color: white !important;
 }
 
-
+/* Product link */
 .product-link {
   text-decoration: none;
   color: inherit;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .shop-page {
     flex-direction: column;
