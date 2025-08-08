@@ -210,8 +210,8 @@
 }
 
 .add-btn {
-  background-color: #22c55e;
-  color: white;
+  background-color: #22c55e !important; /* Force le fond vert */
+  color: white !important; /* Force le texte en blanc */
   border: none;
   padding: 12px 20px;
   border-radius: 10px;
@@ -228,14 +228,15 @@
 }
 
 .add-btn:hover {
-  background-color: #16a34a;
+  background-color: #16a34a !important;
   box-shadow: 0 8px 25px rgba(22, 163, 74, 0.6);
 }
 
 .add-btn svg {
   font-size: 22px;
-  color: white;
+  color: white !important;
 }
+
 
 .product-link {
   text-decoration: none;

@@ -19,15 +19,12 @@ import Categories from "./Categories";
 import "../styles/Navbar.css";
 
 const statesList = [
-  "Alabama",
-  "Alaska",
-  "Arizona",
-  "California",
-  "Colorado",
-  "New Jersey",
-  "New York",
-  "Texas",
-  "Washington",
+  "Tunis",
+  "Ariana",
+  "Bizerte",
+  "Manouba",
+  "Zaghouan",
+  "Nabeul",
 ];
 
 const Navbar = ({ cart = [], wishlist = [] }) => {
