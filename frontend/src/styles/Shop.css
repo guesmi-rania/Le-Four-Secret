@@ -74,6 +74,27 @@
   background-color: #15803d;
 }
 
+.reset-btn:focus-visible {
+  outline: 3px solid #16a34a;
+  outline-offset: 2px;
+}
+
+/* Loader spinner */
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #16a34a;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin 1s linear infinite;
+  margin: 40px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* Product list */
 .shop-products {
   flex: 1;
@@ -95,13 +116,16 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
-.shop-card:hover {
+.shop-card:hover,
+.shop-card:focus-within {
   transform: translateY(-6px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  outline: none;
 }
 
 .shop-card img {
@@ -212,6 +236,11 @@
   transform: scale(1.2);
 }
 
+.product-actions button:focus-visible {
+  outline: 3px solid #16a34a;
+  outline-offset: 2px;
+}
+
 /* Wishlist button with SVG background */
 .wishlist-btn {
   width: 28px;
@@ -267,6 +296,11 @@
   user-select: none;
 }
 
+.compare-btn:focus-visible {
+  outline: 3px solid #1e40af;
+  outline-offset: 2px;
+}
+
 /* Add to cart button */
 .add-btn {
   background-color: #22c55e;
@@ -293,6 +327,11 @@
   background-color: #16a34a;
   box-shadow: 0 5px 15px rgba(22, 163, 74, 0.7);
   outline: none;
+}
+
+.add-btn:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
 }
 
 /* SVG cart icon inside add-btn */
@@ -322,6 +361,11 @@
 .right-buttons button:hover:not(:disabled) {
   background-color: #e5e7eb;
   transform: scale(1.1);
+}
+
+.right-buttons button:focus-visible {
+  outline: 3px solid #6b7280;
+  outline-offset: 2px;
 }
 
 /* Product link */
