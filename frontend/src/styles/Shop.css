@@ -114,18 +114,14 @@
 .badge {
   position: absolute;
   top: 12px;
-  right: 12px;
-  background-color: #ef4444; /* rouge promo */
+  left: 12px;
+  background-color: #22c55e;
   color: white;
-  font-size: 10px;
-  padding: 3px 7px;
-  border-radius: 6px;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 8px;
   font-weight: 700;
   user-select: none;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-  z-index: 10;
 }
 
 /* Text styles */
@@ -190,7 +186,6 @@
   min-width: 42px;
 }
 
-/* Buttons in product actions */
 .product-actions button {
   background: transparent;
   border: none;
@@ -212,44 +207,23 @@
   transform: scale(1.2);
 }
 
-/* Wishlist and compare buttons */
 .wishlist-btn {
   color: #ef4444;
 }
+
 .wishlist-btn:hover {
   color: #b91c1c;
 }
 
-/* Bouton compare personnalisé avec flèches */
 .compare-btn {
-  background-color: #3b82f6;
-  color: white;
-  border-radius: 6px;
-  padding: 4px 8px;
-  font-weight: 700;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  border: none;
-  transition: background-color 0.2s ease;
-  user-select: none;
+  color: #3b82f6;
 }
 
 .compare-btn:hover:not(:disabled) {
-  background-color: #1e40af;
+  color: #1e40af;
 }
 
-/* Flèches dans le bouton */
-.compare-btn .arrow-left,
-.compare-btn .arrow-right {
-  font-size: 16px;
-  line-height: 1;
-}
-
-
-/* Bouton "Ajouter au panier" - version desktop */
+/* Add to cart button compact */
 .add-btn {
   background-color: #22c55e !important;
   color: white !important;
@@ -261,7 +235,7 @@
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 3px;
   justify-content: center;
   box-shadow: 0 1px 4px rgba(34, 197, 94, 0.4);
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
@@ -270,38 +244,16 @@
   height: 28px;
   text-align: center;
   white-space: nowrap;
-  user-select: none;
-  border: 1px solid transparent;
 }
 
-.add-btn:hover,
-.add-btn:focus-visible {
+.add-btn:hover {
   background-color: #16a34a !important;
   box-shadow: 0 3px 8px rgba(22, 163, 74, 0.5);
-  outline: none;
 }
 
 .add-btn svg {
-  font-size: 14px;
+  font-size: 12px;
   color: white !important;
-  flex-shrink: 0;
-}
-
-/* Version mobile : bouton plus large et texte plus grand */
-@media (max-width: 768px) {
-  .add-btn {
-    width: 100%;
-    max-width: 200px;
-    padding: 8px 12px;
-    font-size: 14px;
-    height: auto;
-    gap: 8px;
-    border-radius: 8px;
-  }
-
-  .add-btn svg {
-    font-size: 16px;
-  }
 }
 
 /* Buttons to the right (wishlist, compare) uniform */

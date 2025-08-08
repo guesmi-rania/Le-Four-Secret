@@ -175,12 +175,14 @@ export default function ShopPage({
                         {isInWishlist ? <FaHeart /> : <FaRegHeart />}
                       </button>
 
-                      <button className="compare-btn" onClick={handleCompare} disabled={isDisabled}>
-                        <span className="arrow-left">←</span>
-                        <span>Comparer</span>
-                        <span className="arrow-right">→</span>
+                      <button
+                        className="compare-btn"
+                        onClick={() => onAddToCompare(product)}
+                        disabled={isInCompare}
+                        aria-label="Ajouter à la comparaison"
+                      >
+                        ⚖
                       </button>
-
                     </div>
                   </div>
                 </div>
