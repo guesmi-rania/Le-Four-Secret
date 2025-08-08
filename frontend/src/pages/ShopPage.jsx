@@ -1,9 +1,8 @@
-// ShopPage.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
 import { FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
-import { IoIosGitCompare } from "react-icons/io";
+import { GoGitCompare } from "react-icons/go";
 import { Link } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -99,6 +98,7 @@ export default function ShopPage({
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Rechercher un produit..."
+          aria-label="Recherche de produit"
         />
 
         <h3>Catégories</h3>
@@ -109,6 +109,8 @@ export default function ShopPage({
                 type="checkbox"
                 checked={selectedCategories.includes(cat)}
                 onChange={() => toggleCategory(cat)}
+                aria-checked={selectedCategories.includes(cat)}
+                role="checkbox"
               />
               {cat}
             </label>
@@ -122,22 +124,28 @@ export default function ShopPage({
             placeholder="Min"
             value={minPrice}
             onChange={(e) => setMinPrice(Number(e.target.value))}
+            aria-label="Prix minimum"
+            min={0}
           />
-          <span> - </span>
+          <span aria-hidden="true"> - </span>
           <input
             type="number"
             placeholder="Max"
             value={maxPrice}
             onChange={(e) => setMaxPrice(Number(e.target.value))}
+            aria-label="Prix maximum"
+            min={0}
           />
         </div>
 
-        <button className="reset-btn" onClick={resetFilters}>Réinitialiser</button>
+        <button className="reset-btn" onClick={resetFilters} aria-label="Réinitialiser les filtres">
+          Réinitialiser
+        </button>
       </div>
 
       <div className="shop-products">
         {loading ? (
-          <p>Chargement des produits...</p>
+          <div className="loader" role="status" aria-label="Chargement en cours"></div>
         ) : (
           <div className="shop-grid">
             {filteredProducts.map((product) => {
@@ -145,10 +153,13 @@ export default function ShopPage({
               const isInCompare = compareList.some((item) => item._id === product._id);
 
               return (
-                <div key={product._id} className="shop-card">
-                  <div className="badge">
-                    {Math.floor(Math.random() * 30) + 5}%
-                  </div>
+                <div
+                  key={product._id}
+                  className="shop-card"
+                  tabIndex={0}
+                  aria-label={`${product.name}, catégorie ${product.category}, prix ${product.price} dinars`}
+                >
+                  <div className="badge">{Math.floor(Math.random() * 30) + 5}%</div>
 
                   <Link to={`/produits/${product._id}`} className="product-link">
                     <img src={product.imageUrl} alt={product.name} />
@@ -163,7 +174,11 @@ export default function ShopPage({
                   </div>
 
                   <div className="product-actions">
-                    <button className="add-btn" onClick={() => onAddToCart(product)}>
+                    <button
+                      className="add-btn"
+                      onClick={() => onAddToCart(product)}
+                      aria-label={`Ajouter ${product.name} au panier`}
+                    >
                       <FaShoppingCart /> Ajouter au panier
                     </button>
 
@@ -171,20 +186,25 @@ export default function ShopPage({
                       <button
                         className="wishlist-btn"
                         onClick={() => onToggleWishlist(product)}
-                        aria-label="Ajouter aux favoris"
+                        aria-label={isInWishlist ? "Retirer des favoris" : "Ajouter aux favoris"}
+                        title={isInWishlist ? "Retirer des favoris" : "Ajouter aux favoris"}
                       >
                         {isInWishlist ? <FaHeart /> : <FaRegHeart />}
                       </button>
 
                       <button
-  className="compare-btn"
-  onClick={() => onAddToCompare(product)}
-  disabled={isInCompare}
-  aria-label="Ajouter à la comparaison"
->
-  <GoGitCompare size={20} />
-</button>
-
+                        className="compare-btn"
+                        onClick={() => onAddToCompare(product)}
+                        disabled={isInCompare}
+                        aria-label={
+                          isInCompare ? "Produit déjà en comparaison" : "Ajouter à la comparaison"
+                        }
+                        title={
+                          isInCompare ? "Produit déjà en comparaison" : "Ajouter à la comparaison"
+                        }
+                      >
+                        <GoGitCompare size={20} />
+                      </button>
                     </div>
                   </div>
                 </div>
