@@ -1,15 +1,11 @@
-Recettes de Cuisine
-Une application web permettant de gérer, ajouter et afficher des recettes de cuisine. Cette application offre une interface simple et attractive pour les utilisateurs qui souhaitent conserver leurs recettes préférées.
 
-Fonctionnalités
-Ajouter de nouvelles recettes
-Permet aux utilisateurs d'ajouter de nouvelles recettes à l'application, avec un titre, une liste d'ingrédients et des instructions.
+Contribuer
+Les contributions sont les bienvenues ! Si vous souhaitez contribuer, ouvrez une issue ou soumettez une pull request.
+## 🚀 Lien du site en ligne
+https://frontend-recettes-fxc8.onrender.com/
+<img width="1916" height="906" alt="image" src="https://github.com/user-attachments/assets/7dcb193e-c54e-4074-a986-1cf38d3cfb17" />
+<img width="1919" height="492" alt="image" src="https://github.com/user-attachments/assets/4ab14384-1906-4e10-83fe-b10c25653e90" />
 
-Afficher une liste de recettes sauvegardées
-Les utilisateurs peuvent consulter toutes leurs recettes précédemment ajoutées dans une liste.
-
-Visualiser les détails d'une recette
-Chaque recette contient un titre, une liste d'ingrédients et des instructions détaillées pour sa préparation.
 
 Technologies utilisées
 Frontend : React.js (avec Vite)
@@ -18,9 +14,6 @@ Backend : Node.js, Express.js
 
 Base de données : MongoDB (via Mongoose)
 
-Déploiement : GitHub Pages pour le frontend, Render pour le backend 
+Déploiement : Render pour le backend et frontend
 
 
-Contribuer
-Les contributions sont les bienvenues ! Si vous souhaitez contribuer, ouvrez une issue ou soumettez une pull request.
-![image](https://github.com/user-attachments/assets/ce0fc32c-ca90-4dd0-b301-16a168f0c166)
