@@ -14,7 +14,7 @@ const categories = [
 function CategoryExplore() {
   return (
     <section className="category-explore">
-      <h2>🍽️ Explorer par catégories</h2>
+      <h2>🍽️ Gammes de produit </h2>
       <div className="category-list">
         {categories.map((cat, index) => (
           <div key={index} className="category-item">
