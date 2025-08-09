@@ -14,7 +14,8 @@ Le projet est entièrement déployé sur **Render** (frontend + backend) et util
 
 | Page d'accueil | Liste des categories |
 |----------------|--------------------|
-| ![Aperçu 1](https://github.com/user-attachments/assets/7dcb193e-c54e-4074-a986-1cf38d3cfb17) | ![Aperçu 2](https://github.com/user-attachments/assets/4ab14384-1906-4e10-83fe-b10c25653e90) |
+| ![Aperçu 1](https://github.com/user-attachments/assets/7dcb193e-c54e-4074-a986-1cf38d3cfb17) | ![Aperçu 2](https://github.com/user-attachments/assets/2bad68ad-d469-4e69-b764-92721cddd0a4" />
+) |
 
 ---
 
