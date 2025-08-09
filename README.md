@@ -1,4 +1,4 @@
-# 🍰 Application Web de Pâtisserie - Frontend
+# 🍰 Application Web de Pâtisserie 
 
 Cette application web dynamique dédiée à la pâtisserie permet d'afficher, d'ajouter et de gérer des recettes via une interface utilisateur simple et intuitive. Le projet est entièrement déployé sur **Render** (frontend et backend) et utilise **MongoDB** pour la gestion et la persistance des données.
 
@@ -38,7 +38,3 @@ Découvrez la démo en ligne :
 - **Render** — plateforme cloud utilisée pour héberger à la fois le frontend et le backend
 
 ---
-
-## 📂 Structure du projet
-
-*(À compléter selon l’arborescence exacte de votre projet)*
