@@ -1,26 +1,41 @@
-Recettes de Cuisine
-Une application web permettant de gérer, ajouter et afficher des recettes de cuisine. Cette application offre une interface simple et attractive pour les utilisateurs qui souhaitent conserver leurs recettes préférées.
+# 🍰 Frontend Patisserie
 
-Fonctionnalités
-Ajouter de nouvelles recettes
-Permet aux utilisateurs d'ajouter de nouvelles recettes à l'application, avec un titre, une liste d'ingrédients et des instructions.
+Une application web dynamique de patisserie permettant d’afficher, ajouter et gérer des recettes grâce à une interface intuitive.  
+Le projet est entièrement déployé sur **Render** (frontend + backend) et utilise **MongoDB** pour la persistance des données.
 
-Afficher une liste de recettes sauvegardées
-Les utilisateurs peuvent consulter toutes leurs recettes précédemment ajoutées dans une liste.
+---
 
-Visualiser les détails d'une recette
-Chaque recette contient un titre, une liste d'ingrédients et des instructions détaillées pour sa préparation.
+## 🚀 Lien du site en ligne
+🔗 [https://frontend-recettes-fxc8.onrender.com/](https://frontend-recettes-fxc8.onrender.com/)
 
-Technologies utilisées
-Frontend : React.js (avec Vite)
+---
 
-Backend : Node.js, Express.js
+## 📸 Aperçu
 
-Base de données : MongoDB (via Mongoose)
+| Page d'accueil | Liste des categories |
+|----------------|--------------------|
+| ![Aperçu 1](https://github.com/user-attachments/assets/7dcb193e-c54e-4074-a986-1cf38d3cfb17) | ![Aperçu 2](https://github.com/user-attachments/assets/4ab14384-1906-4e10-83fe-b10c25653e90) |
 
-Déploiement : GitHub Pages pour le frontend, Render pour le backend 
+---
 
+## 🛠️ Technologies utilisées
 
-Contribuer
-Les contributions sont les bienvenues ! Si vous souhaitez contribuer, ouvrez une issue ou soumettez une pull request.
-![image](https://github.com/user-attachments/assets/ce0fc32c-ca90-4dd0-b301-16a168f0c166)
+### **Frontend**
+- [React.js](https://reactjs.org/) avec [Vite](https://vitejs.dev/) pour un rendu rapide et optimisé
+- [Axios](https://axios-http.com/) pour les requêtes HTTP
+- [React Router](https://reactrouter.com/) pour la navigation
+
+### **Backend**
+- [Node.js](https://nodejs.org/) + [Express.js](https://expressjs.com/) pour la gestion des API
+- [Mongoose](https://mongoosejs.com/) pour la communication avec MongoDB
+
+### **Base de données**
+- [MongoDB Atlas](https://www.mongodb.com/atlas) (base de données cloud NoSQL)
+
+### **Déploiement**
+- [Render](https://render.com/) pour l’hébergement du frontend et du backend
+
+---
+
+## 📂 Structure du projet
+
