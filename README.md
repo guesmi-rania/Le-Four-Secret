@@ -16,6 +16,7 @@ Découvrez la démo en ligne :
 | Page d’accueil                    | Liste des catégories+Astuces                  |
 |---------------------------------|-------------------------------------|
 | ![Page d'accueil](https://github.com/user-attachments/assets/7dcb193e-c54e-4074-a986-1cf38d3cfb17) | ![Liste des catégories](https://github.com/user-attachments/assets/302d496f-799e-4ed5-a08f-e41ffdcadaad) |
+<img width="1898" height="903" alt="image" src="https://github.com/user-attachments/assets/d515ab48-021d-4c4c-9605-dd1ebf8053be" />
 
 ---
 
