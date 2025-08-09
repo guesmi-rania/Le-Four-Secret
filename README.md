@@ -1,6 +1,6 @@
-# 🍰 Frontend Recettes
+# 🍰 Frontend Patisserie
 
-Une application web dynamique de recettes de cuisine permettant d’afficher, ajouter et gérer des recettes grâce à une interface intuitive.  
+Une application web dynamique de patisserie permettant d’afficher, ajouter et gérer des recettes grâce à une interface intuitive.  
 Le projet est entièrement déployé sur **Render** (frontend + backend) et utilise **MongoDB** pour la persistance des données.
 
 ---
