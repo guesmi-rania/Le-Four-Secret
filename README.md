@@ -1,43 +1,44 @@
-# 🍰 Frontend Patisserie
+# 🍰 Application Web de Pâtisserie - Frontend
 
-Une application web dynamique de patisserie permettant d’afficher, ajouter et gérer des recettes grâce à une interface intuitive.  
-Le projet est entièrement déployé sur **Render** (frontend + backend) et utilise **MongoDB** pour la persistance des données.
+Cette application web dynamique dédiée à la pâtisserie permet d'afficher, d'ajouter et de gérer des recettes via une interface utilisateur simple et intuitive. Le projet est entièrement déployé sur **Render** (frontend et backend) et utilise **MongoDB** pour la gestion et la persistance des données.
 
 ---
 
-## 🚀 Lien du site en ligne
+## 🚀 Lien vers le site en ligne
+
+Découvrez la démo en ligne :  
 🔗 [https://frontend-recettes-fxc8.onrender.com/](https://frontend-recettes-fxc8.onrender.com/)
 
 ---
 
-## 📸 Aperçu
+## 📸 Aperçu de l’application
 
-| Page d'accueil | Liste des categories |
-|----------------|--------------------|
-| ![Aperçu 1](https://github.com/user-attachments/assets/7dcb193e-c54e-4074-a986-1cf38d3cfb17) | ![Aperçu 2] <img width="1910" height="905" alt="image" src="https://github.com/user-attachments/assets/302d496f-799e-4ed5-a08f-e41ffdcadaad" />
-/>
-) |
+| Page d’accueil                    | Liste des catégories                  |
+|---------------------------------|-------------------------------------|
+| ![Page d'accueil](https://github.com/user-attachments/assets/7dcb193e-c54e-4074-a986-1cf38d3cfb17) | ![Liste des catégories](https://github.com/user-attachments/assets/302d496f-799e-4ed5-a08f-e41ffdcadaad) |
 
 ---
 
 ## 🛠️ Technologies utilisées
 
-### **Frontend**
-- [React.js](https://reactjs.org/) avec [Vite](https://vitejs.dev/) pour un rendu rapide et optimisé
-- [Axios](https://axios-http.com/) pour les requêtes HTTP
-- [React Router](https://reactrouter.com/) pour la navigation
+### Frontend
+- **React.js** — bibliothèque JavaScript pour construire l’interface utilisateur
+- **Vite** — outil de build rapide et optimisé pour un rendu performant
+- **Axios** — client HTTP pour communiquer avec l’API backend
+- **React Router** — gestion de la navigation entre les pages
 
-### **Backend**
-- [Node.js](https://nodejs.org/) + [Express.js](https://expressjs.com/) pour la gestion des API
-- [Mongoose](https://mongoosejs.com/) pour la communication avec MongoDB
+### Backend
+- **Node.js** et **Express.js** — pour la création et gestion des API REST
+- **Mongoose** — ORM facilitant la manipulation de MongoDB
 
-### **Base de données**
-- [MongoDB Atlas](https://www.mongodb.com/atlas) (base de données cloud NoSQL)
+### Base de données
+- **MongoDB Atlas** — base de données NoSQL cloud sécurisée et scalable
 
-### **Déploiement**
-- [Render](https://render.com/) pour l’hébergement du frontend et du backend
+### Déploiement
+- **Render** — plateforme cloud utilisée pour héberger à la fois le frontend et le backend
 
 ---
 
 ## 📂 Structure du projet
 
+*(À compléter selon l’arborescence exacte de votre projet)*
