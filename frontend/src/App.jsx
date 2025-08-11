@@ -17,6 +17,10 @@ import TastingList from "./pages/TastingList";
 import ContactPage from "./pages/ContactPage";
 import Welcome from "./pages/Welcome";
 
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import ProtectedAdminRoute from "./pages/ProtectedAdminRoute";
+
 // Notifications
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -53,25 +57,25 @@ function App() {
 
   // Gestion du panier
   const handleAddToCart = (product) => {
-    setCart(prev => [...prev, product]);
+    setCart((prev) => [...prev, product]);
     notifyAddCart(product.name);
   };
 
   // Toggle wishlist
   const handleToggleWishlist = (product) => {
-    if (wishlist.find(item => item._id === product._id)) {
-      setWishlist(prev => prev.filter(item => item._id !== product._id));
+    if (wishlist.find((item) => item._id === product._id)) {
+      setWishlist((prev) => prev.filter((item) => item._id !== product._id));
       notifyRemoveWishlist(product.name);
     } else {
-      setWishlist(prev => [...prev, product]);
+      setWishlist((prev) => [...prev, product]);
       notifyAddWishlist(product.name);
     }
   };
 
   // Ajouter à la comparaison
   const handleAddToCompare = (product) => {
-    if (!compareList.find(item => item._id === product._id)) {
-      setCompareList(prev => [...prev, product]);
+    if (!compareList.find((item) => item._id === product._id)) {
+      setCompareList((prev) => [...prev, product]);
       notifyAddCompare(product.name);
     }
   };
@@ -86,15 +90,28 @@ function App() {
 
       {/* Routes principales */}
       <Routes>
+        {/* Routes Admin */}
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboard />
+            </ProtectedAdminRoute>
+          }
+        />
+
+        {/* Routes Client */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<ClientAuth />} />
-
-        <Route path="/bienvenue" element={
-          <ProtectedRoute>
-            <Welcome />
-          </ProtectedRoute>
-        } />
-
+        <Route
+          path="/bienvenue"
+          element={
+            <ProtectedRoute>
+              <Welcome />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/produits"
           element={
@@ -107,7 +124,6 @@ function App() {
             />
           }
         />
-
         <Route
           path="/produits/:id"
           element={
@@ -122,16 +138,16 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route path="/panier" element={<CartPage cart={cart} setCart={setCart} />} />
         <Route path="/wishlist" element={<WishlistPage wishlist={wishlist} setWishlist={setWishlist} />} />
-
-        <Route path="/commandes" element={
-          <ProtectedRoute>
-            <OrdersPage />
-          </ProtectedRoute>
-        } />
-
+        <Route
+          path="/commandes"
+          element={
+            <ProtectedRoute>
+              <OrdersPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/dégustation" element={<TastingList />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
