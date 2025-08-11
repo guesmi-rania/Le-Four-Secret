@@ -6,7 +6,7 @@ function AdminLogin() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    if (password === "admin123") { // ← remplace par env ou vérif backend si besoin
+    if (password === process.env.ADMIN_PASSWORD) { // ← remplace par env ou vérif backend si besoin
       localStorage.setItem("admin", "true");
       navigate("/admin");
     } else {
