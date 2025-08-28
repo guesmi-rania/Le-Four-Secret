@@ -40,14 +40,13 @@ export default function ShopPage({
               price: Math.floor(Math.random() * 20 + 5),
               imageUrl: `/images/products/${prodName
                 .toLowerCase()
-                .replace(/[\s\(\)&]/g, "-")}.jpg`,
+                .replace(/[\s\(\)&]/g, "-")}.webp`,
             });
           });
         });
   
         setProducts(allProducts);
   
-        // On prend seulement les catégories principales du JSON
         setCategories(categoriesData.map((c) => c.category));
         setFilteredProducts(allProducts);
       } catch (error) {
@@ -154,7 +153,7 @@ export default function ShopPage({
                   </Link>
 
                   <p className="category">{product.category}</p>
-                  <p className="by">Chef Mr.Lotfi</p>
+                  <p className="by">Mr.Chef Lotfi</p>
                   <div className="price-box">
                     <span className="price">{product.price} Dt</span>
                     <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
