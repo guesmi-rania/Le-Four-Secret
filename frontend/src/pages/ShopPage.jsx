@@ -30,27 +30,27 @@ export default function ShopPage({
       try {
         const res = await axios.get(`${BASE_URL}/api/categories`);
         const categoriesData = res.data;
+  
         const allProducts = [];
-
         categoriesData.forEach((cat) => {
-          cat.subcategories.forEach((sub) => {
-            sub.products.forEach((prod) => {
-              allProducts.push({
-                _id: `${cat.category}-${sub.name}-${prod.name}`,
-                name: prod.name,
-                category: cat.category,
-                subcategory: sub.name,
-                price: Math.floor(Math.random() * 20 + 5),
-                imageUrl: `/images/products/${prod.name
-                  .toLowerCase()
-                  .replace(/[\s\(\)&]/g, "-")}.jpg`,
-              });
+          // ton JSON final n'a plus de subcategories, juste cat.category et cat.products
+          cat.products.forEach((prodName) => {
+            allProducts.push({
+              _id: `${cat.category}-${prodName}`,
+              name: prodName,
+              category: cat.category,
+              price: Math.floor(Math.random() * 20 + 5),
+              imageUrl: `/images/products/${prodName
+                .toLowerCase()
+                .replace(/[\s\(\)&]/g, "-")}.jpg`,
             });
           });
         });
-
+  
         setProducts(allProducts);
-        setCategories([...new Set(allProducts.map((p) => p.category))]);
+  
+        // On prend seulement les catégories principales du JSON
+        setCategories(categoriesData.map((c) => c.category));
         setFilteredProducts(allProducts);
       } catch (error) {
         console.error("Erreur fetchCategories:", error);
@@ -59,9 +59,9 @@ export default function ShopPage({
         setLoading(false);
       }
     }
-
+  
     fetchCategories();
-  }, []);
+  }, []);  
 
   useEffect(() => {
     let temp = [...products];
