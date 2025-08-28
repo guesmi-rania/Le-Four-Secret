@@ -10,6 +10,7 @@ const adminRoutes = require('./routes/adminRoutes');    // <-- routes admin
 const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
 const categoriesRoutes = require("./routes/categories");
+const newsletterRoutes = require( './routes/newsletter');
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/categories', categoriesRoutes);
+app.use("/api/newsletter", newsletterRoutes);
 
 // Frontend React statique (build)
 app.use(express.static(path.join(__dirname, 'public', 'dist')));

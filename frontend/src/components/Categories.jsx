@@ -11,16 +11,12 @@ import { LiaCookieSolid } from "react-icons/lia";
 
 function Categories({ onClickCategory }) {
   const categories = [
-    { name: "Cuisine Tunisienne", icon: <MdOutlineSoupKitchen /> },
-    { name: "Pâtisserie Classique", icon: <GiCupcake />, isNew: true },
-    { name: "Pâtisseries Orientales ", icon: <SiCakephp /> },
-    { name: "Gâteaux Spéciaux", icon: <BsCake /> },
-    { name: "Chocolaterie & Confiserie", icon: <GiChocolateBar />, isNew: true },
-    { name: "Viennoiseries", icon: <LuCroissant /> },
-    { name: "Tartes et Tartelettes", icon: <GiPieSlice /> },
-    { name: "Biscuits & Petits Gâteaux", icon: <LiaCookieSolid /> },
-    { name: "Desserts Glacés", icon: <LuDessert /> },
-    { name: "Pâtes à Tartiner et Confitures", icon: <GiButter /> },
+    { name: "Gâteaux Signature", icon: <MdOutlineSoupKitchen /> },
+    { name: "Viennoiseries & Feuilletés", icon: <GiCupcake />, isNew: true },
+    { name: "Feuilletés & Salés ", icon: <SiCakephp /> },
+    { name: "Choux & Crèmes", icon: <BsCake /> },
+    { name: "Cheesecakes & Gâteaux Froid", icon: <GiChocolateBar />, isNew: true },
+    { name: "Donuts & Pâtisseries Modernes", icon: <LuCroissant /> },
   ];
 
   const [selected, setSelected] = useState(null);
