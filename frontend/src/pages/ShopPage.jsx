@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
 import { FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
-import { IoIosGitCompare } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -33,7 +32,6 @@ export default function ShopPage({
   
         const allProducts = [];
         categoriesData.forEach((cat) => {
-          // ton JSON final n'a plus de subcategories, juste cat.category et cat.products
           cat.products.forEach((prodName) => {
             allProducts.push({
               _id: `${cat.category}-${prodName}`,
@@ -156,7 +154,7 @@ export default function ShopPage({
                   </Link>
 
                   <p className="category">{product.category}</p>
-                  <p className="by">By Douceurs du Chef</p>
+                  <p className="by">Chef Mr.Lotfi</p>
                   <div className="price-box">
                     <span className="price">{product.price} Dt</span>
                     <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
