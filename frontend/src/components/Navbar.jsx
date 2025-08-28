@@ -18,14 +18,7 @@ import logo from "../assets/loglou.png";
 import Categories from "./Categories";
 import "../styles/Navbar.css";
 
-const statesList = [
-  "Tunis",
-  "Ariana",
-  "Bizerte",
-  "Manouba",
-  "Zaghouan",
-  "Nabeul",
-];
+const statesList = ["Tunis", "Ariana", "Bizerte", "Manouba", "Zaghouan", "Nabeul"];
 
 const Navbar = ({ cart = [], wishlist = [] }) => {
   const [showCategories, setShowCategories] = useState(false);
@@ -36,9 +29,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
 
   useEffect(() => {
     const storedClient = JSON.parse(localStorage.getItem("client"));
-    if (storedClient?.name) {
-      setFirstName(storedClient.name.split(" ")[0]);
-    }
+    if (storedClient?.name) setFirstName(storedClient.name.split(" ")[0]);
   }, []);
 
   const filteredStates = statesList.filter((state) =>
@@ -88,10 +79,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
               <FaUserCircle size={24} color="#00BCD4" />
               <span>Bienvenue {firstName}</span>
               <button
-                onClick={() => {
-                  localStorage.clear();
-                  window.location.reload();
-                }}
+                onClick={() => { localStorage.clear(); window.location.reload(); }}
                 className="mobile-logout-btn"
               >
                 <FaSignOutAlt size={20} color="#00BCD4" />
@@ -129,11 +117,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
             Toutes les catégories <FaChevronDown style={{ marginLeft: "6px" }} />
           </button>
 
-          {showCategories && (
-            <div className="mobile-categories-list">
-              <Categories onClickCategory={closeMobileMenu} />
-            </div>
-          )}
+          {showCategories && <Categories onClickCategory={closeMobileMenu} />}
         </div>
       </nav>
 
@@ -169,9 +153,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
             placeholder="Rechercher un produit, catégories ..."
             className="search-input"
           />
-          <button className="search-button">
-            <FaSearch />
-          </button>
+          <button className="search-button"><FaSearch /></button>
         </div>
 
         <div className="nav-icons">
@@ -179,13 +161,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
             <div className="icon-item user-info">
               <FaUserCircle />
               <span>Bienvenue {firstName}</span>
-              <button
-                onClick={() => {
-                  localStorage.clear();
-                  window.location.reload();
-                }}
-                className="logout-btn"
-              >
+              <button onClick={() => { localStorage.clear(); window.location.reload(); }} className="logout-btn">
                 <FaSignOutAlt />
               </button>
             </div>
@@ -212,10 +188,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
 
       <div className="info-bar">
         <nav className="info-menu-links">
-          <button
-            className="categories-toggle-btn"
-            onClick={() => setShowCategories(!showCategories)}
-          >
+          <button className="categories-toggle-btn" onClick={() => setShowCategories(!showCategories)}>
             <FaThLarge style={{ marginRight: "6px" }} />
             Tous Catégories <FaChevronDown style={{ marginLeft: "6px" }} />
           </button>
@@ -224,11 +197,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
           <Link to="/pages">Astuces & Dégustation</Link>
           <Link to="/contact">Contact</Link>
 
-          {showCategories && (
-            <div className="categories-list">
-              <Categories onClickCategory={() => setShowCategories(false)} />
-            </div>
-          )}
+          {showCategories && <Categories onClickCategory={() => setShowCategories(false)} />}
         </nav>
 
         <div className="info-right">
@@ -236,10 +205,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
             <FaMapMarkerAlt className="info-icon" />
             <div className="info-text">
               <span>Votre emplacement</span>
-              <strong
-                className="location-select"
-                onClick={() => setShowLocationDropdown(!showLocationDropdown)}
-              >
+              <strong className="location-select" onClick={() => setShowLocationDropdown(!showLocationDropdown)}>
                 Sélectionnez un emplacement <FaChevronDown />
               </strong>
             </div>
@@ -256,22 +222,11 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
                   autoFocus
                 />
                 <ul>
-                  {filteredStates.length > 0 ? (
-                    filteredStates.map((state) => (
-                      <li
-                        key={state}
-                        onClick={() => {
-                          alert(`Vous avez choisi : ${state}`);
-                          setShowLocationDropdown(false);
-                          setLocationSearch("");
-                        }}
-                      >
-                        {state}
-                      </li>
-                    ))
-                  ) : (
-                    <li>Aucun résultat</li>
-                  )}
+                  {filteredStates.length > 0 ? filteredStates.map((state) => (
+                    <li key={state} onClick={() => { alert(`Vous avez choisi : ${state}`); setShowLocationDropdown(false); setLocationSearch(""); }}>
+                      {state}
+                    </li>
+                  )) : <li>Aucun résultat</li>}
                 </ul>
               </div>
             )}
@@ -289,9 +244,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
             <FaPhoneAlt className="info-icon" />
             <div className="info-text">
               <span>Appelez à tout moment</span>
-              <a href="tel:+21620828055" className="phone-number">
-                +216 20 828 055
-              </a>
+              <a href="tel:+21620828055" className="phone-number">+216 20 828 055</a>
             </div>
           </div>
         </div>

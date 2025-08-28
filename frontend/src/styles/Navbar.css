@@ -239,7 +239,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 5px 20px;
+    padding: 5px 15px;
     border-radius: 6px;
     user-select: none;
     transition: background-color 0.3s, color 0.3s;
@@ -248,7 +248,7 @@
   /* CATEGORIES LIST */
   .categories-list {
     position: absolute;
-    top: 90px;
+    top: 60px;
     left: 0;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);

@@ -1,104 +1,129 @@
-/* Categories.css */
-
-/* Conteneur de la liste des catégories */
-.categories-list,
-.categories-dropdown {
-  position: absolute;
-  top: 40px;
-  left: 0;
-  background-color: white; /* Fond blanc */
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  z-index: 5000;
-  width: 300px;
-  padding: 10px 0;
-  font-family: 'Poppins', sans-serif;
-  color: #222; /* Texte noir */
-  list-style: none;
+/* ===== RESET ===== */
+* {
+  box-sizing: border-box;
   margin: 0;
-  padding-left: 0;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-}
-
-/* Liste */
-.dropdown-list {
-  list-style: none;
   padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ===== LISTE DE CATEGORIES ===== */
+.categories-list {
+  list-style: none;
   margin: 0;
+  padding: 10px 0;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  width: 240px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 50;
 }
 
-/* Élément de la liste */
+/* Chaque item de dropdown */
 .dropdown-item {
-  margin-bottom: 5px;
+  margin: 2px 0;
 }
 
-/* Lien de catégorie */
+/* Les liens de catégorie */
 .category-link {
   display: flex;
   align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: #222 !important; /* texte noir */
-  font-weight: 400;
-  font-size: 0.95rem;
-  white-space: nowrap;
-  padding: 6px 10px;
+  justify-content: space-between;
+  gap: 10px;
+  top: 10px;
+  padding: 5px 10px;
   border-radius: 6px;
-  transition: color 0.3s ease, background-color 0.3s ease;
-  font-family: 'Poppins', sans-serif;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Effet au survol */
 .category-link:hover,
 .category-link.selected {
-  color: #00bcd4;
   background-color: #f0f8ff;
+  color: #00bcd4;
 }
 
-/* Icône */
+/* Icone de chaque catégorie */
 .icon {
   font-size: 1.3rem;
+  color: #00bcd4;
   flex-shrink: 0;
+}
+
+/* Nom de la catégorie */
+.name {
+  flex: 1;
+}
+
+
+/* ===== SECTION NOUVEAUTES ===== */
+.nouveautes-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #555;
+  margin: 10px 0 5px 16px;
+  text-transform: uppercase;
+}
+
+.nouveaute-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nouveaute-link:hover {
+  background-color: #f0f8ff;
   color: #00bcd4;
 }
 
-/* Style catégories dans mobile menu */
-.mobile-menu .categories {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-}
-
-.mobile-menu .categories li {
-  padding: 12px 15px;
-  cursor: pointer;
-  color: #00BCD4;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 6px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Ajout d'une petite icône flèche */
-.mobile-menu .categories li::after {
-  content: '›'; /* chevron simple */
-  font-size: 18px;
-  color: #00a9b7;
-  transition: transform 0.3s ease;
-}
-
-.mobile-menu .categories li:hover {
-  background-color: #00BCD4;
+/* Badge NEW pour nouveautés */
+.badge-new {
+  background-color: #ff4081;
   color: white;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 12px;
+  white-space: nowrap;
+  margin-left: auto;
 }
 
-.mobile-menu .categories li:hover::after {
-  color: white;
-  transform: translateX(5px);
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .categories-list {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    margin-top: 10px;
+  }
+
+  .category-link,
+  .nouveaute-link {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .category-link:last-child,
+  .nouveaute-link:last-child {
+    border-bottom: none;
+  }
 }
