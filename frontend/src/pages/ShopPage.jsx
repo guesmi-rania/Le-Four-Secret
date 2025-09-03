@@ -162,13 +162,13 @@ export default function ShopPage({
                     </button>
 
                     <button
-                      className="compare-btn"
+                     className="compare-btn"
                       onClick={() => onAddToCompare(product)}
                       disabled={isInCompare}
                       aria-label="Ajouter à la comparaison"
-                    >
-                      <i className="fa-solid fa-code-compare"></i>
-                    </button>
+                       >
+                    <FaBalanceScale />
+                      </button>
                   </div>
                 </div>
               );
