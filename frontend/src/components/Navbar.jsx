@@ -244,7 +244,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
             <FaPhoneAlt className="info-icon" />
             <div className="info-text">
               <span>Appelez à tout moment</span>
-              <a href="tel:+21620828055" className="phone-number">+216 20 828 055</a>
+              <a href="tel:+21620828055" className="phone-number">+216 00 000 000</a>
             </div>
           </div>
         </div>
