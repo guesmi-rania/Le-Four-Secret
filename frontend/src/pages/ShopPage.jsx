@@ -1,8 +1,8 @@
-// ShopPage.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
 import { FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaCodeCompare } from "react-icons/fa6"; // nouvel icône FontAwesome 6
 import { Link } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -29,7 +29,7 @@ export default function ShopPage({
       try {
         const res = await axios.get(`${BASE_URL}/api/categories`);
         const categoriesData = res.data;
-  
+
         const allProducts = [];
         categoriesData.forEach((cat) => {
           cat.products.forEach((prodName) => {
@@ -44,9 +44,9 @@ export default function ShopPage({
             });
           });
         });
-  
+
         setProducts(allProducts);
-  
+
         setCategories(categoriesData.map((c) => c.category));
         setFilteredProducts(allProducts);
       } catch (error) {
@@ -56,14 +56,16 @@ export default function ShopPage({
         setLoading(false);
       }
     }
-  
+
     fetchCategories();
-  }, []);  
+  }, []);
 
   useEffect(() => {
     let temp = [...products];
     if (search) {
-      temp = temp.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
+      temp = temp.filter((p) =>
+        p.name.toLowerCase().includes(search.toLowerCase())
+      );
     }
     if (selectedCategories.length > 0) {
       temp = temp.filter((p) => selectedCategories.includes(p.category));
@@ -129,7 +131,9 @@ export default function ShopPage({
           />
         </div>
 
-        <button className="reset-btn" onClick={resetFilters}>Réinitialiser</button>
+        <button className="reset-btn" onClick={resetFilters}>
+          Réinitialiser
+        </button>
       </div>
 
       <div className="shop-products">
@@ -138,8 +142,12 @@ export default function ShopPage({
         ) : (
           <div className="shop-grid">
             {filteredProducts.map((product) => {
-              const isInWishlist = wishlist.some((item) => item._id === product._id);
-              const isInCompare = compareList.some((item) => item._id === product._id);
+              const isInWishlist = wishlist.some(
+                (item) => item._id === product._id
+              );
+              const isInCompare = compareList.some(
+                (item) => item._id === product._id
+              );
 
               return (
                 <div key={product._id} className="shop-card">
@@ -156,12 +164,19 @@ export default function ShopPage({
                   <p className="by">Mr.Chef Lotfi</p>
                   <div className="price-box">
                     <span className="price">{product.price} Dt</span>
-                    <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
+                    <span className="old-price">
+                      {(product.price * 1.2).toFixed(2)} Dt
+                    </span>
                   </div>
 
                   <div className="product-actions">
-                    <button className="add-btn" onClick={() => onAddToCart(product)}>
-                      <FaShoppingCart /> Ajouter au panier
+                    {/* Icône panier seulement */}
+                    <button
+                      className="cart-btn"
+                      onClick={() => onAddToCart(product)}
+                      aria-label="Ajouter au panier"
+                    >
+                      <FaShoppingCart />
                     </button>
 
                     <div className="right-buttons">
@@ -179,7 +194,7 @@ export default function ShopPage({
                         disabled={isInCompare}
                         aria-label="Ajouter à la comparaison"
                       >
-                        ⚖
+                        <FaCodeCompare />
                       </button>
                     </div>
                   </div>
