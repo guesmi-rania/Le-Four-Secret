@@ -1,8 +1,8 @@
+// ShopPage.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
 import { FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
-import { FaCodeCompare } from "react-icons/fa6"; // nouvel icône FontAwesome 6
 import { Link } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -46,7 +46,6 @@ export default function ShopPage({
         });
 
         setProducts(allProducts);
-
         setCategories(categoriesData.map((c) => c.category));
         setFilteredProducts(allProducts);
       } catch (error) {
@@ -62,14 +61,8 @@ export default function ShopPage({
 
   useEffect(() => {
     let temp = [...products];
-    if (search) {
-      temp = temp.filter((p) =>
-        p.name.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-    if (selectedCategories.length > 0) {
-      temp = temp.filter((p) => selectedCategories.includes(p.category));
-    }
+    if (search) temp = temp.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
+    if (selectedCategories.length > 0) temp = temp.filter((p) => selectedCategories.includes(p.category));
     temp = temp.filter((p) => p.price >= minPrice && p.price <= maxPrice);
     setFilteredProducts(temp);
   }, [search, selectedCategories, minPrice, maxPrice, products]);
@@ -116,24 +109,12 @@ export default function ShopPage({
 
         <h3>Prix</h3>
         <div className="price-filter">
-          <input
-            type="number"
-            placeholder="Min"
-            value={minPrice}
-            onChange={(e) => setMinPrice(Number(e.target.value))}
-          />
+          <input type="number" placeholder="Min" value={minPrice} onChange={(e) => setMinPrice(Number(e.target.value))} />
           <span> - </span>
-          <input
-            type="number"
-            placeholder="Max"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(Number(e.target.value))}
-          />
+          <input type="number" placeholder="Max" value={maxPrice} onChange={(e) => setMaxPrice(Number(e.target.value))} />
         </div>
 
-        <button className="reset-btn" onClick={resetFilters}>
-          Réinitialiser
-        </button>
+        <button className="reset-btn" onClick={resetFilters}>Réinitialiser</button>
       </div>
 
       <div className="shop-products">
@@ -142,18 +123,14 @@ export default function ShopPage({
         ) : (
           <div className="shop-grid">
             {filteredProducts.map((product) => {
-              const isInWishlist = wishlist.some(
-                (item) => item._id === product._id
-              );
-              const isInCompare = compareList.some(
-                (item) => item._id === product._id
-              );
+              const isInWishlist = wishlist.some((item) => item._id === product._id);
+              const isInCompare = compareList.some((item) => item._id === product._id);
 
               return (
                 <div key={product._id} className="shop-card">
-                  <div className="badge">
-                    {Math.floor(Math.random() * 30) + 5}%
-                  </div>
+                  {Math.floor(Math.random() * 30) + 5 > 0 && (
+                    <div className="badge">{Math.floor(Math.random() * 30) + 5}%</div>
+                  )}
 
                   <Link to={`/produits/${product._id}`} className="product-link">
                     <img src={product.imageUrl} alt={product.name} />
@@ -164,13 +141,10 @@ export default function ShopPage({
                   <p className="by">Mr.Chef Lotfi</p>
                   <div className="price-box">
                     <span className="price">{product.price} Dt</span>
-                    <span className="old-price">
-                      {(product.price * 1.2).toFixed(2)} Dt
-                    </span>
+                    <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
                   </div>
 
-                  <div className="product-actions">
-                    {/* Icône panier seulement */}
+                  <div className="right-buttons">
                     <button
                       className="cart-btn"
                       onClick={() => onAddToCart(product)}
@@ -179,24 +153,22 @@ export default function ShopPage({
                       <FaShoppingCart />
                     </button>
 
-                    <div className="right-buttons">
-                      <button
-                        className="wishlist-btn"
-                        onClick={() => onToggleWishlist(product)}
-                        aria-label="Ajouter aux favoris"
-                      >
-                        {isInWishlist ? <FaHeart /> : <FaRegHeart />}
-                      </button>
+                    <button
+                      className="wishlist-btn"
+                      onClick={() => onToggleWishlist(product)}
+                      aria-label="Ajouter aux favoris"
+                    >
+                      {isInWishlist ? <FaHeart /> : <FaRegHeart />}
+                    </button>
 
-                      <button
-                        className="compare-btn"
-                        onClick={() => onAddToCompare(product)}
-                        disabled={isInCompare}
-                        aria-label="Ajouter à la comparaison"
-                      >
-                        <FaCodeCompare />
-                      </button>
-                    </div>
+                    <button
+                      className="compare-btn"
+                      onClick={() => onAddToCompare(product)}
+                      disabled={isInCompare}
+                      aria-label="Ajouter à la comparaison"
+                    >
+                      <i className="fa-solid fa-code-compare"></i>
+                    </button>
                   </div>
                 </div>
               );
