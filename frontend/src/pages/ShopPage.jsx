@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
-import { FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaShoppingCart, FaHeart, FaRegHeart, FaBalanceScale } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -128,9 +128,7 @@ export default function ShopPage({
 
               return (
                 <div key={product._id} className="shop-card">
-                  {Math.floor(Math.random() * 30) + 5 > 0 && (
-                    <div className="badge">{Math.floor(Math.random() * 30) + 5}%</div>
-                  )}
+                  <div className="badge">{Math.floor(Math.random() * 30) + 5}%</div>
 
                   <Link to={`/produits/${product._id}`} className="product-link">
                     <img src={product.imageUrl} alt={product.name} />
@@ -139,6 +137,7 @@ export default function ShopPage({
 
                   <p className="category">{product.category}</p>
                   <p className="by">Mr.Chef Lotfi</p>
+
                   <div className="price-box">
                     <span className="price">{product.price} Dt</span>
                     <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
@@ -162,13 +161,13 @@ export default function ShopPage({
                     </button>
 
                     <button
-                     className="compare-btn"
+                      className="compare-btn"
                       onClick={() => onAddToCompare(product)}
                       disabled={isInCompare}
                       aria-label="Ajouter à la comparaison"
-                       >
-                    <FaBalanceScale />
-                      </button>
+                    >
+                      <FaBalanceScale />
+                    </button>
                   </div>
                 </div>
               );

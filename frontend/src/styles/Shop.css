@@ -10,10 +10,10 @@
 /* Sidebar */
 .shop-sidebar {
   width: 270px;
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
 .shop-sidebar h3 {
@@ -58,7 +58,7 @@
 
 .reset-btn {
   background-color: #16a34a;
-  color: white;
+  color: #fff;
   border: none;
   padding: 10px 15px;
   border-radius: 8px;
@@ -86,7 +86,7 @@
   background-color: #fff;
   border-radius: 12px;
   padding: 15px 15px 25px 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -97,7 +97,7 @@
 
 .shop-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
 .shop-card img {
@@ -114,7 +114,7 @@
   top: 8px;
   left: 8px;
   background-color: #ef4444;
-  color: white;
+  color: #fff;
   font-size: 10px;
   padding: 2px 6px;
   border-radius: 6px;
@@ -169,17 +169,16 @@
 /* === Action Buttons === */
 .right-buttons {
   display: flex;
-  flex-direction: column;      /* vertical sur desktop */
-  gap: 10px;                   /* espace entre boutons */
-  align-items: flex-end;       /* align à droite */
-  position: absolute;          /* position absolute dans la carte */
-  top: 50%;                    /* centre verticalement */
+  flex-direction: column; /* vertical sur desktop */
+  gap: 10px;
+  align-items: flex-end; /* align à droite */
+  position: absolute;
+  top: 50%;
   right: 12px;
   transform: translateY(-50%);
   z-index: 5;
 }
 
-/* Général pour tous les boutons */
 .right-buttons button {
   border: none;
   cursor: pointer;
@@ -197,17 +196,17 @@
   transform: scale(1.15);
 }
 
-/* Panier */
+/* Cart */
 .cart-btn {
   background-color: #22c55e;
-  color: white;
+  color: #fff;
 }
 
 .cart-btn:hover {
   background-color: #16a34a;
 }
 
-/* Favoris */
+/* Wishlist */
 .wishlist-btn {
   background-color: #f3f4f6;
   color: #ef4444;
@@ -217,15 +216,15 @@
   background-color: #e5e7eb;
 }
 
-/* Comparer */
+/* Compare */
 .compare-btn {
-  background-color: #ec4899; /* rose */
-  color: white;
+  background-color: #ec4899;
+  color: #fff;
 }
 
 .compare-btn:hover:not(:disabled) {
-  background-color: #fce7f3; /* rose clair */
-  color: #be185d;            /* rose foncé */
+  background-color: #fce7f3;
+  color: #be185d;
 }
 
 /* Product link */
