@@ -21,8 +21,8 @@ const CartDrawer = ({ isOpen, onClose, cartItems }) => {
                 </div>
                 <div className="item-info">
                   <h4>{item.name}</h4>
-                  <p>Item Price ${item.price}</p>
-                  <span className="item-total">${(item.price * item.quantity).toFixed(2)}</span>
+                  <p>Item Price DT{item.price}</p>
+                  <span className="item-total">DT{(item.price * item.quantity).toFixed(2)}</span>
                 </div>
                 <div className="item-actions">
                   <button>-</button>
@@ -38,7 +38,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems }) => {
           <div className="subtotal">
             <span>Subtotal</span>
             <span>
-              $
+            DT
               {cartItems
                 .reduce((acc, item) => acc + item.price * item.quantity, 0)
                 .toFixed(2)}

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
 import { FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
-import { FaCodeCompare } from "react-icons/fa6"; // icône comparer moderne
+import { FaCodeCompare } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -20,10 +20,12 @@ export default function ShopPage({
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
-
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
+
+  // Quick View modal state
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -82,6 +84,16 @@ export default function ShopPage({
     setSelectedCategories([]);
     setMinPrice(0);
     setMaxPrice(1000);
+  };
+
+  // Open Quick View
+  const openQuickView = (product) => {
+    setQuickViewProduct(product);
+  };
+
+  // Close Quick View
+  const closeQuickView = () => {
+    setQuickViewProduct(null);
   };
 
   return (
@@ -159,7 +171,7 @@ export default function ShopPage({
                     <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
                   </div>
 
-                  {/* Boutons à droite */}
+                  {/* Quick Action Buttons */}
                   <div className="right-buttons">
                     <button
                       className="cart-btn"
@@ -178,6 +190,14 @@ export default function ShopPage({
                     </button>
 
                     <button
+                      className="quickview-btn"
+                      onClick={() => openQuickView(product)}
+                      aria-label="Aperçu rapide"
+                    >
+                      Quick View
+                    </button>
+
+                    <button
                       className="compare-btn"
                       onClick={() => onAddToCompare(product)}
                       disabled={isInCompare}
@@ -192,6 +212,42 @@ export default function ShopPage({
           </div>
         )}
       </div>
+
+      {/* Quick View Modal */}
+      {quickViewProduct && (
+        <div className="quickview-modal">
+          <div className="quickview-content">
+            <button className="close-btn" onClick={closeQuickView}>
+              &times;
+            </button>
+
+            <img src={quickViewProduct.imageUrl} alt={quickViewProduct.name} />
+            <h2>{quickViewProduct.name}</h2>
+            <p>Catégorie: {quickViewProduct.category}</p>
+            <p>Prix: {quickViewProduct.price} Dt</p>
+
+            <div className="quickview-buttons">
+              <button onClick={() => onAddToCart(quickViewProduct)}>
+                <FaShoppingCart /> Ajouter au panier
+              </button>
+              <button onClick={() => onToggleWishlist(quickViewProduct)}>
+                {wishlist.some((item) => item._id === quickViewProduct._id) ? (
+                  <FaHeart />
+                ) : (
+                  <FaRegHeart />
+                )}{" "}
+                Wishlist
+              </button>
+              <button
+                onClick={() => onAddToCompare(quickViewProduct)}
+                disabled={compareList.some((item) => item._id === quickViewProduct._id)}
+              >
+                <FaCodeCompare /> Comparer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

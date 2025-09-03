@@ -1,274 +1,100 @@
-/* === Shop Page Layout === */
-.shop-page {
-  display: flex;
-  gap: 30px;
-  padding: 30px;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f9f9f9;
-}
-
-/* Sidebar */
-.shop-sidebar {
-  width: 270px;
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-}
-
-.shop-sidebar h3 {
-  margin-bottom: 10px;
-  color: #111827;
-  font-size: 18px;
-  border-bottom: 2px solid #16a34a;
-  padding-bottom: 4px;
-}
-
-.shop-sidebar input[type="text"],
-.shop-sidebar input[type="number"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-.checkbox-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.checkbox-label {
-  font-size: 14px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.price-filter {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.reset-btn {
-  background-color: #16a34a;
+/* === Quick View Button === */
+.quickview-btn {
+  background-color: #3b82f6; /* bleu vif */
   color: #fff;
   border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
+  padding: 0.5rem 1rem;
   cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.reset-btn:hover {
-  background-color: #15803d;
-}
-
-/* Products */
-.shop-products {
-  flex: 1;
-}
-
-.shop-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 24px;
-}
-
-.shop-card {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 15px 15px 25px 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  cursor: pointer;
-}
-
-.shop-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-}
-
-.shop-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  margin-bottom: 12px;
-  border-radius: 8px;
-}
-
-/* Badge */
-.badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background-color: #ef4444;
-  color: #fff;
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 6px;
-  font-weight: 700;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-/* Text */
-.category {
-  color: #888;
-  font-size: 13px;
-  margin-bottom: 6px;
-  font-weight: 500;
-}
-
-.shop-card h4 {
-  font-size: 17px;
-  font-weight: 700;
-  color: #111;
-  margin: 5px 0 8px 0;
-  min-height: 48px;
-}
-
-.by {
-  font-size: 13px;
-  color: #777;
-  margin-bottom: 14px;
-  font-style: italic;
-}
-
-/* Price */
-.price-box {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 15px;
-}
-
-.price {
-  color: #16a34a;
-  font-weight: 700;
-  font-size: 18px;
-}
-
-.old-price {
-  color: #bbb;
-  font-size: 14px;
-  text-decoration: line-through;
-  align-self: center;
-}
-
-/* === Action Buttons === */
-.right-buttons {
-  display: flex;
-  flex-direction: column; /* vertical sur desktop */
-  gap: 10px;
-  align-items: flex-end; /* alignés à droite */
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  z-index: 5;
-}
-
-.right-buttons button {
-  border: none;
-  cursor: pointer;
-  width: 36px;
-  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 14px;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.right-buttons button:hover:not(:disabled) {
+.quickview-btn:hover:not(:disabled) {
+  background-color: #2563eb; /* bleu plus foncé au hover */
   transform: scale(1.15);
 }
 
-/* Cart */
-.cart-btn {
-  background-color: #22c55e;
+.quickview-btn:disabled {
+  background-color: #93c5fd;
   color: #fff;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
-.cart-btn:hover {
-  background-color: #16a34a;
+/* Quick View Modal déjà existant */
+.quickview-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 
-/* Wishlist */
-.wishlist-btn {
-  background-color: #f3f4f6;
-  color: #ef4444;
+.quickview-content {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  position: relative;
 }
 
-.wishlist-btn:hover {
-  background-color: #e5e7eb;
+.quickview-content img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
-/* Compare */
-.compare-btn {
-  background-color: #ec4899;
-  color: #fff;
+.quickview-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
 }
 
-.compare-btn:hover:not(:disabled) {
-  background-color: #fce7f3;
-  color: #be185d;
+.quickview-buttons button {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-/* Product link */
-.product-link {
-  text-decoration: none;
-  color: inherit;
+.quickview-buttons button:hover:not(:disabled) {
+  transform: scale(1.05);
 }
 
-/* === Responsive === */
+.close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Responsive modal pour mobile */
 @media (max-width: 768px) {
-  .shop-page {
+  .quickview-buttons {
     flex-direction: column;
-    padding: 20px;
   }
-
-  .shop-sidebar {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .shop-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 16px;
-  }
-
-  .badge {
-    font-size: 9px;
-    padding: 2px 4px;
-  }
-
-  /* Boutons horizontaux sur mobile */
-  .right-buttons {
-    flex-direction: row;
-    justify-content: flex-end;
-    position: relative;
-    top: auto;
-    right: auto;
-    transform: none;
-    margin-top: 10px;
-  }
-
-  .right-buttons button {
-    width: 32px;
-    height: 32px;
-    font-size: 15px;
+  .quickview-content {
+    max-width: 95%;
   }
 }
