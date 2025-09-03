@@ -166,15 +166,15 @@
   align-self: center;
 }
 
-/* Actions buttons aligned right */
+/* === Action Buttons === */
 .right-buttons {
   display: flex;
   gap: 10px;
-  justify-content: flex-end;
+  justify-content: flex-end; /* align right */
+  align-items: center;       /* center vertically */
   margin-top: auto;
 }
 
-/* General button style */
 .right-buttons button {
   border: none;
   cursor: pointer;
@@ -191,7 +191,7 @@
   transform: scale(1.1);
 }
 
-/* Add to cart only icon */
+/* Add to cart icon */
 .cart-btn {
   background-color: #22c55e;
   color: white;
@@ -219,14 +219,18 @@
 /* Compare */
 .compare-btn {
   background-color: #f3f4f6;
-  color: #3b82f6;
+  color: #ec4899; /* rose */
   width: 36px;
   height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
 }
 
 .compare-btn:hover:not(:disabled) {
-  background-color: #e5e7eb;
-  color: #1e40af;
+  background-color: #fce7f3; /* rose clair */
+  color: #be185d;             /* rose foncé */
 }
 
 /* Product link */
@@ -257,7 +261,9 @@
     padding: 2px 4px;
   }
 
-  .cart-btn, .wishlist-btn, .compare-btn {
+  .cart-btn,
+  .wishlist-btn,
+  .compare-btn {
     width: 32px;
     height: 32px;
     font-size: 15px;
@@ -265,5 +271,6 @@
 
   .right-buttons {
     justify-content: flex-end;
+    align-items: center;
   }
 }
