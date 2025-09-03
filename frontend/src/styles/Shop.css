@@ -169,68 +169,63 @@
 /* === Action Buttons === */
 .right-buttons {
   display: flex;
-  gap: 10px;
-  justify-content: flex-end; /* align right */
-  align-items: center;       /* center vertically */
-  margin-top: auto;
+  flex-direction: column;      /* vertical sur desktop */
+  gap: 10px;                   /* espace entre boutons */
+  align-items: flex-end;       /* align à droite */
+  position: absolute;          /* position absolute dans la carte */
+  top: 50%;                    /* centre verticalement */
+  right: 12px;
+  transform: translateY(-50%);
+  z-index: 5;
 }
 
+/* Général pour tous les boutons */
 .right-buttons button {
   border: none;
   cursor: pointer;
-  font-size: 16px;
-  padding: 6px;
-  border-radius: 6px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 6px;
+  font-size: 16px;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .right-buttons button:hover:not(:disabled) {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
-/* Add to cart icon */
+/* Panier */
 .cart-btn {
   background-color: #22c55e;
   color: white;
-  font-size: 16px;
-  width: 36px;
-  height: 36px;
 }
 
 .cart-btn:hover {
   background-color: #16a34a;
 }
 
-/* Wishlist */
+/* Favoris */
 .wishlist-btn {
   background-color: #f3f4f6;
   color: #ef4444;
-  width: 36px;
-  height: 36px;
 }
 
 .wishlist-btn:hover {
   background-color: #e5e7eb;
 }
 
-/* Compare */
+/* Comparer */
 .compare-btn {
-  background-color: #f3f4f6;
-  color: #ec4899; /* rose */
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
+  background-color: #ec4899; /* rose */
+  color: white;
 }
 
 .compare-btn:hover:not(:disabled) {
   background-color: #fce7f3; /* rose clair */
-  color: #be185d;             /* rose foncé */
+  color: #be185d;            /* rose foncé */
 }
 
 /* Product link */
@@ -261,16 +256,20 @@
     padding: 2px 4px;
   }
 
-  .cart-btn,
-  .wishlist-btn,
-  .compare-btn {
+  /* Boutons sur mobile horizontal */
+  .right-buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    margin-top: 10px;
+  }
+
+  .right-buttons button {
     width: 32px;
     height: 32px;
     font-size: 15px;
-  }
-
-  .right-buttons {
-    justify-content: flex-end;
-    align-items: center;
   }
 }
