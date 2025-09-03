@@ -5,6 +5,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Slider from "./components/Slider";
 import ProtectedRoute from "./components/ProtectedRoute";
+import CartDrawer from "./pages/CartDrawer"; // ✅ Import du Drawer
 
 import Home from "./pages/Home";
 import ShopPage from "./pages/ShopPage";
@@ -34,6 +35,7 @@ function App() {
   const [wishlist, setWishlist] = useState(() => JSON.parse(localStorage.getItem("wishlist")) || []);
   const [compareList, setCompareList] = useState(() => JSON.parse(localStorage.getItem("compareList")) || []);
 
+  const [isCartOpen, setIsCartOpen] = useState(false); // ✅ Etat du Drawer
   const location = useLocation();
 
   // Synchroniser localStorage à chaque mise à jour
@@ -59,6 +61,7 @@ function App() {
   const handleAddToCart = (product) => {
     setCart((prev) => [...prev, product]);
     notifyAddCart(product.name);
+    setIsCartOpen(true); // ✅ Ouvrir automatiquement le Drawer après ajout
   };
 
   // Toggle wishlist
@@ -82,8 +85,15 @@ function App() {
 
   return (
     <>
-      {/* Navbar sur toutes les pages */}
-      <Navbar cart={cart} wishlist={wishlist} />
+      {/* Navbar avec bouton Cart */}
+      <Navbar cart={cart} wishlist={wishlist} onCartClick={() => setIsCartOpen(true)} />
+
+      {/* Drawer Panier */}
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cart}
+      />
 
       {/* Slider uniquement sur la page d'accueil */}
       {location.pathname === "/" && <Slider />}
