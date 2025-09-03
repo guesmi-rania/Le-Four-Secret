@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
-import { FaShoppingCart, FaHeart, FaRegHeart, FaBalanceScale } from "react-icons/fa";
+import { FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaCodeCompare } from "react-icons/fa6"; // icône comparer moderne
 import { Link } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -62,7 +63,8 @@ export default function ShopPage({
   useEffect(() => {
     let temp = [...products];
     if (search) temp = temp.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
-    if (selectedCategories.length > 0) temp = temp.filter((p) => selectedCategories.includes(p.category));
+    if (selectedCategories.length > 0)
+      temp = temp.filter((p) => selectedCategories.includes(p.category));
     temp = temp.filter((p) => p.price >= minPrice && p.price <= maxPrice);
     setFilteredProducts(temp);
   }, [search, selectedCategories, minPrice, maxPrice, products]);
@@ -84,6 +86,7 @@ export default function ShopPage({
 
   return (
     <div className="shop-page">
+      {/* Sidebar */}
       <div className="shop-sidebar">
         <h3>Recherche</h3>
         <input
@@ -109,14 +112,27 @@ export default function ShopPage({
 
         <h3>Prix</h3>
         <div className="price-filter">
-          <input type="number" placeholder="Min" value={minPrice} onChange={(e) => setMinPrice(Number(e.target.value))} />
+          <input
+            type="number"
+            placeholder="Min"
+            value={minPrice}
+            onChange={(e) => setMinPrice(Number(e.target.value))}
+          />
           <span> - </span>
-          <input type="number" placeholder="Max" value={maxPrice} onChange={(e) => setMaxPrice(Number(e.target.value))} />
+          <input
+            type="number"
+            placeholder="Max"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(Number(e.target.value))}
+          />
         </div>
 
-        <button className="reset-btn" onClick={resetFilters}>Réinitialiser</button>
+        <button className="reset-btn" onClick={resetFilters}>
+          Réinitialiser
+        </button>
       </div>
 
+      {/* Produits */}
       <div className="shop-products">
         {loading ? (
           <p>Chargement des produits...</p>
@@ -143,6 +159,7 @@ export default function ShopPage({
                     <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
                   </div>
 
+                  {/* Boutons à droite */}
                   <div className="right-buttons">
                     <button
                       className="cart-btn"
@@ -166,7 +183,7 @@ export default function ShopPage({
                       disabled={isInCompare}
                       aria-label="Ajouter à la comparaison"
                     >
-                      <FaBalanceScale />
+                      <FaCodeCompare />
                     </button>
                   </div>
                 </div>
