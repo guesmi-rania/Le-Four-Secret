@@ -1,4 +1,4 @@
-// src/pages/ShopPage.jsx
+// ShopPage.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
@@ -19,11 +19,11 @@ export default function ShopPage({
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
 
-  // Fetch categories & products
   useEffect(() => {
     async function fetchCategories() {
       try {
@@ -59,20 +59,10 @@ export default function ShopPage({
     fetchCategories();
   }, []);
 
-  // Filter products
   useEffect(() => {
     let temp = [...products];
-
-    if (search) {
-      temp = temp.filter((p) =>
-        p.name.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-
-    if (selectedCategories.length > 0) {
-      temp = temp.filter((p) => selectedCategories.includes(p.category));
-    }
-
+    if (search) temp = temp.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
+    if (selectedCategories.length > 0) temp = temp.filter((p) => selectedCategories.includes(p.category));
     temp = temp.filter((p) => p.price >= minPrice && p.price <= maxPrice);
     setFilteredProducts(temp);
   }, [search, selectedCategories, minPrice, maxPrice, products]);
@@ -94,7 +84,6 @@ export default function ShopPage({
 
   return (
     <div className="shop-page">
-      {/* Sidebar */}
       <div className="shop-sidebar">
         <h3>Recherche</h3>
         <input
@@ -120,43 +109,28 @@ export default function ShopPage({
 
         <h3>Prix</h3>
         <div className="price-filter">
-          <input
-            type="number"
-            placeholder="Min"
-            value={minPrice}
-            onChange={(e) => setMinPrice(Number(e.target.value))}
-          />
+          <input type="number" placeholder="Min" value={minPrice} onChange={(e) => setMinPrice(Number(e.target.value))} />
           <span> - </span>
-          <input
-            type="number"
-            placeholder="Max"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(Number(e.target.value))}
-          />
+          <input type="number" placeholder="Max" value={maxPrice} onChange={(e) => setMaxPrice(Number(e.target.value))} />
         </div>
 
-        <button className="reset-btn" onClick={resetFilters}>
-          Réinitialiser
-        </button>
+        <button className="reset-btn" onClick={resetFilters}>Réinitialiser</button>
       </div>
 
-      {/* Products */}
       <div className="shop-products">
         {loading ? (
           <p>Chargement des produits...</p>
         ) : (
           <div className="shop-grid">
             {filteredProducts.map((product) => {
-              const isInWishlist = wishlist.some(
-                (item) => item._id === product._id
-              );
-              const isInCompare = compareList.some(
-                (item) => item._id === product._id
-              );
+              const isInWishlist = wishlist.some((item) => item._id === product._id);
+              const isInCompare = compareList.some((item) => item._id === product._id);
 
               return (
                 <div key={product._id} className="shop-card">
-                  <div className="badge">{Math.floor(Math.random() * 30) + 5}%</div>
+                  {Math.floor(Math.random() * 30) + 5 > 0 && (
+                    <div className="badge">{Math.floor(Math.random() * 30) + 5}%</div>
+                  )}
 
                   <Link to={`/produits/${product._id}`} className="product-link">
                     <img src={product.imageUrl} alt={product.name} />
@@ -165,15 +139,11 @@ export default function ShopPage({
 
                   <p className="category">{product.category}</p>
                   <p className="by">Mr.Chef Lotfi</p>
-
                   <div className="price-box">
                     <span className="price">{product.price} Dt</span>
-                    <span className="old-price">
-                      {(product.price * 1.2).toFixed(2)} Dt
-                    </span>
+                    <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
                   </div>
 
-                  {/* Action buttons */}
                   <div className="right-buttons">
                     <button
                       className="cart-btn"
@@ -197,7 +167,7 @@ export default function ShopPage({
                       disabled={isInCompare}
                       aria-label="Ajouter à la comparaison"
                     >
-                      ⚖
+                      <i className="fa-solid fa-code-compare"></i>
                     </button>
                   </div>
                 </div>
