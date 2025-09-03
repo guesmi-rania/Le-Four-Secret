@@ -215,8 +215,11 @@ export default function ShopPage({
 
       {/* Quick View Modal */}
       {quickViewProduct && (
-        <div className="quickview-modal">
-          <div className="quickview-content">
+        <div className="quickview-modal" onClick={closeQuickView}>
+          <div
+            className="quickview-content"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button className="close-btn" onClick={closeQuickView}>
               &times;
             </button>
