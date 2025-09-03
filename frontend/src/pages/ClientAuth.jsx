@@ -99,26 +99,49 @@ function ClientAuth() {
       return alert("Veuillez saisir votre adresse email.");
     }
 
+    // Validation email basique
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(resetEmail)) {
+      return alert("Veuillez saisir une adresse email valide.");
+    }
+
     setResetLoading(true);
     try {
+      console.log("Envoi de la demande de récupération à:", `${BASE_URL}/api/auth/forgot-password`);
+      
       const res = await fetch(`${BASE_URL}/api/auth/forgot-password`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         body: JSON.stringify({ email: resetEmail }),
       });
+
+      // Vérifier si la réponse est bien du JSON
+      const contentType = res.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        console.error("Réponse non-JSON reçue:", contentType);
+        throw new Error("Le serveur a renvoyé une réponse non-JSON. Vérifiez que l'endpoint existe.");
+      }
 
       const data = await res.json();
 
       if (res.ok) {
-        alert("Un email de récupération a été envoyé à votre adresse email.");
+        alert("Un email de récupération a été envoyé à votre adresse email. Vérifiez votre boîte de réception (et vos spams).");
         setShowForgotPassword(false);
         setResetEmail("");
       } else {
         alert(data.message || "Erreur lors de l'envoi de l'email de récupération.");
       }
     } catch (error) {
-      console.error("Erreur serveur : ", error);
-      alert("Erreur serveur, réessayez plus tard.");
+      console.error("Erreur complète:", error);
+      
+      if (error.message.includes("JSON")) {
+        alert("Erreur de communication avec le serveur. L'endpoint de récupération de mot de passe n'est peut-être pas configuré correctement.");
+      } else {
+        alert("Erreur serveur, réessayez plus tard.");
+      }
     } finally {
       setResetLoading(false);
     }
