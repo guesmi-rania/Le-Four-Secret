@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 import "../styles/Footer.css";
 
 function Footer() {
@@ -8,13 +9,11 @@ function Footer() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Merci d’entrer un email valide.");
       return;
     }
-
     setError("");
 
     try {
@@ -23,14 +22,9 @@ function Footer() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-
-      if (!response.ok) {
-        throw new Error("Erreur lors de l'inscription.");
-      }
-
+      if (!response.ok) throw new Error("Erreur lors de l'inscription.");
       setSubmitted(true);
       setEmail("");
-
       setTimeout(() => setSubmitted(false), 2000);
     } catch (err) {
       setError(err.message || "Une erreur est survenue.");
@@ -40,7 +34,7 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="newsletter-section">
-        <h3 className="footer-title">Recevez nos nouveautés & promos 🍰</h3>
+        <h3>Recevez nos nouveautés & promos 🍰</h3>
         <form className="newsletter-form" onSubmit={handleSubmit}>
           <input
             type="email"
@@ -48,62 +42,38 @@ function Footer() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="newsletter-input"
           />
-          <button type="submit" className="newsletter-button">
-            S'inscrire
-          </button>
+          <button type="submit">S'inscrire</button>
         </form>
         {error && <p className="error-msg">{error}</p>}
-        {submitted && !error && (
-          <p className="success-msg">Merci pour votre inscription !</p>
-        )}
+        {submitted && !error && <p className="success-msg">Merci pour votre inscription !</p>}
       </div>
 
-      <div className="footer-content">
+      <div className="footer-columns">
         <div className="footer-column">
-
-          <h4 className="footer-title">Mr.Chef Lotfi</h4>
-          <p>Votre pâtisserie artisanale de confiance</p>
-          <p>© 2025 Douceurs du Chef. Tous droits réservés.</p>
+          <h4>Mr.Chef Lotfi</h4>
+          <p>Pâtisserie artisanale de confiance</p>
         </div>
 
         <div className="footer-column">
-          <h4 className="footer-title">Contact</h4>
+          <h4>Contact</h4>
           <p>📞 +216 20 828 055</p>
           <p>✉️ contact@chefLotfi.com</p>
           <p>📍 123 Rue des Gourmands, Tunis, Tunisie</p>
         </div>
 
         <div className="footer-column">
-          <h4 className="footer-title">Suivez-nous</h4>
+          <h4>Suivez-nous</h4>
           <div className="social-icons">
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Facebook"
-            >
-              <i className="fab fa-facebook-f"></i>
-            </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Instagram"
-            >
-              <i className="fab fa-instagram"></i>
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Twitter"
-            >
-              <i className="fab fa-twitter"></i>
-            </a>
+            <a href="https://facebook.com" target="_blank" rel="noreferrer"><FaFacebookF /></a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer"><FaInstagram /></a>
+            <a href="https://twitter.com" target="_blank" rel="noreferrer"><FaTwitter /></a>
           </div>
         </div>
+      </div>
+
+      <div className="footer-bottom">
+        © 2025 Douceurs du Chef. Tous droits réservés.
       </div>
     </footer>
   );

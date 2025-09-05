@@ -1,140 +1,226 @@
-.slider-container {
-  position: relative;
-  width: 90%;
-  max-width: 1000px;
-  height: 500px;
-  margin: 40px auto 0 auto;
-  margin-left: auto;
-  margin-right: 270px; /* Réduit l'espace à droite */
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+/* === Reset général === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.slide img {
+body, html {
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.slider-section {
+  width: 100%;
+  padding: 0;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: flex-start;  /* tout à gauche */
+  padding-left: 300px;     
+  gap: 30px;     /* pousse le contenu vers la droite si nécessaire */
+  margin-top: 40px;  /* descend la section par rapport au navbar */
+}
+
+/* Conteneur principal : slider + bloc produits */
+.slider-container {
+  display: flex;
+  gap: 30px;                  /* espace entre slider et coupons */
+  align-items: flex-start;
+  max-width: none;
+}
+
+/* === Slider (colonne gauche) === */
+.slider {
+  flex: 3;                     /* plus large que les coupons */
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  min-width: 800px;
+  max-width: 1100px;
+  height: 400px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Slide individuelle */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  opacity: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: 10px;
-}
-
-
-.slide {
-  display: none;
-  position: relative;
+  background-size: cover;
+  background-position: left;   /* image alignée à gauche du slide */
+  transition: all 0.6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: left;       /* overlay texte à gauche */
 }
 
 .slide.active {
-  display: block;
+  left: 0;
+  opacity: 1;
 }
 
-
-.slide-text {
-  position: absolute;
-  bottom: 40px;
-  left: 40px;
-  color: white;
-  text-shadow: 0 0 8px rgba(0,0,0,0.7);
+/* Overlay texte du slider */
+.slide-content {
+  padding: 40px;
+  background: rgba(0,0,0,0.35);
+  border-radius: 12px;
+  color: #fff;
+  max-width: 65%;
+  text-align: left;
 }
 
-.slide-text h2 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.slide-text p {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
-
-.slide-text button {
-  background-color: #00bcd4;
-  color: white;
+.slide-content h2 { font-size: 32px; margin-bottom: 12px; }
+.slide-content p { font-size: 18px; margin-bottom: 18px; }
+.slide-content button {
+  background: #00BCD4;
+  color: #fff;
   border: none;
-  padding: 10px 25px;
-  border-radius: 30px;
+  padding: 12px 30px;
+  border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s;
 }
+.slide-content button:hover { background: #01dbf8; }
 
-.slide-text button:hover {
-  background-color: #0194a3;
-}
-
-/* Donuts */
-.slider-donuts {
+/* Dots */
+.dots {
   position: absolute;
   bottom: 15px;
-  width: 100%;
-  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
 }
-
-.donut {
-  display: inline-block;
-  height: 15px;
-  width: 15px;
-  margin: 0 6px;
-  background-color: rgba(255,255,255,0.5);
+.dot {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  opacity: 0.6;
   border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+}
+.dot.active { opacity: 1; background: #00BCD4; }
+
+/* === Bloc produits / coupons (colonne droite) === */
+.coupons {
+  flex: 2;                 /* ratio largeur par rapport au slider */
+  background: #fff;
+  border-radius: 15px;
+  padding: 20px;             /* espace intérieur plus grand */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: flex-start;
+  height: 400px;
+  /* Taille globale du cadre */
+  min-height: 350px;          /* augmente la hauteur minimale */
+  max-height: 700px;          /* augmente la hauteur maximale */
+  min-width: 450px;           /* largeur minimale du cadre */
+  max-width: 700px;           /* largeur maximale du cadre */
+
+  border: 4px solid #FE81CC;  /* cadre rose plus épais */
+  overflow: hidden;            /* pas de scroll */
+  box-sizing: border-box;
 }
 
-.donut.active {
-  background-color: #00bcd4;
-  box-shadow: 0 0 5px #00bcd4;
+
+/* Carte produit / coupon */
+.coupon-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  transition: all 0.3s;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  cursor: pointer;
 }
 
-@media (max-width: 768px) {
-  .slider-container {
-    width: 95%;       /* occupe presque toute la largeur */
-    height: 250px;    /* hauteur réduite */
-    margin-right: auto; /* enlever la marge à droite */
+.coupon-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Image produit comme icône */
+.coupon-card img {
+  width: 50px;       /* petite taille type icône */
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Contenu texte de la carte */
+.coupon-card .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;           /* texte prend tout l’espace restant */
+}
+
+/* Titres et descriptions */
+.coupon-card strong {
+  font-size: 16px;
+  color: #00BCD4;
+}
+.coupon-card p {
+  font-size: 14px;
+  color: #555;
+  margin: 2px 0;
+}
+
+/* Timer */
+.timer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.time-box {
+  background: #FE81CC;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.timer span { font-weight: bold; font-size: 14px; }
+
+/* === Responsive === */
+@media (max-width: 992px) {
+  .coupons {
+    width: 90%;
+    flex-direction: column;
+    max-height: none; /* toutes les cartes visibles */
   }
-  
-  .slide-text {
-    bottom: 20px;
-    left: 20px;
-  }
-  
-  .slide-text h2 {
-    font-size: 1.5rem;
-  }
-  
-  .slide-text p {
-    font-size: 1rem;
-  }
-  
-  .slide-text button {
-    padding: 8px 20px;
-    font-size: 0.9rem;
-  }
-  
-  .donut {
-    height: 12px;
-    width: 12px;
-    margin: 0 4px;
+  .coupon-card img {
+    width: 40px;
+    height: 40px;
   }
 }
 
-@media (max-width: 480px) {
-  .slider-container {
-    height: 180px;   /* encore plus petit sur mobiles */
+@media (max-width: 576px) {
+  .coupon-card img {
+    width: 30px;
+    height: 30px;
   }
-  
-  .slide-text h2 {
-    font-size: 1.2rem;
-  }
-  
-  .slide-text p {
-    font-size: 0.9rem;
-  }
-  
-  .slide-text button {
-    padding: 6px 15px;
-    font-size: 0.8rem;
-  }
+  .slide-content h2 { font-size: 24px; }
+  .slide-content p { font-size: 14px; }
+  .slide-content button { padding: 8px 18px; font-size: 14px; }
+}
+
+/* Slider responsive */
+@media (max-width: 1400px) { .slider { max-width: 900px; } }
+@media (max-width: 1200px) { .slider { min-width: 600px; max-width: 800px; height: 500px; } }
+@media (max-width: 992px) {
+  .slider-container { flex-direction: column; align-items: flex-start; }
+  .slider { width: 90%; height: 400px; min-width: unset; max-width: unset; margin-bottom: 20px; }
+  .coupons { width: 90%; height: auto; }
 }

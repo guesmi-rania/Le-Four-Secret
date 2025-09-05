@@ -144,4 +144,224 @@
     font-size: 14px;
   }
 }
-  
+  /* === Popular Products Section === */
+.popular-products {
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+}
+
+.popular-products .section-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.popular-products .section-header h2 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.popular-products .section-header p {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Grid des produits */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Carte produit */
+.product-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 15px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Badge promo */
+.product-card .badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #FE81CC;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Image produit */
+.product-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+/* Nom produit */
+.product-card h4 {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Catégorie */
+.product-card .category {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+/* Prix */
+.product-card .price-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.product-card .price-box .price {
+  font-weight: bold;
+  color: #FE81CC;
+}
+
+.product-card .price-box .old-price {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 13px;
+}
+
+/* Boutons */
+.product-card .product-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.product-card .product-buttons button {
+  flex: 1;
+  margin-right: 5px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.product-card .product-buttons button:last-child {
+  margin-right: 0;
+}
+
+/* Couleurs boutons */
+.product-card .product-buttons button:nth-child(1) {
+  background-color: #00BCD4;
+  color: #fff;
+}
+
+.product-card .product-buttons button:nth-child(1):hover {
+  background-color: #01dbf8;
+}
+
+.product-card .product-buttons button:nth-child(2) {
+  background-color: #fff;
+  border: 1px solid #FE81CC;
+  color: #FE81CC;
+}
+
+.product-card .product-buttons button:nth-child(2):hover {
+  background-color: #FE81CC;
+  color: #fff;
+}
+
+.product-card .product-buttons button:nth-child(3) {
+  background-color: #fff;
+  border: 1px solid #555;
+  color: #555;
+}
+
+.product-card .product-buttons button:nth-child(3):hover {
+  background-color: #555;
+  color: #fff;
+}
+
+/* === Responsive === */
+@media (max-width: 1200px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .product-card img {
+    height: 140px;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-card img {
+    height: 120px;
+  }
+
+  .product-card h4 {
+    font-size: 14px;
+  }
+
+  .product-card .price-box .price,
+  .product-card .price-box .old-price {
+    font-size: 12px;
+  }
+
+  .product-card .product-buttons button {
+    font-size: 12px;
+    padding: 5px 6px;
+  }
+}
+.features-container {
+  display: flex;
+  justify-content: space-between; /* espace uniforme entre les items */
+  flex-wrap: wrap;                /* passe à la ligne sur mobile */
+  gap: 20px;
+  padding: 30px 0;
+}
+
+.feature-item {
+  flex: 1 1 220px;    /* prend une largeur minimum de 220px */
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .features-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}

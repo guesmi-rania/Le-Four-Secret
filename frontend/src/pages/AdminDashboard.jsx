@@ -1,144 +1,90 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import CategoryList from "../components/admin/CategoryList";
-import ClientForm from "../components/admin/ClientForm";
-import ClientsTable from "../components/admin/ClientsTable";
+// src/pages/AdminDashboard.jsx
+import React from "react";
+import {
+  FaChartBar,
+  FaShoppingBag,
+  FaUsers,
+  FaBox,
+  FaCheckCircle,
+} from "react-icons/fa";
+import "../styles/AdminDashboard.css";
 
-export default function AdminDashboard() {
-  // États catégories
-  const [categories, setCategories] = useState([]);
-  const [loadingCategories, setLoadingCategories] = useState(true);
-  const [errorCategories, setErrorCategories] = useState(null);
+const AdminDashboard = () => {
+  // 👉 Tu peux remplacer ces données par ton fetch API
+  const stats = [
+    { id: 1, label: "Produits", value: 128, icon: <FaBox /> },
+    { id: 2, label: "Commandes", value: 56, icon: <FaShoppingBag /> },
+    { id: 3, label: "Utilisateurs", value: 340, icon: <FaUsers /> },
+    { id: 4, label: "Ventes", value: "2.450 DT", icon: <FaChartBar /> },
+  ];
 
-  // États clients
-  const [clients, setClients] = useState([]);
-  const [loadingClients, setLoadingClients] = useState(true);
-  const [errorClients, setErrorClients] = useState(null);
-  const [editingClient, setEditingClient] = useState(null);
-
-  // Charger catégories au montage
-  useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/api/categories`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    })
-      .then((res) => {
-        setCategories(res.data);
-        setLoadingCategories(false);
-      })
-      .catch((err) => {
-        console.error("Erreur chargement catégories:", err);
-        setErrorCategories("Erreur chargement catégories");
-        setLoadingCategories(false);
-      });
-  }, []);
-
-  // Charger clients au montage
-  const fetchClients = async () => {
-    try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/clients`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
-      setClients(res.data);
-      setLoadingClients(false);
-    } catch (err) {
-      console.error("Erreur chargement clients:", err);
-      setErrorClients("Erreur chargement clients");
-      setLoadingClients(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchClients();
-  }, []);
-
-  // Sauvegarder catégories
-  const handleSaveCategories = async () => {
-    try {
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/categories`,
-        categories,
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-      );
-      alert("✅ Catégories enregistrées avec succès !");
-    } catch (error) {
-      console.error("Erreur sauvegarde catégories :", error);
-      alert("❌ Erreur lors de la sauvegarde des catégories");
-    }
-  };
-
-  // Sauvegarder client (création ou modification)
-  const handleSaveClient = async (clientData) => {
-    try {
-      if (clientData._id) {
-        await axios.put(
-          `${import.meta.env.VITE_API_URL}/api/admin/clients/${clientData._id}`,
-          clientData,
-          { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-        );
-      } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/api/admin/clients`, clientData, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
-      }
-      setEditingClient(null);
-      fetchClients();
-    } catch (err) {
-      alert("Erreur sauvegarde client");
-    }
-  };
-
-  // Supprimer client
-  const handleDeleteClient = async (id) => {
-    try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/admin/clients/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
-      fetchClients();
-    } catch (err) {
-      alert("Erreur suppression client");
-    }
-  };
+  const orders = [
+    { id: 1, client: "Amira B.", status: "Livrée", total: "45 DT" },
+    { id: 2, client: "Sami K.", status: "En attente", total: "120 DT" },
+    { id: 3, client: "Rania M.", status: "En préparation", total: "75 DT" },
+    { id: 4, client: "Yassine T.", status: "Livrée", total: "200 DT" },
+  ];
 
   return (
-    <div className="p-6 space-y-12">
-      <section>
-        <h2 className="text-2xl font-bold mb-4">🛠️ Gestion des catégories</h2>
-        {loadingCategories && <p>Chargement des catégories...</p>}
-        {errorCategories && <p className="text-red-600">{errorCategories}</p>}
-        {!loadingCategories && !errorCategories && (
-          <>
-            <CategoryList data={categories} setData={setCategories} />
-            <button
-              onClick={handleSaveCategories}
-              className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-            >
-              💾 Enregistrer les catégories
-            </button>
-          </>
-        )}
-      </section>
+    <div className="admin-dashboard">
+      {/* Titre */}
+      <h1 className="dashboard-title">Tableau de bord</h1>
 
-      <section>
-        <h2 className="text-3xl font-bold mb-6">Gestion des clients</h2>
-        {loadingClients && <p>Chargement des clients...</p>}
-        {errorClients && <p className="text-red-600">{errorClients}</p>}
-        {!loadingClients && !errorClients && (
-          <>
-            <ClientForm
-              onSave={handleSaveClient}
-              clientToEdit={editingClient}
-              onCancel={() => setEditingClient(null)}
-            />
-            <div className="mt-8">
-              <ClientsTable
-                clients={clients}
-                onEdit={setEditingClient}
-                onDelete={handleDeleteClient}
-              />
+      {/* Statistiques */}
+      <div className="stats-grid">
+        {stats.map((stat) => (
+          <div key={stat.id} className="stat-card">
+            <div className="stat-icon">{stat.icon}</div>
+            <div className="stat-info">
+              <h3>{stat.value}</h3>
+              <p>{stat.label}</p>
             </div>
-          </>
-        )}
-      </section>
+          </div>
+        ))}
+      </div>
+
+      {/* Commandes récentes */}
+      <div className="recent-orders">
+        <h2>📦 Commandes Récentes</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Statut</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order.id}>
+                <td>{order.client}</td>
+                <td>
+                  <span
+                    className={`status ${
+                      order.status === "Livrée"
+                        ? "delivered"
+                        : order.status === "En attente"
+                        ? "pending"
+                        : "processing"
+                    }`}
+                  >
+                    {order.status}
+                  </span>
+                </td>
+                <td>{order.total}</td>
+                <td>
+                  <button className="validate-btn">
+                    <FaCheckCircle /> Valider
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
-}
+};
+
+export default AdminDashboard;
