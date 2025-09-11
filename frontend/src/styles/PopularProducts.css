@@ -1,0 +1,130 @@
+/* Section globale */
+.popular-products {
+    padding: 40px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin: 40px 0;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .popular-products .section-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .popular-products .section-header h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .popular-products .section-header p {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  /* Grille produits */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+  }
+  
+  /* Carte produit */
+  .product-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  }
+  
+  /* Image produit */
+  .product-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+    transition: transform 0.3s ease;
+  }
+  
+  .product-card:hover img {
+    transform: scale(1.05);
+  }
+  
+  /* Nom & Catégorie */
+  .product-card h4 {
+    margin: 15px 0 5px;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .product-card .category {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  
+  /* Prix */
+  .price-box {
+    margin: 10px 0;
+  }
+  
+  .price-box .price {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #e63946;
+    margin-right: 8px;
+  }
+  
+  .price-box .old-price {
+    font-size: 0.9rem;
+    color: #999;
+    text-decoration: line-through;
+  }
+  
+  /* Boutons actions */
+  .product-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 15px 0;
+  }
+  
+  .product-buttons button {
+    background: #f8f8f8;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #444;
+    transition: all 0.3s ease;
+  }
+  
+  .product-buttons button:hover {
+    background: #ff6b6b;
+    color: #fff;
+  }
+  
+  .product-buttons button:disabled {
+    background: #ddd;
+    cursor: not-allowed;
+  }
+  
+  /* Wishlist active */
+  .wishlist-active {
+    color: #ff6b6b;
+  }
+  

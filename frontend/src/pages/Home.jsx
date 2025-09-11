@@ -4,9 +4,10 @@ import AboutUs from "../components/AboutUs";
 import Footer from "../components/Footer";
 import CategoryExplore from "../components/CategoryExplore";
 import "../styles/Home.css";
+import PopularProducts from "../components/PopularProducts";
 import { FaShippingFast, FaHeadset, FaLock, FaTags } from "react-icons/fa";
 
-function Home() {
+function Home({ onAddToCart, wishlist, compareList, onToggleWishlist, onAddToCompare }) {
   return (
     <div className="home-page">
       <div className="main-content">
@@ -16,6 +17,16 @@ function Home() {
       <hr className="section-separator" />
 
       <CategoryExplore />
+
+      <hr className="section-separator" />
+
+      <PopularProducts
+        onAddToCart={onAddToCart}
+        wishlist={wishlist}
+        compareList={compareList}
+        onToggleWishlist={onToggleWishlist}
+        onAddToCompare={onAddToCompare}
+      />
 
       <hr className="section-separator" />
 
