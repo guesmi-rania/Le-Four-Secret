@@ -27,10 +27,12 @@
   
   /* Grille produits */
   .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 25px;
-  }
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* exactement 3 colonnes */
+        gap: 25px;
+      }
+      
+  
   
   /* Carte produit */
   .product-card {
