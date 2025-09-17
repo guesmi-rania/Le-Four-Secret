@@ -1,4 +1,3 @@
-// frontend/src/components/AdminLogin.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +5,7 @@ import { toast } from "react-toastify";
 import "../styles/AdminLoginPremium.css";
 
 function AdminLogin() {
-  const [username, setUsername] = useState(""); // renommer email → username
+  const [username, setUsername] = useState(""); // renommer
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -18,10 +17,12 @@ function AdminLogin() {
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/admin/login`,
-        { username, password }
+        {
+          username, // correspond au backend
+          password,
+        }
       );
 
-      // Sauvegarder le token
       localStorage.setItem("adminToken", res.data.token);
 
       toast.success("✅ Connexion réussie !");
@@ -42,7 +43,7 @@ function AdminLogin() {
           <form onSubmit={handleLogin} className="admin-login-form">
             <input
               type="text"
-              placeholder="Username"
+              placeholder="Email ou Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
