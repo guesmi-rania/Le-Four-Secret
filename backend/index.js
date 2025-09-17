@@ -6,8 +6,8 @@ const path = require('path');
 const cors = require('cors');
 
 // --- Routes ---
-const authRoutes = require('./routes/auth');           // Inscription / login client
-const adminRoutes = require('./routes/adminRoutes');   // Login admin + routes protégées
+const authRoutes = require('./routes/auth');           // Inscription / login client////////////
+const adminRoutes = require('./routes/adminRoutes');   // Login admin + routes protégées///////////////
 const productRoutes = require('./routes/products');    
 const orderRoutes = require('./routes/orders');       
 const categoriesRoutes = require('./routes/categories');
@@ -15,7 +15,7 @@ const newsletterRoutes = require('./routes/newsletter');
 
 const app = express();
 
-// --- Variables d'environnement ---
+// --- Variables d'environnement --- 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -26,7 +26,7 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const corsOptions = {
   origin: [
     'http://localhost:5173',
-    'https://frontend-recettes-fxc8.onrender.com', // Frontend déployé
+    'https://frontend-recettes-fxc8.onrender.com', // Frontend déployé////////
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
