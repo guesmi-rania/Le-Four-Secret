@@ -1,5 +1,4 @@
-/* AdminLoginPremium.css */
-
+/* ====== Structure globale ====== */
 .admin-login-wrapper {
   display: flex;
   min-height: 100vh;
@@ -10,6 +9,7 @@
   padding: 20px;
 }
 
+/* ====== Carte principale ====== */
 .admin-login-container {
   display: flex;
   flex-direction: row;
@@ -21,6 +21,7 @@
   width: 100%;
 }
 
+/* ====== Partie gauche : formulaire ====== */
 .admin-login-left {
   flex: 1;
   padding: 50px 40px;
@@ -34,6 +35,7 @@
   color: #2d3436;
   margin-bottom: 30px;
   font-weight: 600;
+  text-align: center;
 }
 
 .admin-login-form {
@@ -78,11 +80,13 @@
   cursor: not-allowed;
 }
 
+/* ====== Partie droite : image ====== */
 .admin-login-right {
   flex: 1;
-  background: url('/images/admin-login.png') center/cover no-repeat;
+  background: url("/images/admin-login.png") center/cover no-repeat;
 }
 
+/* ====== Responsive ====== */
 @media (max-width: 900px) {
   .admin-login-container {
     flex-direction: column;

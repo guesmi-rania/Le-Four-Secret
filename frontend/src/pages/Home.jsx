@@ -63,7 +63,7 @@ function Home({ onAddToCart, wishlist, compareList, onToggleWishlist, onAddToCom
             <div className="feature-item">
               <FaTags size={30} color="#FE81CC" />
               <h4>Dernières offres</h4>
-              <p>Bénéficiez jusqu'à 20% de réduction sur nos produits</p>
+              <p>Bénéficiez jusqu'à 18% de réduction sur nos produits</p>
             </div>
           </div>
         </section>
