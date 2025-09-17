@@ -14,7 +14,7 @@ const EMAIL_HOST = process.env.EMAIL_HOST || "smtp.gmail.com";
 const EMAIL_PORT = process.env.EMAIL_PORT || 587;
 const EMAIL_USER = process.env.EMAIL_USER; // ton-email@gmail.com
 const EMAIL_PASS = process.env.EMAIL_PASS; // mot-de-passe-app-gmail
-const FRONTEND_URL = process.env.FRONTEND_URL || "https://ton-frontend.com";
+const FRONTEND_URL = process.env.FRONTEND_URL || "https://frontend-recettes-fxc8.onrender.com";
 
 // ✅ Inscription
 router.post('/register', async (req, res) => {

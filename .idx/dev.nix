@@ -7,6 +7,8 @@
   packages = [
     pkgs.nodejs_20
   ];
+  
+
   # Sets environment variables in the workspace
   env = {};
   idx = {

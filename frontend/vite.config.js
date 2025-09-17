@@ -1,12 +1,19 @@
-// vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/', // ✅ Correct : c’est bien pour un frontend servi par le backend
+  base: '/',
   plugins: [react()],
   build: {
-    outDir: 'dist', // ✅ OK
-    emptyOutDir: true // (facultatif) pour nettoyer le dossier dist avant chaque build
+    outDir: 'dist',
+    emptyOutDir: true,
+  },
+  server: {
+    host: true,    // écoute sur 0.0.0.0
+    port: 5173,
+    strictPort: true,
+    fs: {
+      strict: false,
+    },
   },
 });

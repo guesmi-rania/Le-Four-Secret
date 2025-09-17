@@ -1,24 +1,23 @@
+// backend/index.js
 require('dotenv').config();
-
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
 
-const authRoutes = require('./routes/auth');
-const adminRoutes = require('./routes/adminRoutes');    // <-- routes admin
-const productRoutes = require('./routes/products');
-const orderRoutes = require('./routes/orders');
-const categoriesRoutes = require("./routes/categories");
-const newsletterRoutes = require( './routes/newsletter');
+// Routes
+const authRoutes = require('./routes/auth');           // Inscription / login client
+const adminRoutes = require('./routes/adminRoutes');   // Login admin + routes protégées
+const productRoutes = require('./routes/products');    
+const orderRoutes = require('./routes/orders');       
+const categoriesRoutes = require('./routes/categories');
+const newsletterRoutes = require('./routes/newsletter');
 
 const app = express();
-
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
-const JWT_SECRET = process.env.JWT_SECRET; // à utiliser dans auth.js
 
-// CORS
+// === CORS ===
 const corsOptions = {
   origin: [
     'http://localhost:5173',
@@ -27,32 +26,29 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
-
 app.use(cors(corsOptions));
+
+// === JSON Body Parser ===
 app.use(express.json());
 
-// Routes API
+// === Routes API ===
 app.use('/api/auth', authRoutes);
-
-// ** Protéger les routes admin avec un middleware auth JWT **
-// Si tu as un middleware authAdmin, l’appliquer dans adminRoutes (ex dans adminRoutes.js)
-// Exemple : app.use('/api/admin', authAdmin, adminRoutes);
-app.use('/api/admin', adminRoutes);
-
+app.use('/api/admin', adminRoutes); // login public à l'intérieur, autres protégées avec authAdmin
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/categories', categoriesRoutes);
-app.use("/api/newsletter", newsletterRoutes);
+app.use('/api/newsletter', newsletterRoutes);
 
-// Frontend React statique (build)
+// === Frontend React statique ===
 app.use(express.static(path.join(__dirname, 'public', 'dist')));
 
-// Fallback React Router (routes non API)
-app.get('/:id', (req, res)  => {
+// === Fallback React Router ===
+// toutes les routes non-API renvoient index.html
+app.get(/(.*)/, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'dist', 'index.html'));
 });
 
-// Connexion MongoDB + serveur
+// === Connexion MongoDB ===
 mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('✅ Connecté à MongoDB Atlas');
@@ -60,6 +56,6 @@ mongoose.connect(MONGO_URI)
       console.log(`🚀 Serveur démarré sur le port ${PORT}`);
     });
   })
-  .catch((err) => {
-    console.error('❌ Erreur de connexion MongoDB :', err.message);
+  .catch(err => {
+    console.error('❌ Erreur MongoDB :', err.message);
   });

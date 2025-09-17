@@ -5,7 +5,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Slider from "./components/Slider";
 import ProtectedRoute from "./components/ProtectedRoute";
-import CartDrawer from "./pages/CartDrawer"; // ✅ Import du Drawer
+import CartDrawer from "./pages/CartDrawer";
 
 import Home from "./pages/Home";
 import ShopPage from "./pages/ShopPage";
@@ -18,9 +18,11 @@ import TastingList from "./pages/TastingList";
 import ContactPage from "./pages/ContactPage";
 import Welcome from "./pages/Welcome";
 
-import AdminLogin from "./pages/AdminLogin";
-import AdminDashboard from "./pages/AdminDashboard";
-import ProtectedAdminRoute from "./pages/ProtectedAdminRoute";
+import AdminLogin from "./admin/AdminLogin";
+import AdminDashboard from "./admin/AdminDashboard";
+import AdminProducts from "./admin/AdminProducts";
+import AdminOrders from "./admin/AdminOrders";
+import PrivateRoute from "./admin/PrivateRoute";
 
 // Notifications
 import { ToastContainer, toast } from "react-toastify";
@@ -34,11 +36,11 @@ function App() {
   const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem("cart")) || []);
   const [wishlist, setWishlist] = useState(() => JSON.parse(localStorage.getItem("wishlist")) || []);
   const [compareList, setCompareList] = useState(() => JSON.parse(localStorage.getItem("compareList")) || []);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const [isCartOpen, setIsCartOpen] = useState(false); // ✅ Etat du Drawer
   const location = useLocation();
 
-  // Synchroniser localStorage à chaque mise à jour
+  // Synchronisation avec localStorage
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -61,7 +63,7 @@ function App() {
   const handleAddToCart = (product) => {
     setCart((prev) => [...prev, product]);
     notifyAddCart(product.name);
-    setIsCartOpen(true); // ✅ Ouvrir automatiquement le Drawer après ajout
+    setIsCartOpen(true);
   };
 
   // Toggle wishlist
@@ -85,7 +87,7 @@ function App() {
 
   return (
     <>
-      {/* Navbar avec bouton Cart */}
+      {/* Navbar */}
       <Navbar cart={cart} wishlist={wishlist} onCartClick={() => setIsCartOpen(true)} />
 
       {/* Drawer Panier */}
@@ -102,14 +104,31 @@ function App() {
       <Routes>
         {/* Routes Admin */}
         <Route path="/admin-login" element={<AdminLogin />} />
-        <Route
-          path="/admin"
-          element={
-            <ProtectedAdminRoute>
-              <AdminDashboard />
-            </ProtectedAdminRoute>
-          }
-        />
+<Route
+  path="/admin/dashboard"
+  element={
+    <PrivateRoute>
+      <AdminDashboard />
+    </PrivateRoute>
+  }
+/>
+<Route
+  path="/admin/products"
+  element={
+    <PrivateRoute>
+      <AdminProducts />
+    </PrivateRoute>
+  }
+/>
+<Route
+  path="/admin/orders"
+  element={
+    <PrivateRoute>
+      <AdminOrders />
+    </PrivateRoute>
+  }
+/>
+
 
         {/* Routes Client */}
         <Route path="/" element={<Home />} />
