@@ -46,8 +46,8 @@ const distPath = path.join(__dirname, 'public', 'dist');
 app.use(express.static(distPath));
 
 // --- Routes Fallback pour React ---
-app.get(/^\/(?!api|admin).*/, (req, res) => {
-  res.sendFile(path.join(distPath, 'admin', 'index.html'));
+app.get(/^\/admin-login(\/.*)?$/, (req, res) => {
+  res.sendFile(path.join(adminPath, 'index.html'));
 });
 
 // Fallback pour Client
