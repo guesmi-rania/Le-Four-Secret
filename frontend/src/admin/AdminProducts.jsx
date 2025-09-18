@@ -1,23 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import AdminNavbar from "./AdminNavbar";
 import "../styles/admin.css";
 
 export default function AdminProducts() {
-  const [products, setProducts] = useState([
-    { id: 1, name: "Tarte au citron" },
-    { id: 2, name: "Millefeuille" },
-  ]);
+  const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState("");
 
-  const addProduct = () => {
-    if (newProduct.trim() !== "") {
-      setProducts([...products, { id: Date.now(), name: newProduct }]);
+  const token = localStorage.getItem("adminToken");
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setProducts(res.data);
+      } catch (err) {
+        console.error(err.response?.data || err.message);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  const addProduct = async () => {
+    if (newProduct.trim() === "") return;
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/products`,
+        { name: newProduct },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setProducts([...products, res.data]);
       setNewProduct("");
+    } catch (err) {
+      console.error(err.response?.data || err.message);
     }
   };
 
-  const deleteProduct = (id) => {
-    setProducts(products.filter((p) => p.id !== id));
+  const deleteProduct = async (id) => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setProducts(products.filter((p) => p._id !== id));
+    } catch (err) {
+      console.error(err.response?.data || err.message);
+    }
   };
 
   return (
@@ -36,9 +65,9 @@ export default function AdminProducts() {
         </div>
         <ul className="product-list">
           {products.map((p) => (
-            <li key={p.id}>
+            <li key={p._id}>
               {p.name}
-              <button onClick={() => deleteProduct(p.id)}>❌</button>
+              <button onClick={() => deleteProduct(p._id)}>❌</button>
             </li>
           ))}
         </ul>

@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import AdminNavbar from "./AdminNavbar";
 import "../styles/admin.css";
 
 export default function AdminOrders() {
-  const [orders] = useState([
-    { id: 1, client: "Alice", product: "Tarte au citron", status: "En attente" },
-    { id: 2, client: "Bob", product: "Millefeuille", status: "Livré" },
-  ]);
+  const [orders, setOrders] = useState([]);
+  const token = localStorage.getItem("adminToken");
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setOrders(res.data);
+      } catch (err) {
+        console.error(err.response?.data || err.message);
+      }
+    };
+    fetchOrders();
+  }, []);
 
   return (
     <div className="admin-container">
@@ -24,10 +37,10 @@ export default function AdminOrders() {
           </thead>
           <tbody>
             {orders.map((o) => (
-              <tr key={o.id}>
-                <td>{o.id}</td>
-                <td>{o.client}</td>
-                <td>{o.product}</td>
+              <tr key={o._id}>
+                <td>{o._id}</td>
+                <td>{o.clientName}</td>
+                <td>{o.productName}</td>
                 <td>{o.status}</td>
               </tr>
             ))}
