@@ -23,7 +23,7 @@ const MONGO_URI = process.env.MONGO_URI;
 const corsOptions = {
   origin: [
     'http://localhost:5173',
-    'https://frontend-recettes-fxc8.onrender.com', // Client déployé
+    'https://frontend-recettes-fxc8.onrender.com', // Frontend déployé
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -41,18 +41,23 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 
-// --- Frontend React statique ---
-const distPath = path.join(__dirname, 'public', 'dist');
-app.use(express.static(distPath));
+// --- Chemins vers les builds ---
+const clientPath = path.join(__dirname, 'public', 'client');
+const adminPath = path.join(__dirname, 'public', 'admin');
 
-// --- Routes Fallback pour React ---
-app.get(/^\/admin-login(\/.*)?$/, (req, res) => {
+// --- Servir les fichiers statiques ---
+app.use(express.static(clientPath));
+app.use('/admin', express.static(adminPath));
+
+// --- Routes fallback pour React ---
+// Admin
+app.get('/admin/*', (req, res) => {
   res.sendFile(path.join(adminPath, 'index.html'));
 });
 
-// Fallback pour Client
-app.get(/(.*)/, (req, res) => {
-  res.sendFile(path.join(distPath, 'client', 'index.html'));
+// Client
+app.get('*', (req, res) => {
+  res.sendFile(path.join(clientPath, 'index.html'));
 });
 
 // --- Connexion MongoDB et lancement serveur ---

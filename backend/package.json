@@ -2,11 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "seed:admin": "node scripts/seedAdmin.js"
-  },
+ "scripts": {
+  "start": "node index.js",
+  "seed:admin": "node scripts/seedAdmin.js",
+  "build:all": "npm --prefix ../frontend install && npm --prefix ../frontend run build && cp -r ../frontend/dist/* ./public/client/ && npm --prefix ../admiiin/admiiin install && npm --prefix ../admiiin/admiiin run build && cp -r ../admiiin/admiiin/dist/* ./public/admin/"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
