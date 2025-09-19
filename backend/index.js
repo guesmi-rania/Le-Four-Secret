@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
 
-// --- Routes API ---
+// --- Routes ---
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/adminRoutes');
 const productRoutes = require('./routes/products');
@@ -23,7 +23,7 @@ const MONGO_URI = process.env.MONGO_URI;
 const corsOptions = {
   origin: [
     'http://localhost:5173',
-    'https://frontend-recettes-fxc8.onrender.com',
+    'https://frontend-recettes-fxc8.onrender.com', // Client déployé
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -41,24 +41,24 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 
-// --- Fichiers statiques React ---
-const clientDistPath = path.join(__dirname, 'public', 'client');
-const adminDistPath = path.join(__dirname, 'public', 'admin');
+// --- Frontend React statique ---
+const distPath = path.join(__dirname, 'public', 'dist');
+app.use(express.static(distPath));
 
-app.use(express.static(clientDistPath));
-app.use('/admin', express.static(adminDistPath));
+const clientPath = path.join(__dirname, 'public', 'client');
 
-// --- Fallback pour Admin ---
-app.get('/admin/*', (req, res) => {
-  res.sendFile(path.join(adminDistPath, 'index.html'));
+// Fallback pour admin
+app.get(/^\/admin(\/.*)?$/, (req, res) => {
+  res.sendFile(path.join(adminPath, 'index.html'));
 });
 
-// --- Fallback pour Client ---
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(clientDistPath, 'index.html'));
+// Fallback pour client
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(clientPath, 'index.html'));
 });
 
-// --- Connexion MongoDB ---
+
+// --- Connexion MongoDB et lancement serveur ---
 mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('✅ Connecté à MongoDB Atlas');
