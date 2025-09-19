@@ -41,24 +41,25 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 
-// --- Chemins vers les builds ---
-const clientPath = path.join(__dirname, 'public', 'client');
-const adminPath = path.join(__dirname, 'public', 'admin');
 
 // --- Servir les fichiers statiques ---
-app.use(express.static(clientPath));
-app.use('/admin', express.static(adminPath));
+// Frontend React statique
+const clientDistPath = path.join(__dirname, 'public', 'client');
+const adminDistPath = path.join(__dirname, 'public', 'admin');
 
-// --- Routes fallback pour React ---
-// Admin
+app.use(express.static(clientDistPath));
+app.use('/admin', express.static(adminDistPath));
+
+// Fallback pour Admin
 app.get('/admin/*', (req, res) => {
-  res.sendFile(path.join(adminPath, 'index.html'));
+  res.sendFile(path.join(adminDistPath, 'index.html'));
 });
 
-// Client
-app.get('*', (req, res) => {
-  res.sendFile(path.join(clientPath, 'index.html'));
+// Fallback pour Client
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(clientDistPath, 'index.html'));
 });
+
 
 // --- Connexion MongoDB et lancement serveur ---
 mongoose.connect(MONGO_URI)
