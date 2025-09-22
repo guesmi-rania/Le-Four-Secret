@@ -172,7 +172,7 @@ function App() {
         />
 
         {/* Cart / Checkout / Confirmation */}
-        <Route path="/panier" element={<CartPage cart={cart} setCart={setCart} />} />
+        <Route path="/cart" element={<CartPage cart={cart} setCart={setCart} />} />
         <Route path="/checkout" element={<Checkout cart={cart} setCart={setCart} />} />
         <Route path="/confirmation" element={<Confirmation />} />
 
