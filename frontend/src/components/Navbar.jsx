@@ -180,7 +180,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
 
           <Link to="/cart" className="icon-item">
             <FaShoppingBag />
-            <span>Cart</span>
+            <span>Panier</span>
             {cart.length > 0 && <span className="badge">{cart.length}</span>}
           </Link>
         </div>
