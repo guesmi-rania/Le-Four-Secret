@@ -45,7 +45,6 @@ app.use('/api/newsletter', newsletterRoutes);
 const distPath = path.join(__dirname, 'public', 'dist');
 app.use(express.static(distPath));
 
-const clientPath = path.join(__dirname, 'public', 'client');
 
 // Fallback pour toutes les routes React (y compris /admin)
 app.get('*', (req, res) => {
