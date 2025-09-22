@@ -110,4 +110,33 @@
     border: 1px solid #ddd;
     text-align: center;
   }
-  
+  /* Style des statuts de commande */
+.status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+/* Différents états */
+.status.en-cours {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.status.livré {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.annulé {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status.en-attente {
+  background: #fff3cd;
+  color: #856404;
+}

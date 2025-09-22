@@ -41,8 +41,12 @@ export default function AdminOrders() {
                 <td>{o._id}</td>
                 <td>{o.clientName}</td>
                 <td>{o.productName}</td>
-                <td>{o.status}</td>
-              </tr>
+                <td>
+              <span className={`status ${o.status.toLowerCase().replace(" ", "-")}`}>
+                 {o.status}
+              </span>
+               </td>
+             </tr>
             ))}
           </tbody>
         </table>
