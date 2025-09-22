@@ -177,6 +177,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/cart" element={<CartPage cart={cart} setCart={setCart} />} />
+
         <Route path="/dégustation" element={<TastingList />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
