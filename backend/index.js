@@ -47,15 +47,15 @@ app.use(express.static(distPath));
 
 const clientPath = path.join(__dirname, 'public', 'client');
 
-// Fallback pour admin
-app.get(/^\/admin(\/.*)?$/, (req, res) => {
-  res.sendFile(path.join(adminPath, 'index.html'));
+// --- Frontend React statique ---
+const distPath = path.join(__dirname, 'public', 'dist');
+app.use(express.static(distPath));
+
+// Fallback pour toutes les routes React (y compris /admin)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
-// Fallback pour client
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(clientPath, 'index.html'));
-});
 
 
 // --- Connexion MongoDB et lancement serveur ---
