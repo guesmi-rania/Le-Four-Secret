@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
 // Composants & Pages
 import Navbar from "./components/Navbar";
@@ -10,6 +10,7 @@ import CartDrawer from "./pages/CartDrawer";
 import Home from "./pages/Home";
 import ShopPage from "./pages/ShopPage";
 import CartPage from "./pages/CartPage";
+import Checkout from "./pages/Checkout";
 import OrdersPage from "./pages/OrdersPage";
 import ClientAuth from "./pages/ClientAuth";
 import WishlistPage from "./pages/WishlistPage";
@@ -17,7 +18,9 @@ import ProductDetail from "./pages/ProductDetail";
 import TastingList from "./pages/TastingList";
 import ContactPage from "./pages/ContactPage";
 import Welcome from "./pages/Welcome";
+import Confirmation from "./pages/Confirmation";
 
+// Admin
 import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
 import AdminProducts from "./admin/AdminProducts";
@@ -32,13 +35,14 @@ import "react-toastify/dist/ReactToastify.css";
 import "./styles/Cart.css";
 
 function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   // States synchronisés avec localStorage
   const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem("cart")) || []);
   const [wishlist, setWishlist] = useState(() => JSON.parse(localStorage.getItem("wishlist")) || []);
   const [compareList, setCompareList] = useState(() => JSON.parse(localStorage.getItem("compareList")) || []);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
-  const location = useLocation();
 
   // Synchronisation avec localStorage
   useEffect(() => {
@@ -104,31 +108,30 @@ function App() {
       <Routes>
         {/* Routes Admin */}
         <Route path="/admin-login" element={<AdminLogin />} />
-<Route
-  path="/admin/dashboard"
-  element={
-    <PrivateRoute>
-      <AdminDashboard />
-    </PrivateRoute>
-  }
-/>
-<Route
-  path="/admin/products"
-  element={
-    <PrivateRoute>
-      <AdminProducts />
-    </PrivateRoute>
-  }
-/>
-<Route
-  path="/admin/orders"
-  element={
-    <PrivateRoute>
-      <AdminOrders />
-    </PrivateRoute>
-  }
-/>
-
+        <Route
+          path="/admin/dashboard"
+          element={
+            <PrivateRoute>
+              <AdminDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/products"
+          element={
+            <PrivateRoute>
+              <AdminProducts />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/orders"
+          element={
+            <PrivateRoute>
+              <AdminOrders />
+            </PrivateRoute>
+          }
+        />
 
         {/* Routes Client */}
         <Route path="/" element={<Home />} />
@@ -167,7 +170,13 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Cart / Checkout / Confirmation */}
         <Route path="/panier" element={<CartPage cart={cart} setCart={setCart} />} />
+        <Route path="/checkout" element={<Checkout cart={cart} setCart={setCart} />} />
+        <Route path="/confirmation" element={<Confirmation />} />
+
+        {/* Autres pages */}
         <Route path="/wishlist" element={<WishlistPage wishlist={wishlist} setWishlist={setWishlist} />} />
         <Route
           path="/commandes"
@@ -177,8 +186,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/cart" element={<CartPage cart={cart} setCart={setCart} />} />
-
         <Route path="/dégustation" element={<TastingList />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>

@@ -1,43 +1,98 @@
-import React from "react";
-import "../styles/Cart.css";
-import { FaTrashAlt } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/Cart.css"; // Assure-toi que le chemin correspond
 
 export default function CartPage({ cart, setCart }) {
-  const total = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+  const navigate = useNavigate();
+  const [total, setTotal] = useState(0);
 
+  // Calcul du total
+  useEffect(() => {
+    const subTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const shipping = cart.length > 0 ? 7 : 0;
+    const tax = subTotal * 0.05;
+    setTotal(subTotal + shipping + tax);
+  }, [cart]);
+
+  // Supprimer un produit
   const handleRemove = (id) => {
     const updated = cart.filter((item) => item._id !== id);
     setCart(updated);
-    localStorage.setItem("cart", JSON.stringify(updated)); // synchro stockage
+    localStorage.setItem("cart", JSON.stringify(updated));
+  };
+
+  // Modifier quantité
+  const handleQuantityChange = (id, delta) => {
+    const updated = cart.map((item) =>
+      item._id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
+    );
+    setCart(updated);
+    localStorage.setItem("cart", JSON.stringify(updated));
+  };
+
+  // Aller au checkout
+  const handleCheckout = () => {
+    if (cart.length === 0) {
+      alert("Votre panier est vide !");
+      return;
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    navigate("/checkout");
   };
 
   return (
-    <div className="cart-page">
+    <div className="cart-container">
       <h2>🛒 Mon Panier</h2>
 
       {cart.length === 0 ? (
         <p className="empty">Votre panier est vide.</p>
       ) : (
         <>
-          <div className="cart-grid">
-            {cart.map((item) => (
-              <div key={item._id} className="cart-item">
-                <img src={item.image || item.imageUrl} alt={item.name} />
-                <div className="info">
-                  <h4>{item.name}</h4>
-                  <p className="price">{item.price} Dt</p>
-                  <p>Quantité : {item.quantity || 1}</p>
-                </div>
-                <button className="remove-btn" onClick={() => handleRemove(item._id)}>
-                  <FaTrashAlt />
-                </button>
-              </div>
-            ))}
-          </div>
+          <table className="cart-table">
+            <thead>
+              <tr>
+                <th>Produit</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Total</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((item) => (
+                <tr key={item._id}>
+                  <td className="product-info">
+                    <img src={item.imageUrl} alt={item.name} />
+                    <span>{item.name}</span>
+                  </td>
+                  <td>{item.price.toFixed(2)} DT</td>
+                  <td>
+                    <div className="qty-control">
+                      <button onClick={() => handleQuantityChange(item._id, -1)}>-</button>
+                      <span>{item.quantity}</span>
+                      <button onClick={() => handleQuantityChange(item._id, 1)}>+</button>
+                    </div>
+                  </td>
+                  <td>{(item.price * item.quantity).toFixed(2)} DT</td>
+                  <td>
+                    <button className="remove-btn" onClick={() => handleRemove(item._id)}>
+                      ❌
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-          <div className="cart-total">
-            <h3>Total : {total.toFixed(2)} Dt</h3>
-            <button className="checkout-btn">Passer la commande</button>
+          <div className="cart-summary">
+            <h3>Résumé de la commande</h3>
+            <p>Sous-total : {cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)} DT</p>
+            <p>Frais de livraison : {cart.length > 0 ? "7.00" : "0.00"} DT</p>
+            <p>Taxes (5%) : {(cart.reduce((sum, item) => sum + item.price * item.quantity, 0) * 0.05).toFixed(2)} DT</p>
+            <h3>Total : {total.toFixed(2)} DT</h3>
+            <button className="checkout-btn" onClick={handleCheckout}>
+              Passer la commande
+            </button>
           </div>
         </>
       )}
