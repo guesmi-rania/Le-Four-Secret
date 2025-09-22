@@ -10,8 +10,8 @@ export default defineConfig({
     emptyOutDir: true,    // vide le dossier avant build
     rollupOptions: {
       input: {
-        client: resolve(__dirname, "src/main.jsx"),       // interface client
-        admin: resolve(__dirname, "src/admin/main.jsx"),  // dashboard admin
+        client: resolve(__dirname, "index.html"),  // client
+        admin: resolve(__dirname, "admin.html"),   // admin
       },
     },
   },

@@ -1,4 +1,3 @@
-// backend/index.js
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -42,16 +41,23 @@ app.use('/api/categories', categoriesRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 
 // --- Frontend React statique ---
-const distPath = path.join(__dirname, 'public', 'dist');
-app.use(express.static(distPath));
+const clientPath = path.join(__dirname, 'public', 'client');
+const adminPath = path.join(__dirname, 'public', 'admin');
 
+// Servir les fichiers statiques
+app.use('/admin', express.static(adminPath));
+app.use('/', express.static(clientPath));
 
-// Fallback pour toutes les routes React (y compris /admin)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(distPath, 'index.html'));
+// --- Fallback React ---
+// Admin dashboard fallback
+app.get('/admin/*', (req, res) => {
+  res.sendFile(path.join(adminPath, 'index.html'));
 });
 
-
+// Client fallback
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(clientPath, 'index.html'));
+});
 
 // --- Connexion MongoDB et lancement serveur ---
 mongoose.connect(MONGO_URI)
