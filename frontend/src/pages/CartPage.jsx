@@ -3,11 +3,12 @@ import "../styles/Cart.css";
 import { FaTrashAlt } from "react-icons/fa";
 
 export default function CartPage({ cart, setCart }) {
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  const total = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
 
   const handleRemove = (id) => {
     const updated = cart.filter((item) => item._id !== id);
     setCart(updated);
+    localStorage.setItem("cart", JSON.stringify(updated)); // synchro stockage
   };
 
   return (
@@ -21,10 +22,11 @@ export default function CartPage({ cart, setCart }) {
           <div className="cart-grid">
             {cart.map((item) => (
               <div key={item._id} className="cart-item">
-                <img src={item.imageUrl} alt={item.name} />
+                <img src={item.image || item.imageUrl} alt={item.name} />
                 <div className="info">
                   <h4>{item.name}</h4>
                   <p className="price">{item.price} Dt</p>
+                  <p>Quantité : {item.quantity || 1}</p>
                 </div>
                 <button className="remove-btn" onClick={() => handleRemove(item._id)}>
                   <FaTrashAlt />

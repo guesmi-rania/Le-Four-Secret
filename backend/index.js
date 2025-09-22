@@ -23,8 +23,6 @@ const corsOptions = {
   origin: [
     'http://localhost:5173',
     'https://frontend-recettes-fxc8.onrender.com', // Client déployé
-    'https://5173-firebase-recettes-cuisinegit-1750254642553.cluster-6vyo4gb53jczovun3dxslzjahs.cloudworkstations.dev', // nouveau front
-
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],

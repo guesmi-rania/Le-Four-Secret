@@ -17,16 +17,18 @@ const CartDrawer = ({ isOpen, onClose, cartItems }) => {
             cartItems.map((item, index) => (
               <div key={index} className="cart-item">
                 <div className="item-image">
-                  <img src={item.image} alt={item.name} />
+                  <img src={item.image || item.imageUrl} alt={item.name} />
                 </div>
                 <div className="item-info">
                   <h4>{item.name}</h4>
                   <p>Item Price DT{item.price}</p>
-                  <span className="item-total">DT{(item.price * item.quantity).toFixed(2)}</span>
+                  <span className="item-total">
+                    DT{(item.price * (item.quantity || 1)).toFixed(2)}
+                  </span>
                 </div>
                 <div className="item-actions">
                   <button>-</button>
-                  <span>{item.quantity}</span>
+                  <span>{item.quantity || 1}</span>
                   <button>+</button>
                 </div>
               </div>
@@ -38,9 +40,9 @@ const CartDrawer = ({ isOpen, onClose, cartItems }) => {
           <div className="subtotal">
             <span>Subtotal</span>
             <span>
-            DT
+              DT
               {cartItems
-                .reduce((acc, item) => acc + item.price * item.quantity, 0)
+                .reduce((acc, item) => acc + item.price * (item.quantity || 1), 0)
                 .toFixed(2)}
             </span>
           </div>
