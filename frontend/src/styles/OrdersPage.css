@@ -40,4 +40,12 @@
     margin: 3px 0;
     color: #666;
   }
+  @media (max-width: 768px) {
+    .order-card {
+      padding: 12px;
+    }
+    .order-info p {
+      font-size: 14px;
+    }
+  }
   
