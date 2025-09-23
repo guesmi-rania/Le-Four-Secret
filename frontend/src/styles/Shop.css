@@ -108,19 +108,25 @@
   border-radius: 8px;
 }
 
-/* Badge */
+/* Badge carré en haut à droite */
 .badge {
   position: absolute;
   top: 8px;
-  left: 8px;
+  right: 8px;              /* déplacer à droite */
+  width: 18px;             /* carré */
+  height: 18px;            /* carré */
   background-color: #ef4444;
   color: #fff;
   font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 6px;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;       /* léger arrondi ou 0 pour carré parfait */
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  padding: 0;               /* pas de padding pour garder carré */
 }
+
 
 /* Text & Price */
 .category {
@@ -191,40 +197,61 @@
   transform: scale(1.15);
 }
 
-/* Specific Buttons */
-.cart-btn { background-color: #22c55e; color: #fff; }
-.cart-btn:hover { background-color: #16a34a; }
-
-.wishlist-btn { background-color: #f3f4f6; color: #ef4444; }
-.wishlist-btn:hover { background-color: #e5e7eb; }
-
-.compare-btn {
-  background-color: #ec4899; color: #fff;
-  padding: 0.5rem 1rem; display:flex; align-items:center; justify-content:center;
-}
-.compare-btn:hover { background-color:#fce7f3; color:#be185d; }
-.compare-btn:disabled { cursor:not-allowed; opacity:0.6; }
-
-/* Quick View */
+/* === Buttons Icons Only (Cart, Wishlist, Compare, Quick View) === */
+.cart-btn,
+.wishlist-btn,
+.compare-btn,
 .quickview-btn {
-  background-color: #3b82f6; color: #fff;
-  padding: 0.5rem 1rem; border-radius:6px;
-  display:flex; align-items:center; justify-content:center;
+  background: none;        /* pas de fond */
+  border: none;            /* pas de bordure */
+  color: #ec4899;          /* couleur rose */
+  font-size: 18px;         /* taille de l'icône */
+  cursor: pointer;
+  padding: 0;              /* pas de padding */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
-.quickview-btn:hover:not(:disabled) { background-color:#2563eb; transform:scale(1.15); }
-.quickview-btn:disabled { background-color:#93c5fd; opacity:0.6; }
 
-/* Quick View Modal */
-.quickview-modal {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center;
-  z-index:999;
+.cart-btn:hover,
+.wishlist-btn:hover,
+.compare-btn:hover,
+.quickview-btn:hover {
+  transform: scale(1.15);  /* effet zoom */
+  color: #be185d;          /* rose foncé au hover */
 }
+
+.compare-btn:disabled,
+.quickview-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  color: #f9a5c1;          /* rose clair pour disabled */
+}
+
+/* === Quick View Modal === */
+.quickview-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
 .quickview-content {
-  background:#fff; padding:1.5rem; border-radius:8px;
-  max-width:400px; width:90%; text-align:center; position:relative;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  position: relative;
   animation: fadeIn 0.3s ease;
 }
+
 @keyframes fadeIn { from {opacity:0; transform:scale(0.95);} to {opacity:1; transform:scale(1);} }
 .quickview-content img { max-width:100%; border-radius:8px; margin-bottom:1rem; }
 
