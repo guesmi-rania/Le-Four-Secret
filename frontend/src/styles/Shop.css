@@ -268,11 +268,28 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .shop-page { flex-direction: column; padding:20px; }
-  .shop-sidebar { width:100%; margin-bottom:20px; }
-  .shop-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:16px; }
-  .badge { font-size:9px; padding:2px 4px; }
-  .right-buttons { flex-direction:row; justify-content:flex-end; position:relative; top:auto; right:auto; transform:none; margin-top:10px; }
-  .right-buttons button { width:32px; height:32px; font-size:15px; }
-  .quickview-content { max-width:95%; }
+  /* Déjà existant */
+  .shop-page { flex-direction: column; padding: 20px; }
+  .shop-sidebar { width: 100%; margin-bottom: 20px; }
+  .shop-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+  .badge { font-size: 9px; padding: 2px 4px; }
+  .right-buttons { 
+    flex-direction: row; 
+    justify-content: flex-end; 
+    position: relative; 
+    top: auto; 
+    right: auto; 
+    transform: none; 
+    margin-top: 10px; 
+  }
+  .right-buttons button { 
+    width: 32px; 
+    height: 32px; 
+    font-size: 18px;  /* augmenter pour que l'icône reste visible */
+    padding: 0;        /* pas de padding, juste l'icône */
+    background: none;  /* fond transparent */
+    border: none;      /* pas de bordure */
+    color: #ec4899;    /* couleur rose */
+  }
+  .quickview-content { max-width: 95%; }
 }
