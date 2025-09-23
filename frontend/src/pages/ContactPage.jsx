@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import emailjs from "emailjs-com";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Helmet } from "react-helmet-async";
 import "../styles/ContactPage.css";
 import { FaFacebookF, FaInstagram, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
@@ -46,8 +47,21 @@ export default function ContactPage() {
 
   return (
     <div className="contact-container">
-      <div className="contact-content">
+      {/* ✅ SEO Helmet */}
+      <Helmet>
+        <title>Contact | Douceurs du Chef</title>
+        <meta
+          name="description"
+          content="Contactez Douceurs du Chef pour toute question ou information. Nous sommes disponibles par téléphone, email ou via notre formulaire de contact."
+        />
+        <link rel="canonical" href={`${window.location.origin}/contact`} />
+        <meta property="og:title" content="Contact | Douceurs du Chef" />
+        <meta property="og:description" content="Contactez Douceurs du Chef pour toute question ou information." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${window.location.origin}/contact`} />
+      </Helmet>
 
+      <div className="contact-content">
         {/* Formulaire de contact */}
         <div className="contact-form">
           <h2>Contactez-nous</h2>
@@ -82,7 +96,6 @@ export default function ContactPage() {
         {/* Informations de contact */}
         <div className="contact-info">
           <h2>Comment pouvons-nous vous aider ?</h2>
-
           <div className="contact-field">
             <FaPhoneAlt className="info-icon" />
             <div>
@@ -106,7 +119,6 @@ export default function ContactPage() {
               <p>N°11 rue Kawefel Borj Louzir Ariana</p>
             </div>
           </div>
-
 
           <h4>Suivez-nous :</h4>
           <ul className="social-links">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 import "../styles/ProductDetail.css";
 import { FaShoppingCart, FaHeart, FaRegHeart, FaBalanceScale } from "react-icons/fa";
 
@@ -33,14 +34,60 @@ export default function ProductDetail({
     fetchProduct();
   }, [id]);
 
-  const isInWishlist = wishlist.some(item => item._id === id);
-  const isInCompare = compareList.some(item => item._id === id);
+  const isInWishlist = wishlist.some((item) => item._id === id);
+  const isInCompare = compareList.some((item) => item._id === id);
 
   if (loading) return <div className="product-detail">Chargement...</div>;
   if (notFound || !product) return <div className="product-detail">❌ Produit non trouvé</div>;
 
+  // SEO: données structurées JSON-LD
+  const structuredData = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    name: product.name,
+    image: product.imageUrl,
+    description: product.description || "Produit artisanal Douceurs du Chef",
+    brand: "Douceurs du Chef",
+    offers: {
+      "@type": "Offer",
+      price: product.price,
+      priceCurrency: "TND",
+      availability: "https://schema.org/InStock",
+      url: `${window.location.origin}/product/${id}`,
+    },
+  };
+
   return (
     <div className="product-detail">
+      {/* SEO Helmet */}
+      <Helmet>
+        <title>{product.name} | Douceurs du Chef</title>
+        <meta
+          name="description"
+          content={product.description?.slice(0, 150) || "Découvrez nos pâtisseries artisanales."}
+        />
+        <meta name="keywords" content={`patisserie, ${product.category}, douceurs, gateaux`} />
+
+        {/* Open Graph (Facebook / WhatsApp) */}
+        <meta property="og:title" content={product.name} />
+        <meta property="og:description" content={product.description} />
+        <meta property="og:image" content={product.imageUrl} />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content={`${window.location.origin}/product/${id}`} />
+
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={product.name} />
+        <meta name="twitter:description" content={product.description} />
+        <meta name="twitter:image" content={product.imageUrl} />
+
+        {/* Canonical URL */}
+        <link rel="canonical" href={`${window.location.origin}/product/${id}`} />
+
+        {/* JSON-LD */}
+        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+      </Helmet>
+
       <div className="detail-card">
         <img src={product.imageUrl} alt={product.name} className="detail-image" />
         <div className="detail-info">

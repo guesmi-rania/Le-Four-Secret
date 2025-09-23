@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import "../styles/Cart.css"; // Assure-toi que le chemin correspond
 
 export default function CartPage({ cart, setCart }) {
@@ -42,6 +43,17 @@ export default function CartPage({ cart, setCart }) {
 
   return (
     <div className="cart-container">
+      {/* ✅ SEO Helmet */}
+      <Helmet>
+        <title>Mon Panier | Douceurs du Chef</title>
+        <meta
+          name="description"
+          content="Consultez les articles de votre panier sur Douceurs du Chef et passez votre commande rapidement."
+        />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={`${window.location.origin}/cart`} />
+      </Helmet>
+
       <h2>🛒 Mon Panier</h2>
 
       {cart.length === 0 ? (

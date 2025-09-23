@@ -1,17 +1,32 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import RecipeShowcase from "../components/RecipeShowcase";
 import AboutUs from "../components/AboutUs";
 import Footer from "../components/Footer";
 import CategoryExplore from "../components/CategoryExplore";
-import "../styles/Home.css";
 import PopularProducts from "../components/PopularProducts";
+import "../styles/Home.css";
 import { FaShippingFast, FaHeadset, FaLock, FaTags } from "react-icons/fa";
 
 function Home({ onAddToCart, wishlist, compareList, onToggleWishlist, onAddToCompare }) {
   return (
     <div className="home-page">
+      {/* ✅ SEO Helmet */}
+      <Helmet>
+        <title>Douceurs du Chef | Pâtisseries et Délices à Domicile</title>
+        <meta
+          name="description"
+          content="Découvrez Douceurs du Chef : pâtisseries artisanales, délices sucrés et salés, livraison rapide et paiement sécurisé. Commandez vos gourmandises préférées en ligne !"
+        />
+        <link rel="canonical" href={`${window.location.origin}/`} />
+        <meta property="og:title" content="Douceurs du Chef | Pâtisseries et Délices à Domicile" />
+        <meta property="og:description" content="Découvrez Douceurs du Chef : pâtisseries artisanales, délices sucrés et salés, livraison rapide et paiement sécurisé." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${window.location.origin}/`} />
+      </Helmet>
+
       <div className="main-content">
-        {/* Tu peux ajouter ici ton slider ou autre contenu */}
+        {/* Slider ou contenu principal */}
       </div>
 
       <hr className="section-separator" />
@@ -45,10 +60,7 @@ function Home({ onAddToCart, wishlist, compareList, onToggleWishlist, onAddToCom
             <div className="feature-item">
               <FaShippingFast size={30} color="#FE81CC" />
               <h4>Livraison gratuite dès 200 DT</h4>
-              <p>
-                Profitez de la livraison gratuite pour toute commande supérieure
-                à 200 DT
-              </p>
+              <p>Profitez de la livraison gratuite pour toute commande supérieure à 200 DT</p>
             </div>
             <div className="feature-item">
               <FaHeadset size={30} color="#FE81CC" />

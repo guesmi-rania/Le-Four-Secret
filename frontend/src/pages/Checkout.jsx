@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 import "../styles/Checkout.css";
 
 function Checkout({ cart, setCart }) {
@@ -48,32 +49,45 @@ function Checkout({ cart, setCart }) {
   };
 
   return (
-    <form className="checkout" onSubmit={handleSubmit}>
-      <h2>Valider la commande</h2>
-      <input
-        name="name"
-        placeholder="Nom"
-        value={form.name}
-        onChange={handleChange}
-        required
-      />
-      <input
-        name="email"
-        placeholder="Email"
-        type="email"
-        value={form.email}
-        onChange={handleChange}
-        required
-      />
-      <input
-        name="address"
-        placeholder="Adresse"
-        value={form.address}
-        onChange={handleChange}
-        required
-      />
-      <button type="submit">Envoyer (Total : {total.toFixed(2)} DT)</button>
-    </form>
+    <>
+      {/* ✅ SEO Helmet */}
+      <Helmet>
+        <title>Checkout | Douceurs du Chef</title>
+        <meta
+          name="description"
+          content="Finalisez votre commande de pâtisseries artisanales sur Douceurs du Chef. Remplissez vos informations et passez votre commande en toute sécurité."
+        />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={`${window.location.origin}/checkout`} />
+      </Helmet>
+
+      <form className="checkout" onSubmit={handleSubmit}>
+        <h2>Valider la commande</h2>
+        <input
+          name="name"
+          placeholder="Nom"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="email"
+          placeholder="Email"
+          type="email"
+          value={form.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="address"
+          placeholder="Adresse"
+          value={form.address}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Envoyer (Total : {total.toFixed(2)} DT)</button>
+      </form>
+    </>
   );
 }
 

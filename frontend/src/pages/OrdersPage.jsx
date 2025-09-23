@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const BASE_URL = import.meta.env.VITE_API_URL || "https://recettes-de-cuisine.onrender.com";
 
@@ -24,20 +25,40 @@ export default function OrdersPage() {
 
   return (
     <div style={{ padding: "20px", maxWidth: "800px", margin: "auto" }}>
+      {/* ✅ SEO Helmet */}
+      <Helmet>
+        <title>Mes commandes | Douceurs du Chef</title>
+        <meta
+          name="description"
+          content="Consultez vos commandes passées sur Douceurs du Chef. Retrouvez vos produits, quantités et détails de livraison."
+        />
+        {/* ❌ Cette page est privée → on indique à Google de ne pas indexer */}
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={`${window.location.origin}/orders`} />
+      </Helmet>
+
       <h2>Mes commandes</h2>
       {orders.length === 0 ? (
         <p>Vous n’avez pas encore passé de commande.</p>
       ) : (
         <ul style={{ listStyle: "none", padding: 0 }}>
-          {orders.map(order => (
-            <li key={order._id} style={{ border: "1px solid #ddd", marginBottom: "10px", padding: "10px", borderRadius: "8px" }}>
+          {orders.map((order) => (
+            <li
+              key={order._id}
+              style={{
+                border: "1px solid #ddd",
+                marginBottom: "10px",
+                padding: "10px",
+                borderRadius: "8px",
+              }}
+            >
               <p><strong>Client :</strong> {order.clientName}</p>
               <p><strong>Email :</strong> {order.clientEmail}</p>
               <p><strong>Adresse :</strong> {order.address}</p>
               <p><strong>Total :</strong> {order.totalPrice} €</p>
               <p><strong>Produits :</strong></p>
               <ul>
-                {order.products.map(p => (
+                {order.products.map((p) => (
                   <li key={p.product._id}>
                     {p.product.name} x {p.quantity}
                   </li>
