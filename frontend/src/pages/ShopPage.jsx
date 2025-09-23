@@ -1,11 +1,10 @@
-// src/pages/ShopPage.jsx
+// ShopPage.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Shop.css";
 import { FaShoppingCart, FaHeart, FaRegHeart, FaEye } from "react-icons/fa";
 import { FaCodeCompare } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -25,8 +24,8 @@ export default function ShopPage({
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
 
-  const [sidebarOpen, setSidebarOpen] = useState(false); // sidebar mobile
-  const [quickViewProduct, setQuickViewProduct] = useState(null); // QuickView
+  // Quick View modal state
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -59,6 +58,7 @@ export default function ShopPage({
         setLoading(false);
       }
     }
+
     fetchCategories();
   }, []);
 
@@ -91,35 +91,15 @@ export default function ShopPage({
 
   return (
     <div className="shop-page">
-      <Helmet>
-        <title>Nos Produits - Douceurs du Chef</title>
-      </Helmet>
-
-      <h1 className="shop-title">Nos Produits</h1>
-
-      {/* Bouton filtre mobile */}
-      <button className="filter-toggle-btn" onClick={() => setSidebarOpen(true)}>
-        Filtrer
-      </button>
-
-      {/* Overlay */}
-      {sidebarOpen && (
-        <div className="sidebar-overlay active" onClick={() => setSidebarOpen(false)} />
-      )}
-
       {/* Sidebar */}
-      <aside className={`shop-sidebar ${sidebarOpen ? "" : "mobile-hidden"}`}>
-        <button className="close-sidebar-btn" onClick={() => setSidebarOpen(false)}>
-          Fermer
-        </button>
-
+      <aside className="shop-sidebar">
         <h3>Recherche</h3>
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Rechercher un produit..."
-          aria-label="Recherche produit"
+          aria-label="Rechercher un produit"
         />
 
         <h3>Catégories</h3>
@@ -143,6 +123,7 @@ export default function ShopPage({
             placeholder="Min"
             value={minPrice}
             onChange={(e) => setMinPrice(Number(e.target.value))}
+            aria-label="Prix minimum"
           />
           <span> - </span>
           <input
@@ -150,6 +131,7 @@ export default function ShopPage({
             placeholder="Max"
             value={maxPrice}
             onChange={(e) => setMaxPrice(Number(e.target.value))}
+            aria-label="Prix maximum"
           />
         </div>
 
@@ -169,19 +151,19 @@ export default function ShopPage({
               const isInCompare = compareList.some((item) => item._id === product._id);
 
               return (
-                <div key={product._id} className="shop-card">
+                <article key={product._id} className="shop-card">
                   <div className="badge">{Math.floor(Math.random() * 30) + 5}%</div>
 
                   <Link
-                    to={`/produits/${product.name.toLowerCase().replace(/\s/g, "-")}`}
+                    to={`/produits/${product._id}`}
                     className="product-link"
+                    aria-label={`Voir le produit ${product.name}`}
                   >
                     <img
                       src={product.imageUrl}
-                      alt={`Gâteau ${product.name}`}
-                      loading="lazy"
+                      alt={`Photo du produit ${product.name} (${product.category})`}
                     />
-                    <h4>{product.name}</h4>
+                    <h2>{product.name}</h2>
                   </Link>
 
                   <p className="category">{product.category}</p>
@@ -192,39 +174,63 @@ export default function ShopPage({
                     <span className="old-price">{(product.price * 1.2).toFixed(2)} Dt</span>
                   </div>
 
+                  {/* Quick Action Buttons */}
                   <div className="right-buttons">
-                    <button className="cart-btn" onClick={() => onAddToCart(product)}>
+                    <button
+                      className="cart-btn"
+                      onClick={() => onAddToCart(product)}
+                      aria-label="Ajouter au panier"
+                    >
                       <FaShoppingCart />
                     </button>
-                    <button className="wishlist-btn" onClick={() => onToggleWishlist(product)}>
+
+                    <button
+                      className="wishlist-btn"
+                      onClick={() => onToggleWishlist(product)}
+                      aria-label="Ajouter aux favoris"
+                    >
                       {isInWishlist ? <FaHeart /> : <FaRegHeart />}
                     </button>
-                    <button className="quickview-btn" onClick={() => openQuickView(product)}>
+
+                    <button
+                      className="quickview-btn"
+                      onClick={() => openQuickView(product)}
+                      aria-label="Aperçu rapide"
+                    >
                       <FaEye />
                     </button>
+
                     <button
                       className="compare-btn"
                       onClick={() => onAddToCompare(product)}
                       disabled={isInCompare}
+                      aria-label="Ajouter à la comparaison"
                     >
                       <FaCodeCompare />
                     </button>
                   </div>
-                </div>
+                </article>
               );
             })}
           </div>
         )}
       </section>
 
-      {/* QuickView */}
+      {/* Quick View Modal */}
       {quickViewProduct && (
-        <div className="quickview-modal" onClick={closeQuickView}>
-          <div className="quickview-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={closeQuickView}>
+        <div className="quickview-modal" onClick={closeQuickView} role="dialog" aria-modal="true">
+          <div
+            className="quickview-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className="close-btn" onClick={closeQuickView} aria-label="Fermer">
               &times;
             </button>
-            <img src={quickViewProduct.imageUrl} alt={quickViewProduct.name} />
+
+            <img
+              src={quickViewProduct.imageUrl}
+              alt={`Photo du produit ${quickViewProduct.name}`}
+            />
             <h2>{quickViewProduct.name}</h2>
             <p>Catégorie: {quickViewProduct.category}</p>
             <p>Prix: {quickViewProduct.price} Dt</p>
