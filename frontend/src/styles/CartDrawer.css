@@ -160,13 +160,23 @@
 }
 
 .checkout {
+  appearance: none; /* supprime le style par défaut du navigateur */
+  border: none;
+  outline: none;
+  display: inline-block;
   background: #16a34a;
   color: #fff;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s ease;
 }
 
 .checkout:hover {
   background: #13823d;
 }
+
 
 /* Responsive */
 @media (max-width: 500px) {
