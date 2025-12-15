@@ -23,14 +23,25 @@ export default function ProductDetail({
     async function fetchProduct() {
       try {
         const res = await axios.get(`${BASE_URL}/api/products/${id}`);
-        setProduct(res.data);
+        if (!res.data || !res.data._id) {
+          setNotFound(true);
+          return;
+        }
+    
+        // Ajouter imageUrl si inexistant
+        const productData = {
+          ...res.data,
+          imageUrl: res.data.imageUrl || `/images/products/${res.data.name.toLowerCase().replace(/[\s\(\)&]/g, "-")}.webp`
+        };
+    
+        setProduct(productData);
       } catch (err) {
         console.error("Produit non trouvé", err);
         setNotFound(true);
       } finally {
         setLoading(false);
       }
-    }
+    }    
     fetchProduct();
   }, [id]);
 
