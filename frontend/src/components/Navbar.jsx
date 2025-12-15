@@ -69,7 +69,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
         <ul className="mobile-nav-links">
           <li><Link to="/" onClick={closeMobileMenu}>Accueil</Link></li>
           <li><Link to="/produits" onClick={closeMobileMenu}>Produits</Link></li>
-          <li><Link to="/pages" onClick={closeMobileMenu}>Astuces & Dégustation</Link></li>
+          <li><Link to="/dégustation" onClick={closeMobileMenu}>Astuces & Dégustation</Link></li>
           <li><Link to="/contact" onClick={closeMobileMenu}>Contact</Link></li>
         </ul>
 
@@ -194,7 +194,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
           </button>
 
           <Link to="/produits">Produits</Link>
-          <Link to="/pages">Astuces & Dégustation</Link>
+          <Link to="/dégustation">Astuces & Dégustation</Link>
           <Link to="/contact">Contact</Link>
 
           {showCategories && <Categories onClickCategory={() => setShowCategories(false)} />}

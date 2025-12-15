@@ -1,36 +1,127 @@
-.tasting-container {
-  padding: 20px;
-  max-width: 600px;
+.tasting-page {
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
 }
 
-.tasting-container h2 {
+.tasting-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
-.tasting-container form {
+.tasting-header h1 {
+  font-size: 2.5rem;
+  color: #FE81CC;
+  margin-bottom: 15px;
+}
+
+.tasting-header p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.tasting-content {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.tasting-info {
+  flex: 1;
+  min-width: 300px;
+  background: #f8f8f8;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+}
+
+.tasting-info h3 {
+  color: #FE81CC;
+  margin-bottom: 15px;
+}
+
+.tasting-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tasting-info ul li {
+  margin-bottom: 10px;
+}
+
+.tasting-info a {
+  color: #04295e;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.tasting-info a:hover {
+  text-decoration: underline;
+}
+
+.tasting-form {
+  flex: 1;
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.tasting-container input, 
-.tasting-container textarea {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+.tasting-form h3 {
+  color: #FE81CC;
+  margin-bottom: 20px;
 }
 
-.tasting-container button {
-  background-color: #FE7A36;
-  color: white;
-  padding: 10px;
+.tasting-form input,
+.tasting-form textarea {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.tasting-form input:focus,
+.tasting-form textarea:focus {
+  border-color: #FE81CC;
+  outline: none;
+}
+
+.tasting-form textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+.tasting-form button {
+  background: linear-gradient(135deg, #FE81CC, #FF5DB3);
+  color: #fff;
   border: none;
-  border-radius: 8px;
+  padding: 12px 20px;
+  border-radius: 30px;
   cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
 }
 
-.tasting-container button:hover {
-  background-color: #e86b2c;
+.tasting-form button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #FF5DB3, #FE81CC);
+}
+
+.success-msg {
+  color: #4caf50;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .tasting-content {
+    flex-direction: column;
+  }
 }

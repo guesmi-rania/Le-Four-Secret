@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import "../styles/Footer.css";
 
 function Footer() {
@@ -33,26 +33,28 @@ function Footer() {
 
   return (
     <footer className="footer">
-      <div className="newsletter-section">
-        <h3>Recevez nos nouveautés & promos 🍰</h3>
-        <form className="newsletter-form" onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder="Votre email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <button type="submit">S'inscrire</button>
-        </form>
-        {error && <p className="error-msg">{error}</p>}
-        {submitted && !error && <p className="success-msg">Merci pour votre inscription !</p>}
+      <div className="footer-top">
+        <div className="newsletter">
+          <h3>Recevez nos nouveautés & offres 🍰</h3>
+          <form className="newsletter-form" onSubmit={handleSubmit}>
+            <input
+              type="email"
+              placeholder="Votre email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <button type="submit">S'inscrire</button>
+          </form>
+          {error && <p className="error-msg">{error}</p>}
+          {submitted && !error && <p className="success-msg">Merci pour votre inscription !</p>}
+        </div>
       </div>
 
-      <div className="footer-columns">
+      <div className="footer-middle">
         <div className="footer-column">
-          <h4>Mr.Chef Lotfi</h4>
-          <p>Pâtisserie artisanale de confiance</p>
+          <h4>À propos</h4>
+          <p>Douceurs du Chef, pâtisserie artisanale, créations gourmandes et originales, faites maison avec passion.</p>
         </div>
 
         <div className="footer-column">
@@ -67,7 +69,7 @@ function Footer() {
           <div className="social-icons">
             <a href="https://facebook.com" target="_blank" rel="noreferrer"><FaFacebookF /></a>
             <a href="https://instagram.com" target="_blank" rel="noreferrer"><FaInstagram /></a>
-            <a href="https://twitter.com" target="_blank" rel="noreferrer"><FaTwitter /></a>
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer"><FaLinkedinIn /></a>
           </div>
         </div>
       </div>

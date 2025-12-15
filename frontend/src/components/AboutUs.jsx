@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/AboutUs.css";
-import chefImage from "../assets/chef.jpg"; 
+import chefImage from "../assets/chef.webp"; 
 
 function AboutUs() {
   return (
