@@ -23,6 +23,7 @@ const corsOptions = {
   origin: [
     'http://localhost:5173',
     'https://frontend-recettes-fxc8.onrender.com', // Client déployé
+    'https://5173-firebase-lefoursecretgit-1765180526871.cluster-64pjnskmlbaxowh5lzq6i7v4ra.cloudworkstations.dev', // IDX Workspace
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
