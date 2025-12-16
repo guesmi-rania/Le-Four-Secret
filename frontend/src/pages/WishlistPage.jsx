@@ -52,10 +52,10 @@ export default function WishlistPage({ wishlist, setWishlist }) {
           </table>
 
           <div className="shop-link-container">
-            <Link to="/shop" className="shop-link-btn">
-              Continuer vos achats
-            </Link>
-          </div>
+  <Link to="/produits" className="shop-link-btn">
+    Continuer vos achats
+  </Link>
+</div>
         </>
       )}
     </div>

@@ -134,7 +134,19 @@ function App() {
         />
 
         {/* Routes Client */}
-        <Route path="/" element={<Home />} />
+        <Route
+           path="/"
+          element={
+         <Home
+      onAddToCart={handleAddToCart}
+      wishlist={wishlist}
+      compareList={compareList}
+      onToggleWishlist={handleToggleWishlist}
+      onAddToCompare={handleAddToCompare}
+       />
+           }
+        />
+
         <Route path="/login" element={<ClientAuth />} />
         <Route
           path="/bienvenue"

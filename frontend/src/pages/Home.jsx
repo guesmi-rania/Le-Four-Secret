@@ -35,6 +35,7 @@ function Home({ onAddToCart, wishlist, compareList, onToggleWishlist, onAddToCom
 
       <hr className="section-separator" />
 
+      {/* ✅ PopularProducts avec props */}
       <PopularProducts
         onAddToCart={onAddToCart}
         wishlist={wishlist}
@@ -54,7 +55,6 @@ function Home({ onAddToCart, wishlist, compareList, onToggleWishlist, onAddToCom
 
         <hr className="section-separator" />
 
-        {/* === Features Section === */}
         <section className="home-features">
           <div className="features-container">
             <div className="feature-item">
