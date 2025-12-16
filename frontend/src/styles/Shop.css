@@ -1,295 +1,195 @@
-/* === Shop Page Layout === */
 .shop-page {
   display: flex;
-  gap: 30px;
-  padding: 30px;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f9f9f9;
-  flex-wrap: wrap; /* pour mobile */
+  gap: 20px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
 /* Sidebar */
 .shop-sidebar {
-  width: 270px;
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  flex-shrink: 0;
+  width: 250px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
 }
 
 .shop-sidebar h3 {
+  margin-top: 0;
   margin-bottom: 10px;
-  color: #111827;
   font-size: 18px;
-  border-bottom: 2px solid #16a34a;
-  padding-bottom: 4px;
 }
 
 .shop-sidebar input[type="text"],
 .shop-sidebar input[type="number"] {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 4px;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
 }
 
 .checkbox-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
 }
 
 .checkbox-label {
+  margin-bottom: 5px;
   font-size: 14px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.price-filter {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 20px;
 }
 
 .reset-btn {
-  background-color: #16a34a;
+  margin-top: 10px;
+  padding: 6px 12px;
+  background-color: #f25c54;
   color: #fff;
   border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-.reset-btn:hover {
-  background-color: #15803d;
 }
 
-/* Products */
+.reset-btn:hover {
+  background-color: #e04f47;
+}
+
+/* Products grid */
 .shop-products {
   flex: 1;
 }
 
 .shop-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
 }
 
 .shop-card {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 15px 15px 25px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
   position: relative;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  cursor: pointer;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease;
 }
+
 .shop-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .shop-card img {
   width: 100%;
-  height: 180px;
+  height: 150px;
   object-fit: cover;
-  margin-bottom: 12px;
-  border-radius: 8px;
 }
 
-/* Badge carré en haut à droite */
-.badge {
-  position: absolute;
-  top: 8px;
-  right: 8px;              /* déplacer à droite */
-  width: 18px;             /* carré */
-  height: 18px;            /* carré */
-  background-color: #ef4444;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 3px;       /* léger arrondi ou 0 pour carré parfait */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  padding: 0;               /* pas de padding pour garder carré */
+.shop-card h2 {
+  font-size: 16px;
+  margin: 5px 10px;
 }
 
-
-/* Text & Price */
-.category {
-  color: #888;
-  font-size: 13px;
-  margin-bottom: 6px;
-  font-weight: 500;
-}
-
-.shop-card h4 {
-  font-size: 17px;
-  font-weight: 700;
-  color: #111;
-  margin: 5px 0 8px;
-  min-height: 48px;
-}
-
+.category,
 .by {
-  font-size: 13px;
-  color: #777;
-  margin-bottom: 14px;
-  font-style: italic;
+  font-size: 12px;
+  color: #555;
+  margin: 0 10px 5px 10px;
 }
 
 .price-box {
   display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 15px;
-}
-.price {
-  color: #16a34a;
-  font-weight: 700;
-  font-size: 18px;
-}
-.old-price {
-  color: #bbb;
-  font-size: 14px;
-  text-decoration: line-through;
-  align-self: center;
+  justify-content: space-between;
+  padding: 0 10px 10px 10px;
 }
 
-/* Action Buttons */
+.price {
+  font-weight: bold;
+  color: #f25c54;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #999;
+}
+
 .right-buttons {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-end;
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  z-index: 5;
+  justify-content: space-around;
+  padding: 10px;
 }
+
 .right-buttons button {
+  background-color: transparent;
   border: none;
   cursor: pointer;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
   font-size: 16px;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-.right-buttons button:hover:not(:disabled) {
-  transform: scale(1.15);
 }
 
-/* === Buttons Icons Only (Cart, Wishlist, Compare, Quick View) === */
-.cart-btn,
-.wishlist-btn,
-.compare-btn,
-.quickview-btn {
-  background: none;        /* pas de fond */
-  border: none;            /* pas de bordure */
-  color: #ec4899;          /* couleur rose */
-  font-size: 18px;         /* taille de l'icône */
-  cursor: pointer;
-  padding: 0;              /* pas de padding */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease, color 0.2s ease;
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #f25c54;
+  color: #fff;
+  padding: 3px 6px;
+  font-size: 12px;
+  border-radius: 4px;
 }
 
-.cart-btn:hover,
-.wishlist-btn:hover,
-.compare-btn:hover,
-.quickview-btn:hover {
-  transform: scale(1.15);  /* effet zoom */
-  color: #be185d;          /* rose foncé au hover */
-}
-
-.compare-btn:disabled,
-.quickview-btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-  color: #f9a5c1;          /* rose clair pour disabled */
-}
-
-/* === Quick View Modal === */
+/* Quick view modal */
 .quickview-modal {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 1000;
 }
 
 .quickview-content {
-  background: #fff;
-  padding: 1.5rem;
+  background-color: #fff;
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
   border-radius: 8px;
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
   position: relative;
-  animation: fadeIn 0.3s ease;
 }
 
-@keyframes fadeIn { from {opacity:0; transform:scale(0.95);} to {opacity:1; transform:scale(1);} }
-.quickview-content img { max-width:100%; border-radius:8px; margin-bottom:1rem; }
+.quickview-content img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.quickview-content h2 {
+  margin: 0 0 5px 0;
+}
 
 .quickview-buttons {
-  display:flex; flex-direction:column; gap:10px; margin-top:15px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }
-.quickview-buttons button { padding:10px 12px; font-size:14px; border-radius:6px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; }
-.quickview-buttons button:hover:not(:disabled) { transform:scale(1.05); }
+
+.quickview-buttons button {
+  flex: 1;
+  margin: 0 2px;
+  padding: 5px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
 .close-btn {
-  position:absolute; top:0.5rem; right:0.5rem; font-size:1.5rem;
-  background:none; border:none; cursor:pointer;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  /* Déjà existant */
-  .shop-page { flex-direction: column; padding: 20px; }
-  .shop-sidebar { width: 100%; margin-bottom: 20px; }
-  .shop-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
-  .badge { font-size: 9px; padding: 2px 4px; }
-  .right-buttons { 
-    flex-direction: row; 
-    justify-content: flex-end; 
-    position: relative; 
-    top: auto; 
-    right: auto; 
-    transform: none; 
-    margin-top: 10px; 
-  }
-  .right-buttons button { 
-    width: 32px; 
-    height: 32px; 
-    font-size: 18px;  /* augmenter pour que l'icône reste visible */
-    padding: 0;        /* pas de padding, juste l'icône */
-    background: none;  /* fond transparent */
-    border: none;      /* pas de bordure */
-    color: #ec4899;    /* couleur rose */
-  }
-  .quickview-content { max-width: 95%; }
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
 }
