@@ -1,9 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 .tasting-page {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
   font-family: 'Poppins', sans-serif;
   color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .tasting-header {
@@ -12,13 +17,14 @@
 }
 
 .tasting-header h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   color: #FE81CC;
   margin-bottom: 15px;
+  font-weight: 700;
 }
 
 .tasting-header p {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #555;
 }
 
@@ -27,6 +33,7 @@
   gap: 40px;
   flex-wrap: wrap;
   justify-content: space-between;
+  flex: 1;
 }
 
 .tasting-info {
@@ -41,15 +48,18 @@
 .tasting-info h3 {
   color: #FE81CC;
   margin-bottom: 15px;
+  font-weight: 700;
 }
 
 .tasting-info ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .tasting-info ul li {
   margin-bottom: 10px;
+  font-size: 1rem;
 }
 
 .tasting-info a {
@@ -73,6 +83,7 @@
 .tasting-form h3 {
   color: #FE81CC;
   margin-bottom: 20px;
+  font-weight: 700;
 }
 
 .tasting-form input,
@@ -105,6 +116,7 @@
   border-radius: 30px;
   cursor: pointer;
   font-weight: 600;
+  font-size: 1rem;
   transition: all 0.3s;
 }
 
@@ -123,5 +135,17 @@
 @media (max-width: 900px) {
   .tasting-content {
     flex-direction: column;
+  }
+
+  .tasting-header h1 {
+    font-size: 2rem;
+  }
+
+  .tasting-header p {
+    font-size: 1rem;
+  }
+
+  .tasting-form button {
+    width: 100%;
   }
 }
