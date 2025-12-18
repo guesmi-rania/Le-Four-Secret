@@ -2,6 +2,18 @@ import React, { useState } from "react";
 import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import "../styles/Footer.css";
 
+const categories = [
+  "Gâteaux Signature",
+  "Mousses & Entremets",
+  "Gâteaux Événementiels",
+  "Viennoiseries",
+  "Millefeuilles",
+  "Feuilletés Salés",
+  "Choux & Crèmes",
+  "Cheesecakes",
+  "Donuts",
+];
+
 function Footer() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -32,50 +44,76 @@ function Footer() {
   };
 
   return (
-    <footer className="footer">
+    <footer className="centered-footer">
+      {/* ===== NEWSLETTER ===== */}
+      <div className="footer-newsletter">
+  <h3>Recevez nos nouveautés & offres 🍰</h3>
+  <p>Inscrivez-vous à notre newsletter pour recevoir les dernières promotions et nouveautés.</p>
+  <form className="newsletter-form-footer" onSubmit={handleSubmit}>
+    <input
+      type="email"
+      placeholder="Votre email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      required
+    />
+    <button type="submit">S'inscrire</button>
+  </form>
+  {error && <p className="error-msg">{error}</p>}
+  {submitted && !error && <p className="success-msg">Merci pour votre inscription !</p>}
+  <hr /> {/* ligne longue ajoutée */}
+</div>
+
+
+      {/* ===== CATEGORIES ET LIENS ===== */}
       <div className="footer-top">
-        <div className="newsletter">
-          <h3>Recevez nos nouveautés & offres 🍰</h3>
-          <form className="newsletter-form" onSubmit={handleSubmit}>
-            <input
-              type="email"
-              placeholder="Votre email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <button type="submit">S'inscrire</button>
-          </form>
-          {error && <p className="error-msg">{error}</p>}
-          {submitted && !error && <p className="success-msg">Merci pour votre inscription !</p>}
-        </div>
-      </div>
-
-      <div className="footer-middle">
-        <div className="footer-column">
-          <h4>À propos</h4>
-          <p>Douceurs du Chef, pâtisserie artisanale, créations gourmandes et originales, faites maison avec passion.</p>
-        </div>
-
-        <div className="footer-column">
-          <h4>Contact</h4>
+        <div className="footer-contact">
+          <h4>Contactez-nous</h4>
           <p>📞 +216 20 828 055</p>
           <p>✉️ contact@chefLotfi.com</p>
           <p>📍 123 Rue des Gourmands, Tunis, Tunisie</p>
         </div>
 
-        <div className="footer-column">
-          <h4>Suivez-nous</h4>
-          <div className="social-icons">
-            <a href="https://facebook.com" target="_blank" rel="noreferrer"><FaFacebookF /></a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer"><FaInstagram /></a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer"><FaLinkedinIn /></a>
+        <div className="footer-links">
+          <div className="link-column">
+            <h4>Nos Catégories</h4>
+            <ul>
+              {categories.map((cat, index) => (
+                <li key={index}>{cat}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="link-column">
+            <h4>À propos</h4>
+            <ul>
+              <li>Notre histoire</li>
+              <li>Livraison & Retours</li>
+              <li>Confidentialité</li>
+              <li>Conditions d'utilisation</li>
+            </ul>
+          </div>
+
+          <div className="link-column">
+            <h4>Support</h4>
+            <ul>
+              <li>Aide & FAQ</li>
+              <li>Suivi de commande</li>
+              <li>Contactez-nous</li>
+            </ul>
           </div>
         </div>
       </div>
 
+      {/* ===== FOOTER BOTTOM ===== */}
       <div className="footer-bottom">
-        © 2025 Douceurs du Chef. Tous droits réservés.
+        <div className="social-icons">
+          <a href="https://facebook.com" target="_blank" rel="noreferrer"><FaFacebookF /></a>
+          <a href="https://instagram.com" target="_blank" rel="noreferrer"><FaInstagram /></a>
+          <a href="https://twitter.com" target="_blank" rel="noreferrer"><FaTwitter /></a>
+          <a href="https://linkedin.com" target="_blank" rel="noreferrer"><FaLinkedinIn /></a>
+        </div>
+        <p>© 2025 Douceurs du Chef. Tous droits réservés.</p>
       </div>
     </footer>
   );

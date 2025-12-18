@@ -1,35 +1,189 @@
+/* Confirmation.css */
+
+/* Structure générale de la page */
+.confirmation-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* permet de pousser le footer en bas */
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+/* Container central de confirmation */
 .confirmation-container {
-    max-width: 600px;
-    margin: 80px auto;
-    padding: 30px;
-    text-align: center;
-    background: #f9f9f9;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    font-family: "Poppins", sans-serif;
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 30px;
+  text-align: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  flex: 1; /* pousse le footer vers le bas */
+}
+
+/* Titre de confirmation */
+.confirmation-container h2 {
+  color: #4caf50;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* Texte descriptif */
+.confirmation-container p {
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Bouton de retour à l'accueil */
+.back-btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 12px 25px;
+  background-color: #4caf50;
+  color: #fff;
+  border-radius: 8px;
+  transition: background 0.3s ease, transform 0.2s ease;
+  font-weight: 600;
+}
+
+.back-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+/* Footer */
+.footer {
+  background: #f8f8f8;
+  padding: 40px 20px 20px 20px;
+  color: #333;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Newsletter Footer */
+.footer-newsletter {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.footer-newsletter h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #ff4081;
+}
+
+.footer-newsletter p {
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.newsletter-form input {
+  padding: 10px;
+  width: 250px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.newsletter-form button {
+  padding: 10px 20px;
+  background: #ff4081;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.newsletter-form button:hover {
+  background: #e60070;
+}
+
+/* Catégories Footer */
+.footer-categories-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.category-column h4 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #ff4081;
+}
+
+.category-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-column ul li {
+  margin-bottom: 6px;
+}
+
+.category-column ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  transition: color 0.3s, font-weight 0.3s;
+}
+
+.category-column ul li a:hover {
+  color: #ff4081;
+  font-weight: bold;
+}
+
+/* Footer bottom */
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.footer-bottom p {
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0;
+}
+
+.footer-bottom .social-icons a {
+  margin: 0 10px;
+  color: #333;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.footer-bottom .social-icons a:hover {
+  color: #ff4081;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .confirmation-container {
+    margin: 50px 20px;
+    padding: 25px;
   }
-  
-  .confirmation-container h2 {
-    color: #4caf50;
-    margin-bottom: 20px;
+
+  .footer-categories-wrapper {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .confirmation-container p {
-    margin-bottom: 25px;
-    font-size: 1.1rem;
-    color: #555;
+
+  .newsletter-form input {
+    width: 100%;
   }
-  
-  .back-btn {
-    text-decoration: none;
-    padding: 12px 25px;
-    background-color: #4caf50;
-    color: #fff;
-    border-radius: 8px;
-    transition: 0.2s;
-  }
-  
-  .back-btn:hover {
-    background-color: #45a049;
-  }
-  
+}

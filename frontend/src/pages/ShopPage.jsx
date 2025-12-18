@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import "../styles/Shop.css";
 import { FaShoppingCart, FaHeart, FaRegHeart, FaEye } from "react-icons/fa";
 import { FaCodeCompare } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-
-const BASE_URL = import.meta.env.VITE_API_URL;
+import rawData from "../data/data.json";
+import Footer from "../components/Footer"; // ✅ importer Footer
 
 export default function ShopPage({
   onAddToCart,
@@ -22,44 +21,44 @@ export default function ShopPage({
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
-
   const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 9;
 
-  // Récupération des produits depuis le backend
   useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const res = await axios.get(`${BASE_URL}/api/products`);
-        const productsData = res.data; // tableau d'objets avec _id, name, price, imageUrl, etc.
-        setProducts(productsData);
-        setFilteredProducts(productsData);
-
-        // Extraire les catégories uniques
-        const cats = Array.from(new Set(productsData.flatMap(p => p.categories || [])));
-        setCategories(cats);
-      } catch (error) {
-        console.error("Erreur fetchProducts:", error);
-        alert("Erreur lors du chargement des produits");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchProducts();
+    const productsData = rawData.flatMap((cat) =>
+      cat.products.map((name, index) => ({
+        _id: `${cat.category}-${index}`,
+        name,
+        categories: [cat.category],
+        price: Math.floor(Math.random() * 50) + 10,
+        imageUrl: `/images/products/${name.replace(/\s+/g, "-")}.jpg`,
+      }))
+    );
+    setProducts(productsData);
+    setFilteredProducts(productsData);
+    setCategories(rawData.map((cat) => cat.category));
+    setLoading(false);
   }, []);
 
-  // Filtrage des produits
   useEffect(() => {
     let temp = [...products];
-    if (search) temp = temp.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
-    if (selectedCategories.length > 0) temp = temp.filter(p => (p.categories || []).some(cat => selectedCategories.includes(cat)));
-    temp = temp.filter(p => p.price >= minPrice && p.price <= maxPrice);
+    if (search)
+      temp = temp.filter((p) =>
+        p.name.toLowerCase().includes(search.toLowerCase())
+      );
+    if (selectedCategories.length > 0)
+      temp = temp.filter((p) =>
+        (p.categories || []).some((cat) => selectedCategories.includes(cat))
+      );
+    temp = temp.filter((p) => p.price >= minPrice && p.price <= maxPrice);
     setFilteredProducts(temp);
+    setCurrentPage(1);
   }, [search, selectedCategories, minPrice, maxPrice, products]);
 
   const toggleCategory = (cat) => {
     if (selectedCategories.includes(cat)) {
-      setSelectedCategories(selectedCategories.filter(c => c !== cat));
+      setSelectedCategories(selectedCategories.filter((c) => c !== cat));
     } else {
       setSelectedCategories([...selectedCategories, cat]);
     }
@@ -75,130 +74,206 @@ export default function ShopPage({
   const openQuickView = (product) => setQuickViewProduct(product);
   const closeQuickView = () => setQuickViewProduct(null);
 
+  // Pagination
+  const indexOfLast = currentPage * productsPerPage;
+  const indexOfFirst = indexOfLast - productsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirst, indexOfLast);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
-    <div className="shop-page">
-      <aside className="shop-sidebar">
-        <h3>Recherche</h3>
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Rechercher un produit..."
-        />
-
-        <h3>Catégories</h3>
-        <div className="checkbox-group">
-          {categories.map((cat, i) => (
-            <label key={i} className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={selectedCategories.includes(cat)}
-                onChange={() => toggleCategory(cat)}
-              />
-              {cat}
-            </label>
-          ))}
-        </div>
-
-        <h3>Prix</h3>
-        <div className="price-filter">
+    <div className="shop-page-wrapper">
+      {/* Contenu principal */}
+      <div className="shop-page">
+        <aside className="shop-sidebar">
+          {/* Sidebar: recherche, catégories, prix */}
+          <h3>Recherche</h3>
           <input
-            type="number"
-            placeholder="Min"
-            value={minPrice}
-            onChange={(e) => setMinPrice(Number(e.target.value))}
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Rechercher un produit..."
           />
-          <span> - </span>
-          <input
-            type="number"
-            placeholder="Max"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(Number(e.target.value))}
-          />
-        </div>
 
-        <button className="reset-btn" onClick={resetFilters}>
-          Réinitialiser
-        </button>
-      </aside>
-
-      <section className="shop-products">
-        {loading ? (
-          <p>Chargement des produits...</p>
-        ) : (
-          <div className="shop-grid">
-            {filteredProducts.map((product) => {
-              const isInWishlist = wishlist.some((item) => item._id === product._id);
-              const isInCompare = compareList.some((item) => item._id === product._id);
-
-              return (
-                <article key={product._id} className="shop-card">
-                  <div className="badge">{Math.floor(Math.random() * 30) + 5}%</div>
-
-                  <Link to={`/produits/${product._id}`} className="product-link">
-                    <img src={product.imageUrl} alt={product.name} />
-                    <h2>{product.name}</h2>
-                  </Link>
-
-                  <p className="category">{(product.categories || []).join(", ")}</p>
-                  <p className="by">Mr.Chef Lotfi</p>
-
-                  <div className="price-box">
-                    <span className="price">{product.price.toFixed(2)} TND</span>
-                    <span className="old-price">{(product.price * 1.2).toFixed(2)} TND</span>
-                  </div>
-
-                  <div className="right-buttons">
-                    <button className="cart-btn" onClick={() => onAddToCart(product)}>
-                      <FaShoppingCart />
-                    </button>
-                    <button className="wishlist-btn" onClick={() => onToggleWishlist(product)}>
-                      {isInWishlist ? <FaHeart /> : <FaRegHeart />}
-                    </button>
-                    <button className="quickview-btn" onClick={() => openQuickView(product)}>
-                      <FaEye />
-                    </button>
-                    <button
-                      className="compare-btn"
-                      onClick={() => onAddToCompare(product)}
-                      disabled={isInCompare}
-                    >
-                      <FaCodeCompare />
-                    </button>
-                  </div>
-                </article>
-              );
-            })}
+          <h3>Catégories</h3>
+          <div className="checkbox-group">
+            {categories.map((cat, i) => (
+              <label key={i} className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={selectedCategories.includes(cat)}
+                  onChange={() => toggleCategory(cat)}
+                />
+                {cat}
+              </label>
+            ))}
           </div>
-        )}
-      </section>
 
-      {quickViewProduct && (
-        <div className="quickview-modal" onClick={closeQuickView} role="dialog" aria-modal="true">
-          <div className="quickview-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={closeQuickView} aria-label="Fermer">&times;</button>
-            <img src={quickViewProduct.imageUrl} alt={quickViewProduct.name} />
-            <h2>{quickViewProduct.name}</h2>
-            <p>Catégorie: {(quickViewProduct.categories || []).join(", ")}</p>
-            <p>Prix: {quickViewProduct.price.toFixed(2)} TND</p>
-
-            <div className="quickview-buttons">
-              <button onClick={() => onAddToCart(quickViewProduct)}>
-                <FaShoppingCart /> Ajouter au panier
-              </button>
-              <button onClick={() => onToggleWishlist(quickViewProduct)}>
-                {wishlist.some((item) => item._id === quickViewProduct._id) ? <FaHeart /> : <FaRegHeart />} Wishlist
-              </button>
-              <button
-                onClick={() => onAddToCompare(quickViewProduct)}
-                disabled={compareList.some((item) => item._id === quickViewProduct._id)}
-              >
-                <FaCodeCompare /> Comparer
-              </button>
+          <h3>Prix</h3>
+          <div className="price-slider-container">
+            <input
+              type="range"
+              min="0"
+              max="1000"
+              value={minPrice}
+              onChange={(e) => setMinPrice(Number(e.target.value))}
+            />
+            <input
+              type="range"
+              min="0"
+              max="1000"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(Number(e.target.value))}
+            />
+            <div className="price-values">
+              <span>{minPrice} TND</span>
+              <span>{maxPrice} TND</span>
             </div>
           </div>
-        </div>
-      )}
+
+          <button className="reset-btn" onClick={resetFilters}>
+            Réinitialiser
+          </button>
+        </aside>
+
+        <section className="shop-products">
+          {loading ? (
+            <p>Chargement des produits...</p>
+          ) : (
+            <>
+              <div className="shop-grid">
+                {currentProducts.map((product) => {
+                  const isInWishlist = wishlist.some(
+                    (item) => item._id === product._id
+                  );
+                  const isInCompare = compareList.some(
+                    (item) => item._id === product._id
+                  );
+
+                  return (
+                    <article key={product._id} className="shop-card">
+                      <div className="badge">
+                        {Math.floor(Math.random() * 30) + 5}%
+                      </div>
+
+                      <Link
+                        to={`/produits/${product._id}`}
+                        className="product-link"
+                      >
+                        <img src={product.imageUrl} alt={product.name} />
+                        <h2>{product.name}</h2>
+                      </Link>
+
+                      <p className="category">
+                        {(product.categories || []).join(", ")}
+                      </p>
+                      <p className="by">Mr.Chef Lotfi</p>
+
+                      <div className="price-box">
+                        <span className="price">{product.price.toFixed(2)} TND</span>
+                        <span className="old-price">
+                          {(product.price * 1.2).toFixed(2)} TND
+                        </span>
+                      </div>
+
+                      <div className="right-buttons">
+                        <button className="cart-btn" onClick={() => onAddToCart(product)}>
+                          <FaShoppingCart />
+                        </button>
+                        <button
+                          className="wishlist-btn"
+                          onClick={() => onToggleWishlist(product)}
+                        >
+                          {isInWishlist ? <FaHeart /> : <FaRegHeart />}
+                        </button>
+                        <button
+                          className="quickview-btn"
+                          onClick={() => openQuickView(product)}
+                        >
+                          <FaEye />
+                        </button>
+                        <button
+                          className="compare-btn"
+                          onClick={() => onAddToCompare(product)}
+                          disabled={isInCompare}
+                        >
+                          <FaCodeCompare />
+                        </button>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+
+              <div className="pagination">
+                {Array.from({
+                  length: Math.ceil(filteredProducts.length / productsPerPage),
+                }).map((_, i) => (
+                  <button
+                    key={i}
+                    className={currentPage === i + 1 ? "active" : ""}
+                    onClick={() => paginate(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </section>
+
+        {quickViewProduct && (
+          <div
+            className="quickview-modal"
+            onClick={closeQuickView}
+            role="dialog"
+            aria-modal="true"
+          >
+            <div
+              className="quickview-content"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="close-btn"
+                onClick={closeQuickView}
+                aria-label="Fermer"
+              >
+                &times;
+              </button>
+              <img src={quickViewProduct.imageUrl} alt={quickViewProduct.name} />
+              <h2>{quickViewProduct.name}</h2>
+              <p>Catégorie: {(quickViewProduct.categories || []).join(", ")}</p>
+              <p>Prix: {quickViewProduct.price.toFixed(2)} TND</p>
+
+              <div className="quickview-buttons">
+                <button onClick={() => onAddToCart(quickViewProduct)}>
+                  <FaShoppingCart /> Ajouter au panier
+                </button>
+                <button onClick={() => onToggleWishlist(quickViewProduct)}>
+                  {wishlist.some(
+                    (item) => item._id === quickViewProduct._id
+                  ) ? (
+                    <FaHeart />
+                  ) : (
+                    <FaRegHeart />
+                  )}{" "}
+                  Wishlist
+                </button>
+                <button
+                  onClick={() => onAddToCompare(quickViewProduct)}
+                  disabled={compareList.some(
+                    (item) => item._id === quickViewProduct._id
+                  )}
+                >
+                  <FaCodeCompare /> Comparer
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ✅ Footer en dehors du contenu principal */}
+      <Footer />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import "../styles/ContactPage.css";
 import { FaFacebookF, FaInstagram, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
+import Footer from "../components/Footer";
 
 export default function ContactPage() {
   const form = useRef();
@@ -46,23 +47,19 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="contact-container">
+    <div className="contact-page">
       {/* ✅ SEO Helmet */}
       <Helmet>
         <title>Contact | Douceurs du Chef</title>
         <meta
           name="description"
-          content="Contactez Douceurs du Chef pour toute question ou information. Nous sommes disponibles par téléphone, email ou via notre formulaire de contact."
+          content="Contactez Douceurs du Chef pour toute question ou information."
         />
         <link rel="canonical" href={`${window.location.origin}/contact`} />
-        <meta property="og:title" content="Contact | Douceurs du Chef" />
-        <meta property="og:description" content="Contactez Douceurs du Chef pour toute question ou information." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${window.location.origin}/contact`} />
       </Helmet>
 
-      <div className="contact-content">
-        {/* Formulaire de contact */}
+      {/* Contenu principal */}
+      <main className="contact-container">
         <div className="contact-form">
           <h2>Contactez-nous</h2>
           <form ref={form} onSubmit={sendEmail}>
@@ -93,7 +90,6 @@ export default function ContactPage() {
           </form>
         </div>
 
-        {/* Informations de contact */}
         <div className="contact-info">
           <h2>Comment pouvons-nous vous aider ?</h2>
           <div className="contact-field">
@@ -134,20 +130,26 @@ export default function ContactPage() {
             </li>
           </ul>
         </div>
-      </div>
 
-      {/* Carte Google Maps */}
-      <div className="map-container">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6456956.935024549!2d7.204370499999999!3d33.886915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1255f210b48d138d%3A0x7530c3ce67f77f35!2sTunisie!5e0!3m2!1sfr!2stn!4v1688532689513!5m2!1sfr!2stn"
-          width="100%"
-          height="300"
-          style={{ border: 0 }}
-          allowFullScreen=""
-          loading="lazy"
-          title="Carte Tunisie"
-        />
-      </div>
+        {/* Carte Google Maps */}
+        <div className="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6456956.935024549!2d7.204370499999999!3d33.886915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1255f210b48d138d%3A0x7530c3ce67f77f35!2sTunisie!5e0!3m2!1sfr!2stn!4v1688532689513!5m2!1sfr!2stn"
+            width="100%"
+            height="300"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            title="Carte Tunisie"
+          />
+        </div>
+      </main>
+
+      {/* Séparateur avant le footer */}
+      <div style={{ width: "100%", height: "2px", backgroundColor: "#eee", margin: "50px 0" }} />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
