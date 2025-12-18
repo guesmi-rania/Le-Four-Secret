@@ -12,13 +12,12 @@ body, html {
 
 .slider-section {
   width: 100%;
-  padding: 0;
-  background-color: #f8f9fa;
+  background-color: #fff; /* même couleur que le slider */
   display: flex;
-  justify-content: flex-start;  /* tout à gauche */
-  padding-left: 300px;     
-  gap: 30px;     /* pousse le contenu vers la droite si nécessaire */
-  margin-top: 40px;  /* descend la section par rapport au navbar */
+  justify-content: flex-start;  
+  padding-left: 300px;
+  gap: 30px;     
+  margin-top: 40px;  
 }
 
 /* Conteneur principal : slider + bloc produits */

@@ -174,13 +174,13 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
 
           <Link to="/wishlist" className="icon-item">
             <FaHeart />
-            <span>Wishlist</span>
+           
             {wishlist.length > 0 && <span className="badge">{wishlist.length}</span>}
           </Link>
 
           <Link to="/cart" className="icon-item">
             <FaShoppingBag />
-            <span>Panier</span>
+           
             {cart.length > 0 && <span className="badge">{cart.length}</span>}
           </Link>
         </div>

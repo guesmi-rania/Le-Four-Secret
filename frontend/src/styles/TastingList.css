@@ -3,149 +3,148 @@
 .tasting-page {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 60px 20px 40px;
   font-family: 'Poppins', sans-serif;
   color: #333;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(120deg, #ffffff, #ffffff);
+  animation: fadeIn 1s ease-in-out;
 }
 
 .tasting-header {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 }
 
 .tasting-header h1 {
-  font-size: 2.8rem;
+  font-size: 3rem;
   color: #FE81CC;
   margin-bottom: 15px;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
 .tasting-header p {
   font-size: 1.2rem;
   color: #555;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 .tasting-content {
   display: flex;
-  gap: 40px;
+  gap: 50px;
   flex-wrap: wrap;
   justify-content: space-between;
   flex: 1;
+  align-items: flex-start;
 }
 
 .tasting-info {
   flex: 1;
-  min-width: 300px;
-  background: #f8f8f8;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+  min-width: 320px;
+  background: #fff0f8;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
 }
+
+.tasting-info:hover { transform: translateY(-5px); }
 
 .tasting-info h3 {
   color: #FE81CC;
-  margin-bottom: 15px;
-  font-weight: 700;
+  margin-bottom: 20px;
+  font-weight: 800;
+  font-size: 1.6rem;
 }
 
-.tasting-info ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.tasting-info ul li {
-  margin-bottom: 10px;
+.tasting-info p {
   font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
 }
 
-.tasting-info a {
-  color: #04295e;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.tasting-info a:hover {
-  text-decoration: underline;
-}
+.tasting-info ul { list-style: none; padding: 0; margin-top: 15px; }
+.tasting-info ul li { margin-bottom: 10px; font-size: 1rem; }
+.tasting-info a { color: #FE5DB3; text-decoration: none; font-weight: 600; transition: color 0.3s; }
+.tasting-info a:hover { color: #FF2D95; text-decoration: underline; }
 
 .tasting-form {
   flex: 1;
-  min-width: 300px;
+  min-width: 320px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 18px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
 }
+
+.tasting-form:hover { transform: translateY(-5px); }
 
 .tasting-form h3 {
   color: #FE81CC;
-  margin-bottom: 20px;
-  font-weight: 700;
+  margin-bottom: 25px;
+  font-weight: 800;
+  font-size: 1.6rem;
+  text-align: center;
 }
 
 .tasting-form input,
 .tasting-form textarea {
-  padding: 12px 15px;
-  border-radius: 8px;
+  padding: 14px 18px;
+  border-radius: 10px;
   border: 1px solid #ccc;
   font-size: 1rem;
   width: 100%;
   box-sizing: border-box;
-  transition: border-color 0.3s;
+  transition: border 0.3s, box-shadow 0.3s;
 }
 
 .tasting-form input:focus,
 .tasting-form textarea:focus {
   border-color: #FE81CC;
+  box-shadow: 0 0 10px rgba(254,129,204,0.3);
   outline: none;
 }
 
-.tasting-form textarea {
-  min-height: 120px;
-  resize: none;
-}
+.tasting-form textarea { min-height: 140px; resize: none; }
 
 .tasting-form button {
   background: linear-gradient(135deg, #FE81CC, #FF5DB3);
   color: #fff;
   border: none;
-  padding: 12px 20px;
+  padding: 14px 25px;
   border-radius: 30px;
   cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.3s;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
 }
 
 .tasting-form button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   background: linear-gradient(135deg, #FF5DB3, #FE81CC);
 }
 
 .success-msg {
   color: #4caf50;
+  font-weight: 600;
   margin-top: 10px;
-  font-weight: 500;
+  text-align: center;
 }
 
-/* Responsive */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
 @media (max-width: 900px) {
-  .tasting-content {
-    flex-direction: column;
-  }
-
-  .tasting-header h1 {
-    font-size: 2rem;
-  }
-
-  .tasting-header p {
-    font-size: 1rem;
-  }
-
-  .tasting-form button {
-    width: 100%;
-  }
+  .tasting-content { flex-direction: column; }
+  .tasting-header h1 { font-size: 2.2rem; }
+  .tasting-header p { font-size: 1.1rem; }
+  .tasting-form button { width: 100%; }
 }
