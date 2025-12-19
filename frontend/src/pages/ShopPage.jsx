@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Shop.css";
-import { FaShoppingCart, FaHeart, FaRegHeart, FaBalanceScale } from "react-icons/fa";
+import { FaShoppingCart, FaHeart, FaRegHeart, FaBalanceScale, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import rawData from "../data/data.json";
 import Footer from "../components/Footer";
@@ -21,10 +21,10 @@ export default function ShopPage({
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [currentPage, setCurrentPage] = useState(1);
+  const [quickViewProduct, setQuickViewProduct] = useState(null); // État modal QuickView
   const productsPerPage = 9;
 
   useEffect(() => {
-    // Générer tous les produits depuis le JSON
     const productsData = rawData.flatMap((cat) =>
       cat.products.map((name, index) => ({
         _id: `${cat.category}-${index}`,
@@ -40,7 +40,6 @@ export default function ShopPage({
     setLoading(false);
   }, []);
 
-  // Filtrage selon recherche, catégorie et prix
   useEffect(() => {
     let temp = [...products];
     if (search)
@@ -71,17 +70,19 @@ export default function ShopPage({
     setMaxPrice(1000);
   };
 
-  // Pagination
   const indexOfLast = currentPage * productsPerPage;
   const indexOfFirst = indexOfLast - productsPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirst, indexOfLast);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const openQuickView = (product) => {
+    setQuickViewProduct(product);
+  };
+
   return (
-      <div className="shop-page-wrapper">
-  {/* Bannière en haut */}
-  <div className="shop-banner">
-  </div>
+    <div className="shop-page-wrapper">
+      {/* Bannière en haut */}
+      <div className="shop-banner"></div>
 
       <div className="shop-page">
         {/* Sidebar */}
@@ -156,7 +157,6 @@ export default function ShopPage({
                         {Math.floor(Math.random() * 30) + 5}%
                       </div>
 
-                      {/* Lien vers ProductDetail */}
                       <Link
                         to={`/produits/detail/${product._id}`}
                         className="product-link"
@@ -178,10 +178,7 @@ export default function ShopPage({
                       </div>
 
                       <div className="right-buttons">
-                        <button
-                          className="cart-btn"
-                          onClick={() => onAddToCart(product)}
-                        >
+                        <button className="cart-btn" onClick={() => onAddToCart(product)}>
                           <FaShoppingCart />
                         </button>
                         <button
@@ -189,6 +186,12 @@ export default function ShopPage({
                           onClick={() => onToggleWishlist(product)}
                         >
                           {isInWishlist ? <FaHeart /> : <FaRegHeart />}
+                        </button>
+                        <button
+                          className="quickview-btn"
+                          onClick={() => openQuickView(product)}
+                        >
+                          <FaEye />
                         </button>
                         <button
                           className="compare-btn"
@@ -221,6 +224,23 @@ export default function ShopPage({
           )}
         </section>
       </div>
+
+      {/* Modal QuickView */}
+      {quickViewProduct && (
+        <div className="quickview-modal" onClick={() => setQuickViewProduct(null)}>
+          <div className="quickview-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={() => setQuickViewProduct(null)}>
+              ×
+            </button>
+            <img src={quickViewProduct.imageUrl} alt={quickViewProduct.name} />
+            <h2>{quickViewProduct.name}</h2>
+            <p>Prix : {quickViewProduct.price.toFixed(2)} TND</p>
+            <button onClick={() => onAddToCart(quickViewProduct)}>
+              Ajouter au panier
+            </button>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

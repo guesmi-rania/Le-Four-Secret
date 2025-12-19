@@ -12,7 +12,12 @@ a {
 }
 
 /* ===== PAGE WRAPPER ===== */
-/* BANNIERE FULL WIDTH */
+.shop-page-wrapper {
+  padding: 0;
+  margin: 0;
+}
+
+/* ===== BANNIERE ===== */
 .shop-banner {
   width: 90%; 
   max-width: 1420px; 
@@ -24,26 +29,17 @@ a {
   margin-left: 20%; /* décale la bannière vers la droite */
   border-radius: 8px;
   background: url('/images/shop-banner.png') center/cover no-repeat;
-  background-position: center center;
   transform: scale(1.1); 
   overflow: hidden;
 }
 
-
-
-/* Supprimer padding de la page si nécessaire */
-.shop-page-wrapper {
-  padding: 0;
-  margin: 0;
-}
-
-
+/* ===== SHOP PAGE ===== */
 .shop-page {
   display: flex;
   gap: 25px;
   padding: 25px;
   background: #fff;
-  flex: 1; /* prend tout l'espace restant */
+  flex: 1;
   flex-wrap: wrap;
 }
 
@@ -292,11 +288,12 @@ a {
   border-radius: 12px;
   position: relative;
   font-size: 13px;
+  text-align: center;
 }
 
 .quickview-content img {
   width: 100%;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
   margin-bottom: 12px;
   border-radius: 6px;
@@ -305,23 +302,27 @@ a {
 .quickview-content h2 {
   font-size: 16px;
   font-weight: 600;
-  margin: 0 0 8px;
+  margin: 10px 0;
 }
 
-.quickview-buttons {
-  display: flex;
-  gap: 5px;
-  margin-top: 10px;
+.quickview-content p {
+  font-size: 14px;
+  margin-bottom: 15px;
 }
 
-.quickview-buttons button {
-  flex: 1;
-  padding: 6px 8px;
-  border-radius: 6px;
+.quickview-content button {
+  padding: 8px 15px;
+  background-color: #ff4081;
+  color: #fff;
   border: none;
-  font-size: 12px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 13px;
   transition: background 0.3s;
+}
+
+.quickview-content button:hover {
+  background-color: #e7336b;
 }
 
 .close-btn {
