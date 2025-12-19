@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import rawData from "../data/data.json";
 import "../styles/ProductsByCategory.css";
+import { FaShoppingCart, FaHeart, FaRegHeart, FaEye, FaBalanceScale } from "react-icons/fa";
 
 export default function ProductsByCategory({
   onAddToCart,
-  wishlist,
-  compareList,
+  wishlist = [],
+  compareList = [],
   onToggleWishlist,
   onAddToCompare,
 }) {
@@ -14,6 +15,7 @@ export default function ProductsByCategory({
   const [products, setProducts] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
 
   useEffect(() => {
     const allProducts = rawData.flatMap((cat) =>
@@ -36,20 +38,8 @@ export default function ProductsByCategory({
     setProducts(filtered);
   }, [category, minPrice, maxPrice]);
 
-  if (products.length === 0) {
-    return (
-      <div className="products-by-category-page">
-        <div className="banner">
-          <h1>{category}</h1>
-        </div>
-        <p>Aucun produit trouvé dans cette catégorie.</p>
-      </div>
-    );
-  }
-
   return (
     <div className="products-by-category-page">
-      {/* Bannière */}
       <div className="banner">
         <h1>{category}</h1>
       </div>
@@ -95,18 +85,23 @@ export default function ProductsByCategory({
                   <h3>{product.name}</h3>
                 </Link>
                 <p className="price">{product.price.toFixed(2)} TND</p>
-                <div className="buttons">
-                  <button onClick={() => onAddToCart(product)}>
-                    Ajouter au panier
+
+                <div className="right-buttons">
+                  <button className="cart-btn" onClick={() => onAddToCart(product)}>
+                    <FaShoppingCart />
                   </button>
-                  <button onClick={() => onToggleWishlist(product)}>
-                    {isInWishlist ? "❤️" : "🤍"}
+                  <button className="wishlist-btn" onClick={() => onToggleWishlist(product)}>
+                    {isInWishlist ? <FaHeart /> : <FaRegHeart />}
+                  </button>
+                  <button className="quickview-btn" onClick={() => setQuickViewProduct(product)}>
+                    <FaEye />
                   </button>
                   <button
+                    className="compare-btn"
                     onClick={() => onAddToCompare(product)}
                     disabled={isInCompare}
                   >
-                    ⚖️
+                    <FaBalanceScale />
                   </button>
                 </div>
               </div>
@@ -114,6 +109,19 @@ export default function ProductsByCategory({
           })}
         </div>
       </div>
+
+      {/* QuickView Modal */}
+      {quickViewProduct && (
+        <div className="quickview-modal" onClick={() => setQuickViewProduct(null)}>
+          <div className="quickview-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={() => setQuickViewProduct(null)}>×</button>
+            <img src={quickViewProduct.imageUrl} alt={quickViewProduct.name} />
+            <h2>{quickViewProduct.name}</h2>
+            <p>Prix: {quickViewProduct.price.toFixed(2)} TND</p>
+            <button onClick={() => onAddToCart(quickViewProduct)}>Ajouter au panier</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
