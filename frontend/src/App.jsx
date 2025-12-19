@@ -19,6 +19,7 @@ import TastingList from "./pages/TastingList";
 import ContactPage from "./pages/ContactPage";
 import Welcome from "./pages/Welcome";
 import Confirmation from "./pages/Confirmation";
+import ProductsByCategory from "./pages/ProductsByCategory";
 
 // Admin
 import AdminLogin from "./admin/AdminLogin";
@@ -45,17 +46,9 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Synchronisation avec localStorage
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
-  useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  }, [wishlist]);
-
-  useEffect(() => {
-    localStorage.setItem("compareList", JSON.stringify(compareList));
-  }, [compareList]);
+  useEffect(() => { localStorage.setItem("cart", JSON.stringify(cart)); }, [cart]);
+  useEffect(() => { localStorage.setItem("wishlist", JSON.stringify(wishlist)); }, [wishlist]);
+  useEffect(() => { localStorage.setItem("compareList", JSON.stringify(compareList)); }, [compareList]);
 
   // Notifications
   const notifyAddCart = (name) => toast.success(`✅ ${name} ajouté au panier !`);
@@ -65,7 +58,7 @@ function App() {
 
   // Gestion du panier
   const handleAddToCart = (product) => {
-    setCart((prev) => [...prev, product]);
+    setCart(prev => [...prev, product]);
     notifyAddCart(product.name);
     setIsCartOpen(true);
   };
@@ -73,10 +66,10 @@ function App() {
   // Toggle wishlist
   const handleToggleWishlist = (product) => {
     if (wishlist.find((item) => item._id === product._id)) {
-      setWishlist((prev) => prev.filter((item) => item._id !== product._id));
+      setWishlist(prev => prev.filter((item) => item._id !== product._id));
       notifyRemoveWishlist(product.name);
     } else {
-      setWishlist((prev) => [...prev, product]);
+      setWishlist(prev => [...prev, product]);
       notifyAddWishlist(product.name);
     }
   };
@@ -84,7 +77,7 @@ function App() {
   // Ajouter à la comparaison
   const handleAddToCompare = (product) => {
     if (!compareList.find((item) => item._id === product._id)) {
-      setCompareList((prev) => [...prev, product]);
+      setCompareList(prev => [...prev, product]);
       notifyAddCompare(product.name);
     }
   };
@@ -106,82 +99,56 @@ function App() {
 
       {/* Routes principales */}
       <Routes>
-        {/* Routes Admin */}
+        {/* Admin */}
         <Route path="/admin-login" element={<AdminLogin />} />
-        <Route
-          path="/admin/dashboard"
-          element={
-            <PrivateRoute>
-              <AdminDashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/admin/products"
-          element={
-            <PrivateRoute>
-              <AdminProducts />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/admin/orders"
-          element={
-            <PrivateRoute>
-              <AdminOrders />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/admin/dashboard" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
+        <Route path="/admin/products" element={<PrivateRoute><AdminProducts /></PrivateRoute>} />
+        <Route path="/admin/orders" element={<PrivateRoute><AdminOrders /></PrivateRoute>} />
 
-        {/* Routes Client */}
-        <Route
-           path="/"
-          element={
-         <Home
-      onAddToCart={handleAddToCart}
-      wishlist={wishlist}
-      compareList={compareList}
-      onToggleWishlist={handleToggleWishlist}
-      onAddToCompare={handleAddToCompare}
-       />
-           }
-        />
+        {/* Client */}
+        <Route path="/" element={
+          <Home
+            onAddToCart={handleAddToCart}
+            wishlist={wishlist}
+            compareList={compareList}
+            onToggleWishlist={handleToggleWishlist}
+            onAddToCompare={handleAddToCompare}
+          />
+        } />
 
         <Route path="/login" element={<ClientAuth />} />
-        <Route
-          path="/bienvenue"
-          element={
-            <ProtectedRoute>
-              <Welcome />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/produits"
-          element={
-            <ShopPage
+        <Route path="/bienvenue" element={<ProtectedRoute><Welcome /></ProtectedRoute>} />
+
+        {/* Shop / Produits */}
+        <Route path="/produits" element={
+          <ShopPage
+            onAddToCart={handleAddToCart}
+            wishlist={wishlist}
+            compareList={compareList}
+            onToggleWishlist={handleToggleWishlist}
+            onAddToCompare={handleAddToCompare}
+          />
+        } />
+        <Route path="/produits/:category" element={
+          <ProductsByCategory
+            onAddToCart={handleAddToCart}
+            wishlist={wishlist}
+            compareList={compareList}
+            onToggleWishlist={handleToggleWishlist}
+            onAddToCompare={handleAddToCompare}
+          />
+        } />
+        <Route path="/produits/detail/:id" element={
+          <ProtectedRoute>
+            <ProductDetail
               onAddToCart={handleAddToCart}
+              onAddToWishlist={handleToggleWishlist}
               wishlist={wishlist}
               compareList={compareList}
-              onToggleWishlist={handleToggleWishlist}
               onAddToCompare={handleAddToCompare}
             />
-          }
-        />
-        <Route
-          path="/produits/:id"
-          element={
-            <ProtectedRoute>
-              <ProductDetail
-                onAddToCart={handleAddToCart}
-                onAddToWishlist={handleToggleWishlist}
-                wishlist={wishlist}
-                compareList={compareList}
-                onAddToCompare={handleAddToCompare}
-              />
-            </ProtectedRoute>
-          }
-        />
+          </ProtectedRoute>
+        } />
 
         {/* Cart / Checkout / Confirmation */}
         <Route path="/cart" element={<CartPage cart={cart} setCart={setCart} />} />
@@ -190,19 +157,11 @@ function App() {
 
         {/* Autres pages */}
         <Route path="/wishlist" element={<WishlistPage wishlist={wishlist} setWishlist={setWishlist} />} />
-        <Route
-          path="/commandes"
-          element={
-            <ProtectedRoute>
-              <OrdersPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/commandes" element={<ProtectedRoute><OrdersPage /></ProtectedRoute>} />
         <Route path="/dégustation" element={<TastingList />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
 
-      {/* Container pour notifications */}
       <ToastContainer position="bottom-right" autoClose={3000} />
     </>
   );

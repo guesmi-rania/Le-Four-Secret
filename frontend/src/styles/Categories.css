@@ -1,17 +1,4 @@
-/* ===== RESET ===== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* ===== LISTE DE CATEGORIES ===== */
+/* ================= LISTE DE CATEGORIES ================= */
 .categories-list {
   list-style: none;
   margin: 0;
@@ -24,24 +11,26 @@ a {
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 50;
+  z-index: 3000;
 }
 
-/* Chaque item de dropdown */
+/* ================= ITEM ================= */
 .dropdown-item {
   margin: 2px 0;
 }
 
-/* Les liens de catégorie */
+/* ================= LIEN / BOUTON ================= */
 .category-link {
+  width: 100%;
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  top: 10px;
-  padding: 5px 10px;
+  padding: 6px 12px;
   border-radius: 6px;
-  text-decoration: none;
+  cursor: pointer;
   color: #333;
   font-size: 0.95rem;
   font-weight: 500;
@@ -54,25 +43,25 @@ a {
   color: #00bcd4;
 }
 
-/* Icone de chaque catégorie */
+/* ================= ICONE ================= */
 .icon {
   font-size: 1.3rem;
-  color: #00bcd4;
+  color: #d8d8d8;
   flex-shrink: 0;
 }
 
-/* Nom de la catégorie */
+/* ================= TEXTE ================= */
 .name {
   flex: 1;
+  text-align: left;
 }
 
-
-/* ===== SECTION NOUVEAUTES ===== */
+/* ================= NOUVEAUTES ================= */
 .nouveautes-title {
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #555;
-  margin: 10px 0 5px 16px;
+  margin: 12px 0 6px 16px;
   text-transform: uppercase;
 }
 
@@ -80,32 +69,21 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 16px;
-  border-radius: 6px;
-  color: #333;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.nouveaute-link:hover {
-  background-color: #f0f8ff;
-  color: #00bcd4;
-}
-
-/* Badge NEW pour nouveautés */
+/* ================= BADGE NEW ================= */
 .badge-new {
   background-color: #ff4081;
-  color: white;
+  color: #fff;
   font-size: 0.65rem;
   font-weight: 600;
-  padding: 2px 5px;
+  padding: 2px 6px;
   border-radius: 12px;
   white-space: nowrap;
   margin-left: auto;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
   .categories-list {
     position: static;
@@ -116,14 +94,12 @@ a {
     margin-top: 10px;
   }
 
-  .category-link,
-  .nouveaute-link {
+  .category-link {
     padding: 12px 15px;
     border-bottom: 1px solid #e5e5e5;
   }
 
-  .category-link:last-child,
-  .nouveaute-link:last-child {
+  .category-link:last-child {
     border-bottom: none;
   }
 }

@@ -1,90 +1,65 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { 
-  FaShoppingCart, FaHeart, FaRegHeart, FaBalanceScale 
-} from "react-icons/fa";
 import "../styles/ProductDetail.css";
+import { FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
+import React360Viewer from "react-360-view";
 
-const BASE_URL = import.meta.env.VITE_API_URL;
-
-export default function ProductDetail({
-  onAddToCart,
-  onAddToWishlist,
-  onAddToCompare,
-  wishlist = [],
-  compareList = [],
-}) {
-  const { id } = useParams(); // ✅ doit correspondre à la route "/produits/:id"
+export default function ProductDetail({ onAddToCart, onAddToWishlist, wishlist }) {
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    async function fetchProduct() {
-      try {
-        const res = await axios.get(`${BASE_URL}/api/products/${id}`);
-        setProduct(res.data);
-      } catch (err) {
-        console.error("Produit non trouvé", err);
-        setProduct(null);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchProduct();
+    import("../data/data.json").then((data) => {
+      const allProducts = data.default.flatMap((cat) =>
+        cat.products.map((name, index) => ({
+          _id: `${cat.category}-${index}`,
+          name,
+          categories: [cat.category],
+          price: Math.floor(Math.random() * 50) + 10,
+          description: `Description détaillée pour ${name}`,
+          imageUrl: `/images/products/${name.replace(/\s+/g, "-")}.jpg`,
+          images360: Array.from({ length: 36 }, (_, i) =>
+            `/images/products/360/${name.replace(/\s+/g, "-")}/${i}.jpg`
+          ),
+        }))
+      );
+      const prod = allProducts.find((p) => p._id === id);
+      setProduct(prod);
+    });
   }, [id]);
 
-  if (loading) return <div className="product-detail-wrapper">Chargement…</div>;
-  if (!product) return <div className="product-detail-wrapper">❌ Produit non trouvé</div>;
+  if (!product) return <p>Chargement du produit...</p>;
 
-  const isInWishlist = wishlist.some((i) => i._id === product._id);
-  const isInCompare = compareList.some((i) => i._id === product._id);
+  const isInWishlist = wishlist.some((item) => item._id === product._id);
 
   return (
-    <div className="product-detail-wrapper">
-      <div className="product-detail">
-        <div className="product-images">
-          <img src={product.imageUrl} alt={product.name} />
-        </div>
+    <div className="product-detail-page">
+      <div className="product-detail-left">
+        <img src={product.imageUrl} alt={product.name} className="main-image" />
 
-        <div className="product-info">
-          <h1>{product.name}</h1>
-          <p className="price">{product.price.toFixed(2)} TND</p>
+        {/* Visionneuse 360° si disponible */}
+        {product.images360 && product.images360.length > 0 && (
+          <React360Viewer
+            amount={product.images360.length}
+            imagePath={`/images/products/360/${product.name.replace(/\s+/g, "-")}/`}
+            fileName="{}.jpg"
+            spinReverse={false}
+          />
+        )}
+      </div>
 
-          <div className="quantity-box">
-            <button onClick={() => setQuantity(q => Math.max(1, q - 1))}>-</button>
-            <span>{quantity}</span>
-            <button onClick={() => setQuantity(q => q + 1)}>+</button>
-          </div>
+      <div className="product-detail-right">
+        <h1>{product.name}</h1>
+        <p className="price">{product.price.toFixed(2)} TND</p>
+        <p className="description">{product.description}</p>
 
-          <div className="product-buttons">
-            <button onClick={() => onAddToCart({ ...product, quantity })} className="btn-cart">
-              <FaShoppingCart /> Ajouter au panier
-            </button>
-            <button onClick={() => onAddToWishlist(product)} className="btn-wishlist">
-              {isInWishlist ? <FaHeart color="red" /> : <FaRegHeart />} Wishlist
-            </button>
-            <button onClick={() => onAddToCompare(product)} className="btn-compare" disabled={isInCompare}>
-              <FaBalanceScale /> Comparer
-            </button>
-          </div>
+        <button onClick={() => onAddToCart(product)}>
+          <FaShoppingCart /> Ajouter au panier
+        </button>
 
-          <div className="product-description">
-            <h3>Description</h3>
-            <p>{product.description}</p>
-          </div>
-
-          {product.categories && (
-            <p><strong>Catégories :</strong> {product.categories.join(", ")}</p>
-          )}
-          {product.tags && (
-            <p><strong>Tags :</strong> {product.tags.join(", ")}</p>
-          )}
-          {product.brands && (
-            <p><strong>Marques :</strong> {product.brands.join(", ")}</p>
-          )}
-        </div>
+        <button onClick={() => onAddToWishlist(product)}>
+          {isInWishlist ? <FaHeart /> : <FaRegHeart />} Ajouter à la wishlist
+        </button>
       </div>
     </div>
   );
