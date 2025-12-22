@@ -4,62 +4,73 @@ const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
 
-// --- Routes ---
-const authRoutes = require('./routes/auth');
-const adminRoutes = require('./routes/adminRoutes');
-const productRoutes = require('./routes/products');
-const orderRoutes = require('./routes/orders');
-const categoriesRoutes = require('./routes/categories');
-const newsletterRoutes = require('./routes/newsletter');
-
 const app = express();
 
-// --- Variables d'environnement ---
+// =======================
+// CONFIG
+// =======================
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
-// --- CORS ---
-// ⚡ Autorise tout le monde pour dev dans IDX
+// =======================
+// MIDDLEWARES
+// =======================
 app.use(cors());
-
-// --- JSON Body Parser ---
 app.use(express.json());
 
-// --- Routes API ---
-app.use('/api/auth', authRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/categories', categoriesRoutes);
-app.use('/api/newsletter', newsletterRoutes);
+// =======================
+// ROUTES API (⚠️ TOUJOURS AVANT LE FRONT)
+// =======================
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/products', require('./routes/products'));
+app.use('/api/orders', require('./routes/orders'));
+app.use('/api/categories', require('./routes/categories'));
+app.use('/api/newsletter', require('./routes/newsletter'));
 
-// --- Frontend React statique ---
+// 🔒 Sécurité : toute route /api inconnue
+app.use('/api', (req, res) => {
+  res.status(404).json({ message: 'API route not found' });
+});
+
+// =======================
+// FRONTEND STATIQUE
+// =======================
 const clientPath = path.join(__dirname, 'public', 'client');
 const adminPath = path.join(__dirname, 'public', 'admin');
 
+// Admin dashboard
 app.use('/admin', express.static(adminPath));
-app.use('/', express.static(clientPath));
 
-// --- Fallback React ---
-// Admin dashboard fallback
+// Client
+app.use(express.static(clientPath));
+
+// =======================
+// FALLBACKS REACT
+// =======================
+
+// Admin React Router
 app.get('/admin/*', (req, res) => {
   res.sendFile(path.join(adminPath, 'index.html'));
 });
 
-// Client fallback
-app.get('/*', (req, res) => {
+// Client React Router
+app.get('*', (req, res) => {
   res.sendFile(path.join(clientPath, 'index.html'));
 });
 
-// --- Connexion MongoDB et lancement serveur ---
-mongoose.connect(MONGO_URI)
+// =======================
+// MONGODB + SERVER
+// =======================
+mongoose
+  .connect(MONGO_URI)
   .then(() => {
-    console.log('✅ Connecté à MongoDB Atlas');
+    console.log('✅ MongoDB connecté');
     app.listen(PORT, () => {
-      console.log(`🚀 Serveur démarré sur le port ${PORT}`);
+      console.log(`🚀 Serveur lancé sur le port ${PORT}`);
     });
   })
-  .catch(err => {
-    console.error('❌ Erreur MongoDB :', err.message);
+  .catch((err) => {
+    console.error('❌ MongoDB error:', err.message);
     process.exit(1);
   });
