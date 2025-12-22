@@ -7,7 +7,7 @@ export default function AdminProducts() {
 
   useEffect(() => {
     axios
-      .get("https://your-backend-url.com/api/products") // Remplace par ton backend
+      .get("https://recettes-de-cuisine.onrender.com/api/products") // Remplace par ton backend
       .then((res) => setProducts(res.data))
       .catch((err) => console.error(err));
   }, []);

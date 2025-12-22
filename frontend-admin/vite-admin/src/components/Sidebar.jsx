@@ -1,7 +1,7 @@
 export default function Sidebar() {
   return (
     <aside className="sidebar">
-      <h2 className="logo">PickBazar</h2>
+      <h2 className="logo">Le Four Secret</h2>
       <nav>
         <a className="active">Dashboard</a>
         <a>Commandes</a>
