@@ -3,29 +3,29 @@ import { useParams } from "react-router-dom";
 import "../styles/ProductDetail.css";
 import { FaShoppingCart, FaHeart, FaRegHeart, FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import React360Viewer from "react-360-view";
+import axios from "axios";
 
 export default function ProductDetail({ onAddToCart, onAddToWishlist, wishlist }) {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    import("../data/data.json").then((data) => {
-      const allProducts = data.default.flatMap((cat) =>
-        cat.products.map((name, index) => ({
-          _id: `${cat.category}-${index}`,
-          name,
-          categories: [cat.category],
-          price: Math.floor(Math.random() * 50) + 10,
-          description: `Description détaillée pour ${name}. Ici vous pouvez ajouter toutes les informations du produit.`,
-          imageUrl: `/images/products/${name.replace(/\s+/g, "-")}.jpg`,
-          images360: Array.from({ length: 36 }, (_, i) =>
-            `/images/products/360/${name.replace(/\s+/g, "-")}/${i}.jpg`
+    // Récupérer le produit depuis le backend
+    axios.get(`${BASE_URL}/api/products/${id}`)
+      .then(res => {
+        const p = res.data;
+        // Ajouter description et images360 si pas présentes
+        setProduct({
+          ...p,
+          description: p.description || `Description détaillée pour ${p.name}. Ici vous pouvez ajouter toutes les informations du produit.`,
+          images360: p.images360 || Array.from({ length: 36 }, (_, i) =>
+            `/images/products/360/${p.name.replace(/\s+/g, "-")}/${i}.jpg`
           ),
-        }))
-      );
-      const prod = allProducts.find((p) => p._id === id);
-      setProduct(prod);
-    });
+          price: p.price || Math.floor(Math.random() * 50) + 10
+        });
+      })
+      .catch(err => console.error("Erreur récupération produit :", err));
   }, [id]);
 
   if (!product) return <p>Chargement du produit...</p>;
@@ -46,16 +46,13 @@ export default function ProductDetail({ onAddToCart, onAddToWishlist, wishlist }
           />
         )}
 
-        {/* Ligne séparatrice */}
         <hr className="separator" />
 
-        {/* Description en dessous de l'image */}
         <div className="product-description">
           <h2>Description du produit</h2>
           <p>{product.description}</p>
         </div>
 
-        {/* Réseaux sociaux */}
         <div className="social-buttons">
           <button className="facebook"><FaFacebookF /> Partager</button>
           <button className="twitter"><FaTwitter /> Tweeter</button>
@@ -77,7 +74,6 @@ export default function ProductDetail({ onAddToCart, onAddToWishlist, wishlist }
           </button>
         </div>
 
-        {/* Types de paiement sous le récap */}
         <div className="payment-methods-right">
           <h3>Méthodes de paiement acceptées :</h3>
           <span>💳 Visa</span>

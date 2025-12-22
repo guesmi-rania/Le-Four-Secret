@@ -1,17 +1,22 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-  products: [
+  clientInfo: {
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
+    address: { type: String, required: true },
+  },
+  cart: [
     {
-      product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
+      name: String,
+      price: Number,
       quantity: { type: Number, default: 1 },
     },
   ],
-  clientName: String,
-  clientEmail: String,
-  address: String,
-  totalPrice: Number,
-  status: { type: String, default: "En cours" },
+  totalPrice: { type: Number, required: true },
+  status: { type: String, default: "En attente" }, // En attente, Confirmée, Livrée
   createdAt: { type: Date, default: Date.now },
 });
 

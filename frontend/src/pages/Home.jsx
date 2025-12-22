@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import rawData from "../data/data.json"; // JSON des produits
+import axios from "axios";
 import RecipeShowcase from "../components/RecipeShowcase";
 import AboutUs from "../components/AboutUs";
 import Footer from "../components/Footer";
@@ -11,24 +11,22 @@ import { FaShippingFast, FaHeadset, FaLock, FaTags } from "react-icons/fa";
 
 function Home({ onAddToCart, wishlist, compareList, onToggleWishlist, onAddToCompare }) {
   const [products, setProducts] = useState([]);
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
-  // Charger les produits depuis le JSON local
   useEffect(() => {
-    const productsData = rawData.flatMap((cat) =>
-      cat.products.map((name, index) => ({
-        _id: `${cat.category}-${index}`,
-        name,
-        categories: [cat.category],
-        price: Math.floor(Math.random() * 50) + 10, // prix aléatoire entre 10 et 60
-        imageUrl: `/images/products/${name.replace(/\s+/g, "-")}.jpg`, // adapter selon vos images
-      }))
-    );
-    setProducts(productsData);
+    axios.get(`${BASE_URL}/api/products`)
+      .then(res => {
+        const productsWithPrice = res.data.map(p => ({
+          ...p,
+          price: p.price || Math.floor(Math.random() * 50) + 10 // si pas de prix dans la DB
+        }));
+        setProducts(productsWithPrice);
+      })
+      .catch(err => console.error("Erreur récupération produits :", err));
   }, []);
 
   return (
     <div className="home-page">
-      {/* SEO */}
       <Helmet>
         <title>Douceurs du Chef | Pâtisseries et Délices à Domicile</title>
         <meta
@@ -48,9 +46,8 @@ function Home({ onAddToCart, wishlist, compareList, onToggleWishlist, onAddToCom
 
       <hr className="section-separator" />
 
-      {/* PopularProducts avec la liste des produits */}
       <PopularProducts
-        products={products} // <-- c'est ici qu'on passe les produits
+        products={products}
         onAddToCart={onAddToCart}
         wishlist={wishlist}
         compareList={compareList}

@@ -1,247 +1,220 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import axios from "axios";
-import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 import "../styles/Checkout.css";
 
-function Checkout({ cart, setCart }) {
+export default function Checkout({ cart, setCart }) {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const [form, setForm] = useState({
+  const [clientInfo, setClientInfo] = useState({
     firstName: "",
     lastName: "",
     company: "",
-    address: "",
+    country: "Tunisie",
+    street: "",
     apartment: "",
     city: "",
     state: "",
     zip: "",
-    country: "Tunisie",
     phone: "",
     email: "",
-    orderNotes: "",
-    coupon: "",
-    agreePrivacy: false,
-    reviewInvite: false,
-    paymentMethod: "bank",
+    notes: "",
   });
 
-  const [total, setTotal] = useState(0);
+  const [shipDifferent, setShipDifferent] = useState(false);
+  const [shippingInfo, setShippingInfo] = useState({ ...clientInfo });
 
-  useEffect(() => {
-    const subTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const shipping = cart.length > 0 ? 20 : 0; // livraison fixe en TND
-    const tax = subTotal * 0.07; // TVA 7%
-    setTotal(subTotal + shipping + tax);
-  }, [cart]);
+  const BASE_URL = import.meta.env.VITE_API_URL;
+  const totalPrice = cart.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm({ ...form, [name]: type === "checkbox" ? checked : value });
+  const handleChange = (e, shipping = false) => {
+    const target = shipping ? setShippingInfo : setClientInfo;
+    target(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (cart.length === 0) {
-      alert("Votre panier est vide !");
-      return;
-    }
+    if (!cart.length) return alert("Votre panier est vide !");
+    setLoading(true);
+
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/orders`, {
-        products: cart.map((item) => ({ product: item._id, quantity: item.quantity })),
-        clientDetails: form,
-        totalPrice: total,
-        paymentMethod: form.paymentMethod,
-      });
+      const orderData = {
+        clientInfo,
+        shippingInfo: shipDifferent ? shippingInfo : clientInfo,
+        cart,
+        totalPrice,
+      };
+      await axios.post(`${BASE_URL}/api/orders`, orderData);
       setCart([]);
-      localStorage.removeItem("cart");
       navigate("/confirmation");
     } catch (err) {
-      console.error("Erreur lors du paiement :", err);
-      alert("Une erreur est survenue, veuillez réessayer.");
+      console.error(err);
+      alert("Erreur lors de la commande !");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <>
-      <Helmet>
-        <title>Paiement | Douceurs du Chef</title>
-      </Helmet>
+    <div className="checkout-page">
+      <h1>Finaliser votre commande</h1>
 
-      <div className="checkout-container">
-        <form className="checkout-form" onSubmit={handleSubmit}>
-          <h2>Valider la commande</h2>
+      <div className="checkout-wrapper">
+        {/* Formulaire */}
+        <div className="checkout-form-wrapper">
+          <form className="checkout-form" onSubmit={handleSubmit}>
+            <h2>Détails de facturation</h2>
 
-          <input
-            name="coupon"
-            placeholder="Avez-vous un code promo ?"
-            value={form.coupon}
-            onChange={handleChange}
-          />
-
-          <div className="billing-grid">
             <input
+              type="text"
               name="firstName"
               placeholder="Prénom *"
-              value={form.firstName}
+              value={clientInfo.firstName}
               onChange={handleChange}
               required
             />
             <input
+              type="text"
               name="lastName"
               placeholder="Nom *"
-              value={form.lastName}
+              value={clientInfo.lastName}
               onChange={handleChange}
               required
             />
             <input
+              type="text"
               name="company"
-              placeholder="Nom de l'entreprise (optionnel)"
-              value={form.company}
+              placeholder="Société (optionnel)"
+              value={clientInfo.company}
               onChange={handleChange}
             />
-            <select
-              name="country"
-              value={form.country}
-              onChange={handleChange}
-              required
-            >
-              <option>Tunisie</option>
-              <option>Autre</option>
+            <select name="country" value={clientInfo.country} onChange={handleChange} required>
+              <option value="Tunisie">Tunisie</option>
             </select>
             <input
-              name="address"
-              placeholder="Adresse complète *"
-              value={form.address}
+              type="text"
+              name="street"
+              placeholder="Adresse *"
+              value={clientInfo.street}
               onChange={handleChange}
               required
             />
             <input
+              type="text"
               name="apartment"
-              placeholder="Appartement, étage, etc. (optionnel)"
-              value={form.apartment}
+              placeholder="Appartement, suite, unité (optionnel)"
+              value={clientInfo.apartment}
               onChange={handleChange}
             />
             <input
+              type="text"
               name="city"
               placeholder="Ville *"
-              value={form.city}
+              value={clientInfo.city}
               onChange={handleChange}
               required
             />
             <input
+              type="text"
               name="state"
               placeholder="Gouvernorat *"
-              value={form.state}
+              value={clientInfo.state}
               onChange={handleChange}
               required
             />
             <input
+              type="text"
               name="zip"
               placeholder="Code postal *"
-              value={form.zip}
+              value={clientInfo.zip}
               onChange={handleChange}
               required
             />
             <input
+              type="tel"
               name="phone"
               placeholder="Téléphone *"
-              value={form.phone}
+              value={clientInfo.phone}
               onChange={handleChange}
               required
             />
             <input
-              name="email"
               type="email"
-              placeholder="Adresse e-mail *"
-              value={form.email}
+              name="email"
+              placeholder="Email *"
+              value={clientInfo.email}
               onChange={handleChange}
               required
             />
             <textarea
-              name="orderNotes"
-              placeholder="Notes supplémentaires (optionnel)"
-              value={form.orderNotes}
+              name="notes"
+              placeholder="Notes (optionnel)"
+              value={clientInfo.notes}
               onChange={handleChange}
-            ></textarea>
-          </div>
+            />
 
-          <div className="checkout-order">
-            <h3>Votre commande</h3>
-            {cart.map((item) => (
-              <div key={item._id} className="order-item">
-                <span>{item.name} × {item.quantity}</span>
-                <span>{item.price * item.quantity} TND</span>
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={shipDifferent}
+                onChange={() => setShipDifferent(!shipDifferent)}
+              />
+              Expédier à une adresse différente ?
+            </label>
+
+            {shipDifferent && (
+              <div className="shipping-address">
+                <h2>Adresse de livraison</h2>
+                {Object.keys(shippingInfo).map((key) => (
+                  key !== "notes" && key !== "country" && (
+                    <input
+                      key={key}
+                      type="text"
+                      name={key}
+                      placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+                      value={shippingInfo[key]}
+                      onChange={(e) => handleChange(e, true)}
+                      required
+                    />
+                  )
+                ))}
               </div>
-            ))}
-            <div className="order-total">
-              <span>Sous-total :</span> <span>{cart.reduce((sum, item) => sum + item.price * item.quantity, 0)} TND</span>
-            </div>
-            <div className="order-total">
-              <span>Total :</span> <span>{total.toFixed(2)} TND</span>
-            </div>
-          </div>
+            )}
 
-          <div className="payment-methods">
-            <h4>Méthode de paiement</h4>
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="bank"
-                checked={form.paymentMethod === "bank"}
-                onChange={handleChange}
-              />
-              Virement bancaire
+            <h2>Méthode de paiement</h2>
+            <label className="checkbox-label">
+              <input type="radio" name="payment" value="card" defaultChecked />
+              Paiement par carte bancaire
             </label>
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="check"
-                checked={form.paymentMethod === "check"}
-                onChange={handleChange}
-              />
-              Chèque
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="cod"
-                checked={form.paymentMethod === "cod"}
-                onChange={handleChange}
-              />
+            <label className="checkbox-label">
+              <input type="radio" name="payment" value="cash" />
               Paiement à la livraison
             </label>
+
+            <button type="submit" disabled={loading}>
+              {loading ? "En cours..." : "Passer la commande"}
+            </button>
+          </form>
+        </div>
+
+        {/* Résumé de commande */}
+        <div className="checkout-summary">
+          <h2>Votre commande</h2>
+          <ul>
+            {cart.map((item) => (
+              <li key={item._id}>
+                {item.imageUrl && <img src={item.imageUrl} alt={item.name} />}
+                <span>{item.name} x {item.quantity || 1}</span>
+                <span>{(item.price * (item.quantity || 1)).toFixed(2)} TND</span>
+              </li>
+            ))}
+          </ul>
+          <div className="total">
+            <strong>Total :</strong> {totalPrice.toFixed(2)} TND
           </div>
-
-          <label className="privacy">
-            <input
-              type="checkbox"
-              name="agreePrivacy"
-              checked={form.agreePrivacy}
-              onChange={handleChange}
-              required
-            />
-            J'ai lu et j'accepte la <a href="/privacy">politique de confidentialité</a>.
-          </label>
-
-          <label className="review-invite">
-            <input
-              type="checkbox"
-              name="reviewInvite"
-              checked={form.reviewInvite}
-              onChange={handleChange}
-            />
-            Je souhaite être invité à laisser un avis sur ma commande
-          </label>
-
-          <button type="submit">Envoyer (Total : {total.toFixed(2)} TND)</button>
-        </form>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
-
-export default Checkout;

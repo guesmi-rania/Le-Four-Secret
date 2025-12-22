@@ -1,32 +1,23 @@
 const express = require("express");
-const Order = require("../models/Order");
 const router = express.Router();
+const Order = require("../models/Order");
 
 // Créer une commande
 router.post("/", async (req, res) => {
   try {
-    const order = new Order(req.body);
-    await order.save();
-    res.status(201).json(order);
+    const { clientInfo, cart, totalPrice } = req.body;
+    const newOrder = new Order({ clientInfo, cart, totalPrice });
+    await newOrder.save();
+    res.status(201).json({ message: "Commande créée avec succès !" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// Récupérer toutes les commandes (admin ou test)
+// Récupérer toutes les commandes (Admin)
 router.get("/", async (req, res) => {
   try {
-    const orders = await Order.find().populate("products.product");
-    res.json(orders);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// Récupérer les commandes d’un client par email
-router.get("/client/:email", async (req, res) => {
-  try {
-    const orders = await Order.find({ clientEmail: req.params.email }).populate("products.product");
+    const orders = await Order.find().sort({ createdAt: -1 });
     res.json(orders);
   } catch (err) {
     res.status(500).json({ message: err.message });

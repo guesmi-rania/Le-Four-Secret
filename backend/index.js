@@ -19,16 +19,8 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 // --- CORS ---
-const corsOptions = {
-  origin: [
-    'http://localhost:5173',
-    'https://frontend-recettes-fxc8.onrender.com', // Client déployé
-    'https://5173-firebase-lefoursecretgit-1765180526871.cluster-64pjnskmlbaxowh5lzq6i7v4ra.cloudworkstations.dev', // IDX Workspace
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-app.use(cors(corsOptions));
+// ⚡ Autorise tout le monde pour dev dans IDX
+app.use(cors());
 
 // --- JSON Body Parser ---
 app.use(express.json());
@@ -45,7 +37,6 @@ app.use('/api/newsletter', newsletterRoutes);
 const clientPath = path.join(__dirname, 'public', 'client');
 const adminPath = path.join(__dirname, 'public', 'admin');
 
-// Servir les fichiers statiques
 app.use('/admin', express.static(adminPath));
 app.use('/', express.static(clientPath));
 

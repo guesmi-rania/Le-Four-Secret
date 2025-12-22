@@ -16,11 +16,13 @@ export default defineConfig({
     },
   },
   server: {
-    host: true,       // écoute sur 0.0.0.0
+    host: true,
     port: 5173,
     strictPort: true,
-    fs: {
-      strict: false,
-    },
-  },
+    fs: { strict: false },
+    proxy: {
+      '/api': 'http://localhost:5000'  // redirige toutes les requêtes /api vers ton backend local
+    }
+  }
+  
 });
