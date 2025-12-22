@@ -1,0 +1,83 @@
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  background: #f4f6f8;
+}
+
+.admin-layout {
+  display: flex;
+}
+
+.sidebar {
+  width: 240px;
+  background: #fff;
+  height: 100vh;
+  padding: 20px;
+  border-right: 1px solid #eee;
+}
+
+.logo {
+  color: #009f7f;
+}
+
+.sidebar nav a {
+  display: block;
+  padding: 12px;
+  margin: 5px 0;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.sidebar nav a.active,
+.sidebar nav a:hover {
+  background: #009f7f;
+  color: white;
+}
+
+.admin-main {
+  flex: 1;
+}
+
+.admin-header {
+  background: white;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+}
+
+.dashboard {
+  padding: 24px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.table-box {
+  background: white;
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.success { color: green; }
+.pending { color: orange; }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
-import Footer from "../components/Footer"; // ✅ Assure-toi d’avoir le Footer
+import Footer from "../components/Footer";
 import "../styles/Orders.css";
 
 const BASE_URL =
@@ -12,29 +12,25 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/api/orders`)
-      .then((res) => {
+    const fetchOrders = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/api/deliveries`);
         setOrders(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error("Erreur lors du chargement des commandes", err);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    fetchOrders();
   }, []);
 
   return (
     <div className="orders-page">
-      {/* SEO */}
       <Helmet>
         <title>Mes commandes | Douceurs du Chef</title>
-        <meta
-          name="description"
-          content="Consultez vos commandes passées sur Douceurs du Chef. Retrouvez vos produits, quantités et détails de livraison."
-        />
+        <meta name="description" content="Consultez vos commandes passées sur Douceurs du Chef." />
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href={`${window.location.origin}/orders`} />
       </Helmet>
 
       <div className="orders-container">
@@ -48,26 +44,25 @@ export default function OrdersPage() {
           orders.map((order) => (
             <div key={order._id} className="order-card">
               <div className="order-info">
+                <p><strong>Client :</strong> {order.clientInfo?.name}</p>
+                <p><strong>Email :</strong> {order.clientInfo?.email}</p>
+                <p><strong>Téléphone :</strong> {order.clientInfo?.phone}</p>
+                <p><strong>Adresse :</strong> {order.clientInfo?.address}</p>
+                <p><strong>Total :</strong> {order.totalPrice?.toFixed(2)} DT</p>
                 <p>
-                  <strong>Client :</strong> {order.clientName}
-                </p>
-                <p>
-                  <strong>Email :</strong> {order.clientEmail}
-                </p>
-                <p>
-                  <strong>Adresse :</strong> {order.address}
-                </p>
-                <p>
-                  <strong>Total :</strong> {order.totalPrice.toFixed(2)} DT
+                  <strong>Statut :</strong>{" "}
+                  <span className={`status ${order.status?.toLowerCase().replace(" ", "-")}`}>
+                    {order.status}
+                  </span>
                 </p>
               </div>
 
               <div className="order-products">
-                <p><strong>Produits :</strong></p>
+                <strong>Produits :</strong>
                 <ul>
-                  {order.products.map((p) => (
-                    <li key={p.product._id}>
-                      {p.product.name} x {p.quantity}
+                  {order.cart?.map((item, idx) => (
+                    <li key={idx}>
+                      {item.name} × {item.quantity}
                     </li>
                   ))}
                 </ul>
