@@ -18,22 +18,23 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
-// --- CORS ---
+// --- CORS sécurisé ---
 const allowedOrigins = [
-  "http://localhost:5173", // client local
-  "http://localhost:5174", // admin local
-  "https://recettes-de-cuisine.onrender.com" // client prod
+  "http://localhost:5173", // client local dev
+  "http://localhost:5174", // admin local dev
+  "https://frontend-recettes-fxc8.onrender.com" // frontend prod
 ];
 
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin) return callback(null, true); // Postman, serveur
+    if (!origin) return callback(null, true); // Postman / serveur
     if (allowedOrigins.includes(origin)) return callback(null, true);
+    console.log('CORS blocked:', origin);
     callback(new Error('Not allowed by CORS'));
   },
+  credentials: true,
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-  allowedHeaders: ["Content-Type","Authorization"],
-  credentials: true
+  allowedHeaders: ["Content-Type","Authorization"]
 }));
 
 app.options("*", cors());
@@ -66,7 +67,7 @@ app.get('/*', (req, res) => {
 });
 
 // --- Connexion MongoDB et lancement serveur ---
-mongoose.set('strictQuery', true); // éviter warnings mongoose
+mongoose.set('strictQuery', true);
 mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('✅ Connecté à MongoDB Atlas');
