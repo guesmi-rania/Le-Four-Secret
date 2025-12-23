@@ -34,15 +34,19 @@ export default function AdminLogin({ onLogin }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          autoComplete="current-password" // <- ajoute ceci
+
         />
         <label>Password</label>
         <input
-          type="password"
-          placeholder="••••••••"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
+       type="password"
+       placeholder="••••••••"
+       value={password}
+       onChange={(e) => setPassword(e.target.value)}
+       required
+       autoComplete="current-password" // <- ajoute ceci
         />
+
         <button type="submit">Connecter</button>
         <p className="forgot" onClick={handleForgotPassword}>
           Mot de passe oublié

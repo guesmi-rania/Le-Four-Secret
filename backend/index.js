@@ -20,29 +20,28 @@ const MONGO_URI = process.env.MONGO_URI;
 
 // --- CORS ---
 const allowedOrigins = [
-  "http://localhost:5173", // frontend client local
-  "http://localhost:5174", // frontend admin local
-  "https://recettes-de-cuisine.onrender.com" // frontend client prod
+  "http://localhost:5173", // client local
+  "http://localhost:5174", // admin local
+  "https://recettes-de-cuisine.onrender.com" // client prod
 ];
 
 app.use(cors({
   origin: function(origin, callback) {
-    // autoriser requêtes sans origin (Postman, serveur)
-    if (!origin) return callback(null, true);
+    if (!origin) return callback(null, true); // Postman, serveur
     if (allowedOrigins.includes(origin)) return callback(null, true);
     callback(new Error('Not allowed by CORS'));
   },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+  allowedHeaders: ["Content-Type","Authorization"],
   credentials: true
 }));
 
-app.options("*", cors()); // autoriser preflight
+app.options("*", cors());
 
 // --- JSON Body Parser ---
 app.use(express.json());
 
-// --- Routes API (toujours avant les static files) ---
+// --- Routes API ---
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/products', productRoutes);
@@ -57,7 +56,7 @@ const adminPath = path.join(__dirname, 'public', 'admin');
 app.use('/admin', express.static(adminPath));
 app.use('/', express.static(clientPath));
 
-// --- Fallback React pour SPA ---
+// --- Fallback React SPA ---
 app.get('/admin/*', (req, res) => {
   res.sendFile(path.join(adminPath, 'index.html'));
 });
@@ -67,6 +66,7 @@ app.get('/*', (req, res) => {
 });
 
 // --- Connexion MongoDB et lancement serveur ---
+mongoose.set('strictQuery', true); // éviter warnings mongoose
 mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('✅ Connecté à MongoDB Atlas');
