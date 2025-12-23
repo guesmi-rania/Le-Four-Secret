@@ -21,12 +21,7 @@ import Welcome from "./pages/Welcome";
 import Confirmation from "./pages/Confirmation";
 import ProductsByCategory from "./pages/ProductsByCategory";
 
-// Admin
-import AdminLogin from "./admin/AdminLogin";
-import AdminDashboard from "./admin/AdminDashboard";
-import AdminProducts from "./admin/AdminProducts";
-import AdminOrders from "./admin/AdminOrders";
-import PrivateRoute from "./admin/PrivateRoute";
+
 
 // Notifications
 import { ToastContainer, toast } from "react-toastify";
@@ -99,11 +94,7 @@ function App() {
 
       {/* Routes principales */}
       <Routes>
-        {/* Admin */}
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
-        <Route path="/admin/products" element={<PrivateRoute><AdminProducts /></PrivateRoute>} />
-        <Route path="/admin/orders" element={<PrivateRoute><AdminOrders /></PrivateRoute>} />
+       
 
         {/* Client */}
         <Route path="/" element={

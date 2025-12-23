@@ -39,12 +39,23 @@ export default function Checkout({ cart, setCart }) {
     setLoading(true);
 
     try {
+      // Mapper clientInfo pour correspondre au modèle backend
       const orderData = {
-        clientInfo,
-        shippingInfo: shipDifferent ? shippingInfo : clientInfo,
-        cart,
+        clientInfo: {
+          name: `${clientInfo.firstName} ${clientInfo.lastName}`,
+          email: clientInfo.email,
+          phone: clientInfo.phone,
+          address: `${clientInfo.street}, ${clientInfo.city}, ${clientInfo.state}, ${clientInfo.zip}`
+        },
+        cart: cart.map(item => ({
+          productId: item._id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity
+        })),
         totalPrice,
       };
+
       await axios.post(`${BASE_URL}/api/orders`, orderData);
       setCart([]);
       navigate("/confirmation");

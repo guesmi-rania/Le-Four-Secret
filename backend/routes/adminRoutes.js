@@ -5,7 +5,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authAdmin = require('../middlewares/authAdmin');
 const Admin = require('../models/AdminModel');
-const Client = require('../models/Client'); // Pour exemple route clients
+const Client = require('../models/Client');
+const Order = require('../models/Order');
+const Product = require('../models/Product');
 
 // --- LOGIN ADMIN (PUBLIC)
 router.post('/login', async (req, res) => {
@@ -31,8 +33,8 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// --- ROUTES PROTÉGÉES
-// Exemple : récupérer tous les clients
+// --- ROUTES ADMIN PROTÉGÉES ---
+// Récupérer tous les clients
 router.get('/clients', authAdmin, async (req, res) => {
   try {
     const clients = await Client.find().sort({ dateInscription: -1 });
@@ -42,8 +44,46 @@ router.get('/clients', authAdmin, async (req, res) => {
   }
 });
 
-// Autres routes admin protégées peuvent suivre le même modèle
-// router.get('/orders', authAdmin, ...)
-// router.post('/products', authAdmin, ...)
+// Récupérer toutes les commandes
+router.get('/orders', authAdmin, async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .populate("clientId", "name email address") // Remplace clientId si tu as un champ différent
+      .populate("cart.productId", "name price")   // Pour les infos produit si besoin
+      .sort({ createdAt: -1 });
+
+    // Transforme les données pour correspondre au frontend
+    const formattedOrders = orders.map(order => ({
+      _id: order._id,
+      clientInfo: {
+        name: order.clientId?.name || "—",
+        email: order.clientId?.email || "—",
+        address: order.clientId?.address || "—",
+      },
+      cart: order.cart.map(item => ({
+        name: item.productId?.name || item.name,
+        quantity: item.quantity,
+      })),
+      totalPrice: order.totalPrice,
+      status: order.status,
+      createdAt: order.createdAt
+    }));
+
+    res.json(formattedOrders);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Exemple route produits admin (lecture)
+router.get('/products', authAdmin, async (req, res) => {
+  try {
+    const products = await Product.find().sort({ createdAt: -1 });
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 module.exports = router;

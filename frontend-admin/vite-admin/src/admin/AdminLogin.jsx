@@ -1,41 +1,52 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import "../styles/admin.css";
 
-export default function AdminLogin() {
-  const navigate = useNavigate();
+export default function AdminLogin({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
+  const ADMIN_EMAIL = "rania.guesmi@esen.tn";
+  const ADMIN_PASSWORD = "Rania@123";
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Exemple simple : tu peux remplacer par API
-    if (email === "admin@example.com" && password === "admin123") {
-      localStorage.setItem("admin", true);
-      navigate("/admin/dashboard");
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      onLogin(true);
     } else {
-      alert("Email ou mot de passe incorrect");
+      setError("Email ou mot de passe incorrect");
     }
   };
 
+  const handleForgotPassword = () => {
+    alert(`Votre mot de passe est : ${ADMIN_PASSWORD}`);
+  };
+
   return (
-    <div className="login-container">
-      <h2>Admin Login</h2>
-      <form onSubmit={handleLogin}>
+    <div className="login-page">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Connexion Admin</h2>
+        {error && <p className="error">{error}</p>}
+        <label>Email</label>
         <input
           type="email"
-          placeholder="Email"
+          placeholder="admin@gmail.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        <label>Password</label>
         <input
           type="password"
-          placeholder="Mot de passe"
+          placeholder="••••••••"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Se connecter</button>
+        <button type="submit">Connecter</button>
+        <p className="forgot" onClick={handleForgotPassword}>
+          Mot de passe oublié
+        </p>
       </form>
     </div>
   );

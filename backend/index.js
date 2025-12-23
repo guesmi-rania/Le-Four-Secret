@@ -4,73 +4,77 @@ const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
 
+// --- Routes ---
+const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/adminRoutes');
+const productRoutes = require('./routes/products');
+const orderRoutes = require('./routes/orders');
+const categoriesRoutes = require('./routes/categories');
+const newsletterRoutes = require('./routes/newsletter');
+
 const app = express();
 
-// =======================
-// CONFIG
-// =======================
+// --- Variables d'environnement ---
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
-// =======================
-// MIDDLEWARES
-// =======================
-app.use(cors());
+// --- CORS ---
+const allowedOrigins = [
+  "http://localhost:5173", // frontend client local
+  "http://localhost:5174", // frontend admin local
+  "https://recettes-de-cuisine.onrender.com" // frontend client prod
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // autoriser requêtes sans origin (Postman, serveur)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
+
+app.options("*", cors()); // autoriser preflight
+
+// --- JSON Body Parser ---
 app.use(express.json());
 
-// =======================
-// ROUTES API (⚠️ TOUJOURS AVANT LE FRONT)
-// =======================
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/admin', require('./routes/adminRoutes'));
-app.use('/api/products', require('./routes/products'));
-app.use('/api/orders', require('./routes/orders'));
-app.use('/api/categories', require('./routes/categories'));
-app.use('/api/newsletter', require('./routes/newsletter'));
+// --- Routes API (toujours avant les static files) ---
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/categories', categoriesRoutes);
+app.use('/api/newsletter', newsletterRoutes);
 
-// 🔒 Sécurité : toute route /api inconnue
-app.use('/api', (req, res) => {
-  res.status(404).json({ message: 'API route not found' });
-});
-
-// =======================
-// FRONTEND STATIQUE
-// =======================
+// --- Frontend React statique ---
 const clientPath = path.join(__dirname, 'public', 'client');
 const adminPath = path.join(__dirname, 'public', 'admin');
 
-// Admin dashboard
 app.use('/admin', express.static(adminPath));
+app.use('/', express.static(clientPath));
 
-// Client
-app.use(express.static(clientPath));
-
-// =======================
-// FALLBACKS REACT
-// =======================
-
-// Admin React Router
+// --- Fallback React pour SPA ---
 app.get('/admin/*', (req, res) => {
   res.sendFile(path.join(adminPath, 'index.html'));
 });
 
-// Client React Router
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(clientPath, 'index.html'));
 });
 
-// =======================
-// MONGODB + SERVER
-// =======================
-mongoose
-  .connect(MONGO_URI)
+// --- Connexion MongoDB et lancement serveur ---
+mongoose.connect(MONGO_URI)
   .then(() => {
-    console.log('✅ MongoDB connecté');
+    console.log('✅ Connecté à MongoDB Atlas');
     app.listen(PORT, () => {
-      console.log(`🚀 Serveur lancé sur le port ${PORT}`);
+      console.log(`🚀 Serveur démarré sur le port ${PORT}`);
     });
   })
-  .catch((err) => {
-    console.error('❌ MongoDB error:', err.message);
+  .catch(err => {
+    console.error('❌ Erreur MongoDB :', err.message);
     process.exit(1);
   });
