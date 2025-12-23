@@ -6,7 +6,7 @@
     "start": "node index.js",
     "seed:admin": "node scripts/seedAdmin.js",
     "build:frontend": "npm --prefix ../frontend install && npm --prefix ../frontend run build && mkdir -p ./public/client && cp -r ../frontend/dist/* ./public/client/",
-    "build:admin": "npm --prefix ../admiiin/admiiin install && npm --prefix ../admiiin/admiiin run build && mkdir -p ./public/admin && cp -r ../admiiin/admiiin/dist/* ./public/admin/",
+    "build:admin": "npm --prefix ../frontend-admin/vite-admin install && npm --prefix ../frontend-admin/vite-admin run build && mkdir -p ./public/admin && cp -r ../frontend-admin/vite-admin/dist/* ./public/admin/",
     "build:all": "npm run build:frontend && npm run build:admin"
   },
   "keywords": [],
