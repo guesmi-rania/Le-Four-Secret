@@ -2,7 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const fs = require('fs');
 
 // --- Routes ---
 const authRoutes = require('./routes/auth');
@@ -18,26 +22,26 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
-// --- CORS sécurisé ---
-const allowedOrigins = [
-  "http://localhost:5173", // client local dev
-  "http://localhost:5174", // admin local dev
-  "https://frontend-recettes-fxc8.onrender.com" // frontend prod
-];
+// --- Sécurité et optimisation ---
+app.use(helmet());         // headers sécurisés
+app.use(compression());     // gzip compression
 
-app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin) return callback(null, true); // Postman / serveur
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    console.log('CORS blocked:', origin);
-    callback(new Error('Not allowed by CORS'));
-  },
-  credentials: true,
-  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-  allowedHeaders: ["Content-Type","Authorization"]
-}));
+// --- Limitation de requêtes ---
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(limiter);
 
-app.options("*", cors());
+// --- Logging HTTP ---
+if (process.env.NODE_ENV === 'production') {
+  const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+  app.use(morgan('combined', { stream: accessLogStream }));
+} else {
+  app.use(morgan('dev'));
+}
 
 // --- JSON Body Parser ---
 app.use(express.json());
@@ -51,19 +55,24 @@ app.use('/api/categories', categoriesRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 
 // --- Frontend React statique ---
-const clientPath = path.join(__dirname, 'public', 'client');
-const adminPath = path.join(__dirname, 'public', 'admin');
+const clientPath = path.join(__dirname, 'public', 'client'); // React Frontend
+const adminPath = path.join(__dirname, 'public', 'admin');   // React Admin
 
 app.use('/admin', express.static(adminPath));
 app.use('/', express.static(clientPath));
 
-// --- Fallback React SPA ---
+// --- React SPA Fallback ---
 app.get('/admin/*', (req, res) => {
   res.sendFile(path.join(adminPath, 'index.html'));
 });
-
 app.get('/*', (req, res) => {
   res.sendFile(path.join(clientPath, 'index.html'));
+});
+
+// --- Gestion globale des erreurs ---
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({ message: err.message || 'Erreur serveur' });
 });
 
 // --- Connexion MongoDB et lancement serveur ---

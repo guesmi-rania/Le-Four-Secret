@@ -1,4 +1,3 @@
-// models/Product.js
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 
@@ -11,7 +10,7 @@ const productSchema = new mongoose.Schema({
   category: String,
 });
 
-// Middleware pour générer automatiquement le slug avant sauvegarde
+// Middleware pour générer le slug automatiquement
 productSchema.pre('save', function(next) {
   if (this.name && !this.slug) {
     this.slug = slugify(this.name, { lower: true, strict: true });
