@@ -7,8 +7,9 @@ const compression = require('compression');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const fs = require('fs');
+const cors = require('cors');
 
-// --- Routes ---
+// --- Import des routes ---
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/adminRoutes');
 const productRoutes = require('./routes/products');
@@ -22,16 +23,39 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
-// --- Sécurité et optimisation ---
-app.use(helmet());         // headers sécurisés
-app.use(compression());     // gzip compression
+// --- CORS Configuration ---
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://5173-firebase-lefoursecretgit-1765180526871.cluster-64pjnskmlbaxowh5lzq6i7v4ra.cloudworkstations.dev'
+];
 
-// --- Limitation de requêtes ---
+app.use(cors({
+  origin: (origin, callback) => {
+    // Autorise Postman, Render health checks, server-to-server
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error(`CORS bloqué pour l'origine : ${origin}`));
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
+
+// --- Sécurité & optimisation ---
+app.use(helmet());
+app.use(compression());
+
+// --- Limitation des requêtes ---
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
+  windowMs: 15 * 60 * 1000, // 15 min
+  max: 100,                  // max 100 requêtes par IP
   standardHeaders: true,
-  legacyHeaders: false,
+  legacyHeaders: false
 });
 app.use(limiter);
 
@@ -43,7 +67,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(morgan('dev'));
 }
 
-// --- JSON Body Parser ---
+// --- Body parser JSON ---
 app.use(express.json());
 
 // --- Routes API ---
@@ -61,7 +85,7 @@ const adminPath = path.join(__dirname, 'public', 'admin');   // React Admin
 app.use('/admin', express.static(adminPath));
 app.use('/', express.static(clientPath));
 
-// --- React SPA Fallback ---
+// --- SPA Fallback ---
 app.get('/admin/*', (req, res) => {
   res.sendFile(path.join(adminPath, 'index.html'));
 });
@@ -69,13 +93,13 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(clientPath, 'index.html'));
 });
 
-// --- Gestion globale des erreurs ---
+// --- Gestion des erreurs ---
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({ message: err.message || 'Erreur serveur' });
 });
 
-// --- Connexion MongoDB et lancement serveur ---
+// --- Connexion MongoDB ---
 mongoose.set('strictQuery', true);
 mongoose.connect(MONGO_URI)
   .then(() => {
