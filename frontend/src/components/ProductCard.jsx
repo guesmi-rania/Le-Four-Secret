@@ -1,42 +1,68 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { FaShoppingCart, FaHeart, FaRegHeart, FaEye } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "../styles/ProductCard.css";
-import { FaHeart, FaRegHeart, FaShoppingCart } from "react-icons/fa";
 
-export default function ProductCard({ product, onAddToCart, onAddToWishlist, wishlist }) {
+export default function ProductCard({
+  product,
+  onAddToCart,
+  wishlist,
+  onToggleWishlist,
+  onAddToCompare,
+  openQuickView
+}) {
+  const navigate = useNavigate();
   const isInWishlist = wishlist?.some(item => item._id === product._id);
 
-  return (
-    <div className="product-card">
-      {product.discount && <div className="badge-discount">-{product.discount}%</div>}
+  const handleWishlistClick = (e) => {
+    e.stopPropagation(); // empêche le clic de propager vers la page détail
+    onToggleWishlist(product);
+  };
 
-      <Link to={`/product/${product.slug}`}>
-        <div className="product-image-wrapper">
-          <img src={product.imageUrl} alt={product.name} />
+  return (
+    <div
+      className="product-card"
+      onClick={() => navigate(`/produits/detail/${product._id}`)} // clique sur la carte = page détail
+    >
+      <div className="product-image-container">
+        <img
+          src={product.imageUrl || "/placeholder.png"}
+          alt={product.name}
+          className="product-image"
+        />
+        <div className="product-icons">
+          <button
+            className={`icon-btn wishlist ${isInWishlist ? "active" : ""}`}
+            onClick={handleWishlistClick}
+          >
+            {isInWishlist ? <FaHeart /> : <FaRegHeart />}
+          </button>
+
+          <button
+            className="icon-btn compare"
+            onClick={(e) => { e.stopPropagation(); onAddToCompare(product); }}
+          >
+            ⚖️
+          </button>
+
+          <button
+            className="icon-btn quickview"
+            onClick={(e) => { e.stopPropagation(); openQuickView(product); }}
+          >
+            <FaEye />
+          </button>
         </div>
-      </Link>
+      </div>
 
       <div className="product-info">
         <h3>{product.name}</h3>
-        <p className="category">{product.category}</p>
-        {product.color && <p className="color">Couleur: {product.color}</p>}
-        <p className="price">
-          {product.discount
-            ? <>
-                <span className="old-price">{product.price.toFixed(2)} TND</span> 
-                {(product.price * (1 - product.discount / 100)).toFixed(2)} TND
-              </>
-            : `${product.price.toFixed(2)} TND`}
-        </p>
-
-        <div className="buttons">
-          <button onClick={() => onAddToCart?.(product)} className="btn-add"><FaShoppingCart /> Ajouter</button>
-          <button onClick={() => onAddToWishlist?.(product)} className="btn-wishlist">
-            {isInWishlist ? <FaHeart /> : <FaRegHeart />}
-          </button>
-        </div>
-
-        <Link to={`/product/${product.slug}`} className="btn-view">Voir détail</Link>
+        <p className="price">{product.price?.toFixed(2)} TND</p>
+        <button
+          className="add-to-cart-btn"
+          onClick={(e) => { e.stopPropagation(); onAddToCart(product); }}
+        >
+          <FaShoppingCart /> Ajouter au panier
+        </button>
       </div>
     </div>
   );

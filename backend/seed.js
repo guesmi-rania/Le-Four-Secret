@@ -1,9 +1,9 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const Product = require('./models/Product');
-const data = require('./data.json'); // ton fichier JSON avec toutes les catégories et produits
+const data = require('./data.json'); // ton JSON avec toutes les catégories et produits
 
-const MONGODB_URI = process.env.MONGO_URI || 'mongodb+srv://raniaguesmi:AhfnzsUoS3gnIfNe@cluster2.stjl3ql.mongodb.net/recettes?retryWrites=true&w=majority&appName=Cluster2';
+const MONGODB_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGODB_URI)
   .then(async () => {
@@ -20,7 +20,8 @@ mongoose.connect(MONGODB_URI)
           category: categoryItem.category,
           description: `Délicieux ${name} de la catégorie ${categoryItem.category}`,
           price: Math.floor(Math.random() * 50) + 5,
-          imageUrl: `/images/${name.replace(/ /g, "_")}.jpg`
+          imageUrl: `/images/${name.replace(/ /g, "_")}.jpg`,
+          weight: parseFloat((Math.random() * 2 + 0.2).toFixed(2)) // poids aléatoire entre 0.2kg et 2.2kg
         });
       });
     });

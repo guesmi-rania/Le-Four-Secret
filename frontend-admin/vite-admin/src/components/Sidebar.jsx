@@ -1,62 +1,35 @@
+// src/components/Sidebar.jsx
 import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import "../styles/Sidebar.css";
 
-export default function Sidebar({ activeSection, setActiveSection, onLogout }) {
-  const menuItems = [
-    { id: "dashboard", label: "Dashboard" },
-    { id: "orders", label: "Commandes" },
-    { id: "products", label: "Produits" },
-    { id: "categories", label: "Catégories" },
-    { id: "newsletter", label: "Newsletter" },
+export default function Sidebar({ onLogout }) {
+  const location = useLocation();
+
+  const links = [
+    { name: "Dashboard", path: "/" },
+    { name: "Commandes", path: "/orders" },
+    { name: "Produits", path: "/products" },
+    { name: "Catégories", path: "/categories" },
+    { name: "Newsletter", path: "/newsletter" },
   ];
 
   return (
-    <aside style={{
-      width: "220px",
-      backgroundColor: "#2c3e50",
-      color: "#fff",
-      minHeight: "100vh",
-      padding: "20px",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between"
-    }}>
-      <div>
-        <h2 style={{ textAlign: "center", marginBottom: "30px" }}>Admin</h2>
-        <ul style={{ listStyle: "none", padding: 0 }}>
-          {menuItems.map(item => (
-            <li
-              key={item.id}
-              onClick={() => setActiveSection(item.id)}
-              style={{
-                padding: "12px 10px",
-                marginBottom: "8px",
-                cursor: "pointer",
-                borderRadius: "8px",
-                background: activeSection === item.id ? "#007bff" : "transparent",
-                color: activeSection === item.id ? "#fff" : "#fff",
-                transition: "0.3s"
-              }}
-            >
-              {item.label}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <button
-        onClick={onLogout}
-        style={{
-          marginTop: "20px",
-          padding: "10px",
-          backgroundColor: "#e74c3c",
-          color: "#fff",
-          border: "none",
-          borderRadius: "8px",
-          cursor: "pointer"
-        }}
-      >
-        Déconnexion
-      </button>
-    </aside>
+    <div className="sidebar">
+      <h2>Admin</h2>
+      <ul>
+        {links.map((link) => (
+          <li
+            key={link.path}
+            className={location.pathname === link.path ? "active" : ""}
+          >
+            <Link to={link.path}>{link.name}</Link>
+          </li>
+        ))}
+        <li onClick={onLogout} style={{ marginTop: "auto", cursor: "pointer", background: "#e84118" }}>
+          Déconnexion
+        </li>
+      </ul>
+    </div>
   );
 }

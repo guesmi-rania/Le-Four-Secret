@@ -1,56 +1,53 @@
 import React, { useState } from "react";
-import "../styles/admin.css";
+import axios from "axios";
 
 export default function AdminLogin({ onLogin }) {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const ADMIN_EMAIL = "rania.guesmi@esen.tn";
-  const ADMIN_PASSWORD = "Rania@123";
+  const BASE_URL = import.meta.env.VITE_API_URL || "https://recettes-de-cuisine.onrender.com";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      onLogin(true);
-    } else {
-      setError("Email ou mot de passe incorrect");
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await axios.post(`${BASE_URL}/api/admin/login`, { username, password });
+      localStorage.setItem("adminToken", res.data.token);
+      onLogin(); // mise à jour du state dans App.jsx
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.message || "Erreur de connexion");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleForgotPassword = () => {
-    alert(`Votre mot de passe est : ${ADMIN_PASSWORD}`);
-  };
-
   return (
-    <div className="login-page">
-      <form className="login-form" onSubmit={handleSubmit}>
+    <div className="admin-login-container">
+      <form className="admin-login-form" onSubmit={handleSubmit}>
         <h2>Connexion Admin</h2>
         {error && <p className="error">{error}</p>}
-        <label>Email</label>
         <input
-          type="email"
-          placeholder="admin@gmail.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="Nom d'utilisateur"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
-          autoComplete="current-password" // <- ajoute ceci
-
         />
-        <label>Password</label>
         <input
-       type="password"
-       placeholder="••••••••"
-       value={password}
-       onChange={(e) => setPassword(e.target.value)}
-       required
-       autoComplete="current-password" // <- ajoute ceci
+          type="password"
+          placeholder="Mot de passe"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
         />
-
-        <button type="submit">Connecter</button>
-        <p className="forgot" onClick={handleForgotPassword}>
-          Mot de passe oublié
-        </p>
+        <button type="submit" disabled={loading}>
+          {loading ? "Connexion..." : "Se connecter"}
+        </button>
       </form>
     </div>
   );

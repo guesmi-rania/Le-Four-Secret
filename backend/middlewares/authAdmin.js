@@ -16,11 +16,13 @@ const authAdmin = (req, res, next) => {
 
     // Vérifier le token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (!decoded.isAdmin) {
+    
+    // Vérifier si l'utilisateur est admin
+    if (!decoded || !decoded.isAdmin) {
       return res.status(403).json({ message: 'Accès interdit : non admin' });
     }
 
-    // Ajouter les infos admin à la requête
+    // Ajouter les infos admin à la requête pour les routes suivantes
     req.admin = {
       id: decoded.id,
       username: decoded.username,

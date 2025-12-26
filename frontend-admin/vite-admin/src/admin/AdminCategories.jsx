@@ -4,51 +4,48 @@ import axios from "axios";
 export default function AdminCategories() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const token = localStorage.getItem("adminToken");
-  const BASE_URL = import.meta.env.VITE_API_URL;
+  const BASE_URL = import.meta.env.VITE_API_URL || "https://recettes-de-cuisine.onrender.com";
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/categories`, {
+        const res = await axios.get(`${BASE_URL}/api/admin/categories`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setCategories(Array.isArray(res.data) ? res.data : []);
+        setCategories(res.data || []);
       } catch (err) {
         console.error(err);
-        setCategories([]);
+        setError("Impossible de charger les catégories.");
       } finally {
         setLoading(false);
       }
     };
-    if (token) fetchCategories();
-  }, [token, BASE_URL]);
+    fetchCategories();
+  }, [token]);
 
   if (loading) return <p>Chargement des catégories...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (!categories.length) return <p>Aucune catégorie trouvée.</p>;
 
   return (
-    <div className="dashboard-content">
-      <h3>Catégories</h3>
-      {categories.length === 0 ? (
-        <p>Aucune catégorie trouvée.</p>
-      ) : (
-        <table className="orders-table">
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {categories.map((cat) => (
-              <tr key={cat._id}>
-                <td>{cat.name}</td>
-                <td>{cat.description}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+    <table className="orders-table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Créé le</th>
+        </tr>
+      </thead>
+      <tbody>
+        {categories.map((c) => (
+          <tr key={c._id}>
+            <td>{c.name}</td>
+            <td>{new Date(c.createdAt).toLocaleDateString()}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }

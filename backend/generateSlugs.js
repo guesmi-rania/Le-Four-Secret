@@ -1,10 +1,15 @@
 // generateSlugs.js
+
+require('dotenv').config();
 const mongoose = require("mongoose");
 const Product = require("./models/Product");
 const slugify = require("slugify");
 
 // Remplace par ton URI MongoDB
-mongoose.connect("mongodb://localhost:27017/tonDB", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(
+  process.env.MONGO_URI,
+  { useNewUrlParser: true, useUnifiedTopology: true }
+);
 
 async function generateSlugs() {
   const products = await Product.find();

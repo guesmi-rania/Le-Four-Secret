@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+// src/App.jsx
+import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-
-// Composants & Pages
 import Navbar from "./components/Navbar";
 import Slider from "./components/Slider";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -17,51 +16,37 @@ import WishlistPage from "./pages/WishlistPage";
 import ProductDetail from "./pages/ProductDetail";
 import TastingList from "./pages/TastingList";
 import ContactPage from "./pages/ContactPage";
-import Welcome from "./pages/Welcome";
 import Confirmation from "./pages/Confirmation";
 import ProductsByCategory from "./pages/ProductsByCategory";
+import Welcome from "./pages/Welcome";
 
-
-
-// Notifications
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-// Styles globaux
 import "./styles/Cart.css";
 
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // States synchronisés avec localStorage
   const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem("cart")) || []);
   const [wishlist, setWishlist] = useState(() => JSON.parse(localStorage.getItem("wishlist")) || []);
   const [compareList, setCompareList] = useState(() => JSON.parse(localStorage.getItem("compareList")) || []);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Synchronisation avec localStorage
   useEffect(() => { localStorage.setItem("cart", JSON.stringify(cart)); }, [cart]);
   useEffect(() => { localStorage.setItem("wishlist", JSON.stringify(wishlist)); }, [wishlist]);
   useEffect(() => { localStorage.setItem("compareList", JSON.stringify(compareList)); }, [compareList]);
 
-  // Notifications
   const notifyAddCart = (name) => toast.success(`✅ ${name} ajouté au panier !`);
   const notifyAddWishlist = (name) => toast.info(`❤️ ${name} ajouté à la wishlist !`);
   const notifyRemoveWishlist = (name) => toast.info(`❌ ${name} retiré de la wishlist !`);
   const notifyAddCompare = (name) => toast.info(`⚖️ ${name} ajouté à la comparaison !`);
 
-  // Gestion du panier
-  const handleAddToCart = (product) => {
-    setCart(prev => [...prev, product]);
-    notifyAddCart(product.name);
-    setIsCartOpen(true);
-  };
+  const handleAddToCart = (product) => { setCart(prev => [...prev, product]); notifyAddCart(product.name); setIsCartOpen(true); };
 
-  // Toggle wishlist
   const handleToggleWishlist = (product) => {
-    if (wishlist.find((item) => item._id === product._id)) {
-      setWishlist(prev => prev.filter((item) => item._id !== product._id));
+    if (wishlist.find(item => item._id === product._id)) {
+      setWishlist(prev => prev.filter(item => item._id !== product._id));
       notifyRemoveWishlist(product.name);
     } else {
       setWishlist(prev => [...prev, product]);
@@ -69,34 +54,24 @@ function App() {
     }
   };
 
-  // Ajouter à la comparaison
   const handleAddToCompare = (product) => {
-    if (!compareList.find((item) => item._id === product._id)) {
+    if (!compareList.find(item => item._id === product._id)) {
       setCompareList(prev => [...prev, product]);
       notifyAddCompare(product.name);
     }
   };
 
+  const openQuickView = (product) => {
+    alert(`Quick View: ${product.name}`); // ici tu peux mettre modal si tu veux
+  };
+
   return (
     <>
-      {/* Navbar */}
       <Navbar cart={cart} wishlist={wishlist} onCartClick={() => setIsCartOpen(true)} />
-
-      {/* Drawer Panier */}
-      <CartDrawer
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cartItems={cart}
-      />
-
-      {/* Slider uniquement sur la page d'accueil */}
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} cartItems={cart} />
       {location.pathname === "/" && <Slider />}
 
-      {/* Routes principales */}
       <Routes>
-       
-
-        {/* Client */}
         <Route path="/" element={
           <Home
             onAddToCart={handleAddToCart}
@@ -108,27 +83,32 @@ function App() {
         } />
 
         <Route path="/login" element={<ClientAuth />} />
-        <Route path="/bienvenue" element={<ProtectedRoute><Welcome /></ProtectedRoute>} />
+        <Route path="/bienvenue" element={
+       <ProtectedRoute>
+         <Welcome />
+        </ProtectedRoute>
+        } />
 
-        {/* Shop / Produits */}
         <Route path="/produits" element={
           <ShopPage
             onAddToCart={handleAddToCart}
             wishlist={wishlist}
-            compareList={compareList}
             onToggleWishlist={handleToggleWishlist}
             onAddToCompare={handleAddToCompare}
+            openQuickView={openQuickView}
           />
         } />
+
         <Route path="/produits/:category" element={
           <ProductsByCategory
             onAddToCart={handleAddToCart}
             wishlist={wishlist}
-            compareList={compareList}
             onToggleWishlist={handleToggleWishlist}
             onAddToCompare={handleAddToCompare}
+            openQuickView={openQuickView}
           />
         } />
+
         <Route path="/produits/detail/:id" element={
           <ProtectedRoute>
             <ProductDetail
@@ -141,13 +121,11 @@ function App() {
           </ProtectedRoute>
         } />
 
-        {/* Cart / Checkout / Confirmation */}
         <Route path="/cart" element={<CartPage cart={cart} setCart={setCart} />} />
         <Route path="/checkout" element={<Checkout cart={cart} setCart={setCart} />} />
         <Route path="/confirmation" element={<Confirmation />} />
-
-        {/* Autres pages */}
-        <Route path="/wishlist" element={<WishlistPage wishlist={wishlist} setWishlist={setWishlist} />} />
+        <Route path="/wishlist" element={
+        <WishlistPage wishlist={wishlist} setWishlist={setWishlist} />} />
         <Route path="/commandes" element={<ProtectedRoute><OrdersPage /></ProtectedRoute>} />
         <Route path="/dégustation" element={<TastingList />} />
         <Route path="/contact" element={<ContactPage />} />

@@ -26,18 +26,14 @@ const MONGO_URI = process.env.MONGO_URI;
 // --- CORS Configuration ---
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://5173-firebase-lefoursecretgit-1765180526871.cluster-64pjnskmlbaxowh5lzq6i7v4ra.cloudworkstations.dev'
+  'https://le-four-secret.onrender.com',
+  'https://frontend-recettes-fxc8.onrender.com'
 ];
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Autorise Postman, Render health checks, server-to-server
     if (!origin) return callback(null, true);
-
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-
+    if (allowedOrigins.includes(origin)) return callback(null, true);
     return callback(new Error(`CORS bloqué pour l'origine : ${origin}`));
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -45,21 +41,19 @@ app.use(cors({
   credentials: true
 }));
 
-
 // --- Sécurité & optimisation ---
 app.use(helmet());
 app.use(compression());
 
 // --- Limitation des requêtes ---
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 min
-  max: 100,                  // max 100 requêtes par IP
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
   standardHeaders: true,
   legacyHeaders: false
-});
-app.use(limiter);
+}));
 
-// --- Logging HTTP ---
+// --- Logging ---
 if (process.env.NODE_ENV === 'production') {
   const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
   app.use(morgan('combined', { stream: accessLogStream }));
@@ -79,19 +73,15 @@ app.use('/api/categories', categoriesRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 
 // --- Frontend React statique ---
-const clientPath = path.join(__dirname, 'public', 'client'); // React Frontend
-const adminPath = path.join(__dirname, 'public', 'admin');   // React Admin
+const clientPath = path.join(__dirname, 'public', 'client');
+const adminPath = path.join(__dirname, 'public', 'admin');
 
 app.use('/admin', express.static(adminPath));
 app.use('/', express.static(clientPath));
 
 // --- SPA Fallback ---
-app.get('/admin/*', (req, res) => {
-  res.sendFile(path.join(adminPath, 'index.html'));
-});
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(clientPath, 'index.html'));
-});
+app.get('/admin/*', (req, res) => res.sendFile(path.join(adminPath, 'index.html')));
+app.get('/*', (req, res) => res.sendFile(path.join(clientPath, 'index.html')));
 
 // --- Gestion des erreurs ---
 app.use((err, req, res, next) => {
@@ -99,14 +89,12 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message || 'Erreur serveur' });
 });
 
-// --- Connexion MongoDB ---
+// --- Connexion MongoDB Atlas ---
 mongoose.set('strictQuery', true);
 mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('✅ Connecté à MongoDB Atlas');
-    app.listen(PORT, () => {
-      console.log(`🚀 Serveur démarré sur le port ${PORT}`);
-    });
+    app.listen(PORT, () => console.log(`🚀 Serveur démarré sur le port ${PORT}`));
   })
   .catch(err => {
     console.error('❌ Erreur MongoDB :', err.message);

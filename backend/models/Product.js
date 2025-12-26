@@ -8,9 +8,9 @@ const productSchema = new mongoose.Schema({
   price: Number,
   imageUrl: String,
   category: String,
+  weight: Number, // poids en kg
 });
 
-// Middleware pour générer le slug automatiquement
 productSchema.pre('save', function(next) {
   if (this.name && !this.slug) {
     this.slug = slugify(this.name, { lower: true, strict: true });
