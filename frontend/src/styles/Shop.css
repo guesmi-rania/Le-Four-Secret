@@ -146,3 +146,73 @@
   font-size: 1.3rem;
   cursor: pointer;
 }
+
+/* === Responsive version mobile === */
+@media (max-width: 992px) {
+  .shop-page {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .filters {
+    max-width: 100%;
+    width: 100%;
+    order: 1; /* apparait au-dessus */
+  }
+
+  .products-section {
+    width: 100%;
+    order: 2;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .pagination {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .filters h2 {
+    font-size: 1.2rem;
+  }
+
+  .filters h3 {
+    font-size: 1rem;
+  }
+
+  .filters label {
+    font-size: 0.85rem;
+  }
+
+  .pagination button {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  .quickview-modal {
+    padding: 1rem;
+  }
+
+  .quickview-modal h2 {
+    font-size: 1.2rem;
+  }
+
+  .quickview-modal p {
+    font-size: 0.9rem;
+  }
+
+  .quickview-modal .buttons button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}
