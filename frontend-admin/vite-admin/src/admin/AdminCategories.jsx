@@ -1,3 +1,4 @@
+// frontend/src/pages/AdminCategories.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -31,21 +32,24 @@ export default function AdminCategories() {
   if (!categories.length) return <p>Aucune catégorie trouvée.</p>;
 
   return (
-    <table className="orders-table">
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Créé le</th>
-        </tr>
-      </thead>
-      <tbody>
-        {categories.map((c) => (
-          <tr key={c._id}>
-            <td>{c.name}</td>
-            <td>{new Date(c.createdAt).toLocaleDateString()}</td>
+    <div>
+      <h2>Catégories</h2>
+      <table className="orders-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Créé le</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {categories.map((c) => (
+            <tr key={c._id}>
+              <td>{c.name}</td>
+              <td>{new Date(c.createdAt).toLocaleDateString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

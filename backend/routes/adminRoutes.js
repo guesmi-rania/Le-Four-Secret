@@ -8,11 +8,12 @@ const Admin = require('../models/AdminModel');
 const Client = require('../models/Client');
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+const Category = require('../models/Category');
+const Newsletter = require('../models/Newsletter');
 
 // --- LOGIN ADMIN (PUBLIC)
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
-
   try {
     const admin = await Admin.findOne({ username });
     if (!admin) return res.status(401).json({ message: 'Utilisateur introuvable' });
@@ -34,7 +35,6 @@ router.post('/login', async (req, res) => {
 });
 
 // --- ROUTES ADMIN PROTÉGÉES ---
-// Récupérer tous les clients
 router.get('/clients', authAdmin, async (req, res) => {
   try {
     const clients = await Client.find().sort({ dateInscription: -1 });
@@ -44,25 +44,20 @@ router.get('/clients', authAdmin, async (req, res) => {
   }
 });
 
-// Récupérer toutes les commandes
+// Commandes admin
 router.get('/orders', authAdmin, async (req, res) => {
   try {
     const orders = await Order.find()
-      .populate("clientId", "name email address") // Remplace clientId si tu as un champ différent
-      .populate("cart.productId", "name price")   // Pour les infos produit si besoin
+      .populate("cart.product", "name price") // Populate seulement le produit
       .sort({ createdAt: -1 });
 
-    // Transforme les données pour correspondre au frontend
     const formattedOrders = orders.map(order => ({
       _id: order._id,
-      clientInfo: {
-        name: order.clientId?.name || "—",
-        email: order.clientId?.email || "—",
-        address: order.clientId?.address || "—",
-      },
+      clientInfo: order.clientInfo,
       cart: order.cart.map(item => ({
-        name: item.productId?.name || item.name,
+        name: item.name,
         quantity: item.quantity,
+        price: item.price,
       })),
       totalPrice: order.totalPrice,
       status: order.status,
@@ -76,11 +71,31 @@ router.get('/orders', authAdmin, async (req, res) => {
   }
 });
 
-// Exemple route produits admin (lecture)
+// Produits admin
 router.get('/products', authAdmin, async (req, res) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
     res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Catégories admin
+router.get('/categories', authAdmin, async (req, res) => {
+  try {
+    const categories = await Category.find().sort({ createdAt: -1 });
+    res.json(categories);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Newsletter admin
+router.get('/newsletter', authAdmin, async (req, res) => {
+  try {
+    const subs = await Newsletter.find().sort({ createdAt: -1 });
+    res.json(subs);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

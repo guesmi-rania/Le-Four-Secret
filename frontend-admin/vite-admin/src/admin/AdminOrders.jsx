@@ -1,3 +1,4 @@
+// frontend/src/pages/AdminOrders.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { jsPDF } from "jspdf";
@@ -12,27 +13,18 @@ export default function AdminOrders() {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      if (!token) {
-        setError("Vous n'êtes pas connecté(e) en tant qu'admin.");
-        setLoading(false);
-        return;
-      }
-
       try {
         const res = await axios.get(`${BASE_URL}/api/admin/orders`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setOrders(Array.isArray(res.data) ? res.data : []);
+        setOrders(res.data || []);
       } catch (err) {
         console.error(err);
-        setError(
-          err.response?.data?.message || "Impossible de charger les commandes."
-        );
+        setError("Impossible de charger les commandes.");
       } finally {
         setLoading(false);
       }
     };
-
     fetchOrders();
   }, [token]);
 
@@ -49,7 +41,7 @@ export default function AdminOrders() {
 
     let y = 85;
     order.cart.forEach((item, idx) => {
-      doc.text(`${idx + 1}. ${item.name} × ${item.quantity}`, 25, y);
+      doc.text(`${idx + 1}. ${item.name} × ${item.quantity} - ${item.price} DT`, 25, y);
       y += 10;
     });
 
@@ -72,7 +64,7 @@ export default function AdminOrders() {
           <th>Total</th>
           <th>Statut</th>
           <th>Date</th>
-          <th>Devis PDF</th>
+          <th>PDF</th>
         </tr>
       </thead>
       <tbody>
