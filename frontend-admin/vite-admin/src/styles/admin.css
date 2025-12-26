@@ -159,15 +159,62 @@ button[style*="background-color: #007bff"] {
 }
 
 /* --- Admin Login --- */
-/* --- Admin Login Stylé --- */
+/* === Admin Login amélioré === */
 .admin-login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #6a89cc, #b8e994);
+  background: linear-gradient(135deg, #a5d8ff, #ffffff); /* bleu ciel vers blanc */
+  padding: 1rem;
 }
 
+.admin-login-form {
+  background-color: #ffffff;
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 450px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-login-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.admin-login-form h2 {
+  margin-bottom: 30px;
+  text-align: center;
+  color: #1b1b1b; /* noir pour titre */
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+/* Formulaire champs côte à côte sur desktop */
+/* --- Container Login --- */
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #dbefff, #ffffff); /* bleu ciel -> blanc */
+  padding: 1rem;
+}
+
+/* --- Formulaire --- */
+/* --- Container Login --- */
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #abd9ff, #ffffff); /* bleu ciel -> blanc */
+  padding: 1rem;
+}
+
+/* --- Formulaire --- */
 .admin-login-form {
   background-color: #ffffff;
   padding: 40px 50px;
@@ -184,36 +231,40 @@ button[style*="background-color: #007bff"] {
 }
 
 .admin-login-form h2 {
-  margin-bottom: 25px;
   text-align: center;
-  color: #40739e;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  color: #002838; /* noir */
+  margin-bottom: 30px;
   letter-spacing: 1px;
+  font-weight: 700; /* gras */
 }
 
+
+/* --- Champs --- */
 .admin-login-form input {
-  width: 100%;
+  width: 100%; /* pleine largeur */
   padding: 12px 15px;
-  margin-bottom: 20px;
   border-radius: 8px;
-  border: 1px solid #dcdde1;
+  border: 1px solid #74c0fc; /* bleu ciel */
   font-size: 1rem;
+  margin-bottom: 20px;
   transition: all 0.3s ease;
 }
 
 .admin-login-form input:focus {
-  border-color: #40739e;
-  box-shadow: 0 0 8px rgba(64, 115, 158, 0.3);
+  border-color: #4d4d4d;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   outline: none;
 }
 
+/* --- Bouton aligné aux champs --- */
 .admin-login-form button {
-  width: 100%;
+  width: 100%; /* même largeur que les champs */
   padding: 12px 0;
   font-weight: bold;
   font-size: 1rem;
   color: #fff;
-  background: linear-gradient(135deg, #40739e, #74b9ff);
+  background: linear-gradient(135deg, #74c0fc, #1b1b1b); /* bleu ciel -> noir */
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -221,11 +272,12 @@ button[style*="background-color: #007bff"] {
 }
 
 .admin-login-form button:hover {
-  background: linear-gradient(135deg, #2f3640, #40739e);
+  background: linear-gradient(135deg, #1b1b1b, #74c0fc);
   transform: translateY(-2px);
 }
 
-.error {
+/* --- Message d'erreur --- */
+.admin-login-form .error {
   color: #e74c3c;
   font-weight: bold;
   margin-bottom: 15px;
@@ -235,8 +287,13 @@ button[style*="background-color: #007bff"] {
   border-radius: 5px;
   border: 1px solid #e74c3c;
 }
+.admin-login-form input,
+.admin-login-form button {
+  width: 100%;       /* pleine largeur identique */
+  box-sizing: border-box; /* inclut padding et border dans la largeur */
+}
 
-/* Responsive Login */
+/* --- Responsive mobile --- */
 @media (max-width: 480px) {
   .admin-login-form {
     padding: 30px 20px;
@@ -246,6 +303,7 @@ button[style*="background-color: #007bff"] {
     font-size: 1.5rem;
   }
 }
+
 
 /* --- Responsive --- */
 @media (max-width: 768px) {

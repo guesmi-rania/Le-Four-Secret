@@ -29,26 +29,28 @@ export default function AdminLogin({ onLogin }) {
   return (
     <div className="admin-login-container">
       <form className="admin-login-form" onSubmit={handleSubmit}>
-        <h2>Connexion Admin</h2>
-        {error && <p className="error">{error}</p>}
-        <input
-          type="text"
-          placeholder="Nom d'utilisateur"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Connexion..." : "Se connecter"}
-        </button>
-      </form>
+  <h2>Connexion Admin</h2>
+  {error && <p className="error">{error}</p>}
+  <div className="form-row">
+    <input
+      type="text"
+      placeholder="Nom d'utilisateur"
+      value={username}
+      onChange={(e) => setUsername(e.target.value)}
+      required
+    />
+    <input
+      type="password"
+      placeholder="Mot de passe"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+    />
+    <button type="submit" disabled={loading}>
+      {loading ? "Connexion..." : "Se connecter"}
+    </button>
+  </div>
+</form>
     </div>
   );
 }
