@@ -1,52 +1,60 @@
-// frontend/src/pages/AdminOrders.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { jsPDF } from "jspdf";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const token = localStorage.getItem("adminToken");
   const BASE_URL = import.meta.env.VITE_API_URL || "https://recettes-de-cuisine.onrender.com";
 
+  const fetchOrders = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/api/admin/orders`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setOrders(res.data || []);
+    } catch (err) {
+      console.error(err);
+      setError("Impossible de charger les commandes.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}/api/admin/orders`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setOrders(res.data || []);
-      } catch (err) {
-        console.error(err);
-        setError("Impossible de charger les commandes.");
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchOrders();
-  }, [token]);
+  }, []);
 
-  const generatePDF = (order) => {
-    const doc = new jsPDF();
-    doc.setFontSize(16);
-    doc.text("Devis / Commande", 20, 20);
-    doc.setFontSize(12);
-    doc.text(`Client : ${order.clientInfo?.name}`, 20, 35);
-    doc.text(`Email : ${order.clientInfo?.email}`, 20, 45);
-    doc.text(`Adresse : ${order.clientInfo?.address}`, 20, 55);
-    doc.text(`Date : ${new Date(order.createdAt).toLocaleString()}`, 20, 65);
-    doc.text("Produits :", 20, 75);
+  const handleUpdateStatus = async (orderId, status) => {
+    try {
+      await axios.put(`${BASE_URL}/api/admin/orders/${orderId}/status`, { status }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      fetchOrders();
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la mise à jour du statut");
+    }
+  };
 
-    let y = 85;
-    order.cart.forEach((item, idx) => {
-      doc.text(`${idx + 1}. ${item.name} × ${item.quantity} - ${item.price} DT`, 25, y);
-      y += 10;
-    });
+  const handleSendEmail = async (email) => {
+    const subject = prompt("Sujet de l'email:");
+    const message = prompt("Message à envoyer:");
+    if (!subject || !message) return;
 
-    doc.text(`Total : ${order.totalPrice} DT`, 20, y + 5);
-    doc.save(`commande_${order._id}.pdf`);
+    try {
+      await axios.post(`${BASE_URL}/api/admin/send-email`, { email, subject, message }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setMessage("Email envoyé avec succès !");
+      setTimeout(() => setMessage(""), 3000);
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de l'envoi de l'email");
+    }
   };
 
   if (loading) return <p>Chargement des commandes...</p>;
@@ -54,43 +62,41 @@ export default function AdminOrders() {
   if (!orders.length) return <p>Aucune commande trouvée.</p>;
 
   return (
-    <table className="orders-table">
-      <thead>
-        <tr>
-          <th>Client</th>
-          <th>Email</th>
-          <th>Adresse</th>
-          <th>Produits</th>
-          <th>Total</th>
-          <th>Statut</th>
-          <th>Date</th>
-          <th>PDF</th>
-        </tr>
-      </thead>
-      <tbody>
-        {orders.map((order) => (
-          <tr key={order._id}>
-            <td>{order.clientInfo?.name}</td>
-            <td>{order.clientInfo?.email}</td>
-            <td>{order.clientInfo?.address}</td>
-            <td>
-              <ul>
-                {order.cart?.map((item, idx) => (
-                  <li key={idx}>
-                    {item.name} × {item.quantity}
-                  </li>
-                ))}
-              </ul>
-            </td>
-            <td>{order.totalPrice} DT</td>
-            <td>{order.status || "En attente"}</td>
-            <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-            <td>
-              <button onClick={() => generatePDF(order)}>📄 PDF</button>
-            </td>
+    <div>
+      <h2>Commandes</h2>
+      {message && <p style={{ color: "green" }}>{message}</p>}
+      <table className="orders-table">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Commande</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Créée le</th>
+            <th>Actions</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {orders.map(order => (
+            <tr key={order._id}>
+              <td>{order.clientInfo.name}<br/>{order.clientInfo.email}</td>
+              <td>
+                {order.cart.map(item => (
+                  <div key={item.name}>{item.name} x{item.quantity} - {item.price} TND</div>
+                ))}
+              </td>
+              <td>{order.totalPrice} TND</td>
+              <td>{order.status}</td>
+              <td>{new Date(order.createdAt).toLocaleString()}</td>
+              <td>
+                <button onClick={() => handleUpdateStatus(order._id, "Validée")}>Valider</button>
+                <button onClick={() => handleUpdateStatus(order._id, "Annulée")}>Annuler</button>
+                <button onClick={() => handleSendEmail(order.clientInfo.email)}>Envoyer Email</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-// backend/routes/adminRoutes.js
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
@@ -10,6 +9,7 @@ const Order = require('../models/Order');
 const Product = require('../models/Product');
 const Category = require('../models/Category');
 const Newsletter = require('../models/Newsletter');
+const sendEmail = require('../utils/email');
 
 // --- LOGIN ADMIN (PUBLIC)
 router.post('/login', async (req, res) => {
@@ -34,7 +34,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// --- ROUTES ADMIN PROTÉGÉES ---
+// --- CLIENTS ---
 router.get('/clients', authAdmin, async (req, res) => {
   try {
     const clients = await Client.find().sort({ dateInscription: -1 });
@@ -44,11 +44,11 @@ router.get('/clients', authAdmin, async (req, res) => {
   }
 });
 
-// Commandes admin
+// --- COMMANDES ---
 router.get('/orders', authAdmin, async (req, res) => {
   try {
     const orders = await Order.find()
-      .populate("cart.product", "name price") // Populate seulement le produit
+      .populate("cart.product", "name price")
       .sort({ createdAt: -1 });
 
     const formattedOrders = orders.map(order => ({
@@ -71,7 +71,40 @@ router.get('/orders', authAdmin, async (req, res) => {
   }
 });
 
-// Produits admin
+// --- Modifier le status d'une commande ---
+router.put('/orders/:id/status', authAdmin, async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    const order = await Order.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+    res.json(order);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// --- ENVOYER EMAIL A CLIENT ---
+router.post('/send-email', authAdmin, async (req, res) => {
+  const { email, subject, message } = req.body;
+  try {
+    await sendEmail({
+      to: email,
+      subject,
+      text: message,
+      html: `<p>${message}</p>`,
+    });
+    res.json({ message: "Email envoyé avec succès" });
+  } catch (err) {
+    res.status(500).json({ message: "Erreur lors de l'envoi de l'email" });
+  }
+});
+
+// --- PRODUITS ---
 router.get('/products', authAdmin, async (req, res) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
@@ -81,7 +114,7 @@ router.get('/products', authAdmin, async (req, res) => {
   }
 });
 
-// Catégories admin
+// --- CATEGORIES ---
 router.get('/categories', authAdmin, async (req, res) => {
   try {
     const categories = await Category.find().sort({ createdAt: -1 });
@@ -91,14 +124,12 @@ router.get('/categories', authAdmin, async (req, res) => {
   }
 });
 
-// Newsletter admin
-// GET - tous les abonnés à la newsletter (admin)
-router.get("/newsletter", authAdmin, async (req, res) => {
+// --- NEWSLETTER ---
+router.get('/newsletter', authAdmin, async (req, res) => {
   try {
     const subs = await Newsletter.find().sort({ createdAt: -1 });
     res.json(subs);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: err.message });
   }
 });

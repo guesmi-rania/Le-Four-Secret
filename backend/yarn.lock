@@ -643,10 +643,10 @@ negotiator@0.6.3:
   resolved "https://registry.npmjs.org/negotiator/-/negotiator-0.6.3.tgz"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-nodemailer@^7.0.6:
-  version "7.0.6"
-  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-7.0.6.tgz"
-  integrity sha512-F44uVzgwo49xboqbFgBGkRaiMgtoBrBEWCVincJPK9+S9Adkzt/wXCLKbf7dxucmxfTI5gHGB+bEmdyzN6QKjw==
+nodemailer@^7.0.12:
+  version "7.0.12"
+  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-7.0.12.tgz"
+  integrity sha512-H+rnK5bX2Pi/6ms3sN4/jRQvYSMltV6vqup/0SFOrxYYY/qoNvhXPlYq3e+Pm9RFJRwrMGbMIwi81M4dxpomhA==
 
 object-assign@^4:
   version "4.1.1"
