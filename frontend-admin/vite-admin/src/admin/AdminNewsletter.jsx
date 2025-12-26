@@ -1,51 +1,55 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function AdminCategories() {
-  const [categories, setCategories] = useState([]);
+export default function AdminNewsletter() {
+  const [subscribers, setSubscribers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
   const token = localStorage.getItem("adminToken");
   const BASE_URL = import.meta.env.VITE_API_URL || "https://recettes-de-cuisine.onrender.com";
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchSubscribers = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/api/admin/categories`, {
+        const res = await axios.get(`${BASE_URL}/api/admin/newsletter`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setCategories(res.data || []);
+        setSubscribers(res.data || []);
       } catch (err) {
         console.error(err);
-        setError("Impossible de charger les catégories.");
+        setError("Impossible de charger les abonnés.");
       } finally {
         setLoading(false);
       }
     };
-    fetchCategories();
+
+    fetchSubscribers();
   }, [token]);
 
-  if (loading) return <p>Chargement des catégories...</p>;
+  if (loading) return <p>Chargement des abonnés...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
-  if (!categories.length) return <p>Aucune catégorie trouvée.</p>;
+  if (!subscribers.length) return <p>Aucun abonné trouvé.</p>;
 
   return (
-    <table className="orders-table">
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Créé le</th>
-        </tr>
-      </thead>
-      <tbody>
-        {categories.map((c) => (
-          <tr key={c._id}>
-            <td>{c.name}</td>
-            <td>{new Date(c.createdAt).toLocaleDateString()}</td>
+    <div>
+      <h2>Abonnés à la Newsletter</h2>
+      <table className="orders-table">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Inscrit le</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {subscribers.map((sub) => (
+            <tr key={sub._id}>
+              <td>{sub.email}</td>
+              <td>{new Date(sub.createdAt).toLocaleDateString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

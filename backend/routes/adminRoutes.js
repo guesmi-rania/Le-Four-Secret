@@ -92,11 +92,13 @@ router.get('/categories', authAdmin, async (req, res) => {
 });
 
 // Newsletter admin
-router.get('/newsletter', authAdmin, async (req, res) => {
+// GET - tous les abonnés à la newsletter (admin)
+router.get("/newsletter", authAdmin, async (req, res) => {
   try {
     const subs = await Newsletter.find().sort({ createdAt: -1 });
     res.json(subs);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 });

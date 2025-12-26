@@ -19,6 +19,9 @@ function Footer() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
+  // Assure-toi que cette variable pointe vers ton backend
+  const BASE_URL = import.meta.env.VITE_API_URL || "https://recettes-de-cuisine.onrender.com";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -27,17 +30,22 @@ function Footer() {
       return;
     }
     setError("");
-
+  
     try {
-      const response = await fetch('/api/newsletter', {
+      const response = await fetch(`${BASE_URL}/api/newsletter`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      if (!response.ok) throw new Error("Erreur lors de l'inscription.");
+  
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Erreur lors de l'inscription.");
+      }
+  
       setSubmitted(true);
       setEmail("");
-      setTimeout(() => setSubmitted(false), 2000);
+      setTimeout(() => setSubmitted(false), 3000);
     } catch (err) {
       setError(err.message || "Une erreur est survenue.");
     }
@@ -47,23 +55,22 @@ function Footer() {
     <footer className="centered-footer">
       {/* ===== NEWSLETTER ===== */}
       <div className="footer-newsletter">
-  <h3>Recevez nos nouveautés & offres 🍰</h3>
-  <p>Inscrivez-vous à notre newsletter pour recevoir les dernières promotions et nouveautés.</p>
-  <form className="newsletter-form-footer" onSubmit={handleSubmit}>
-    <input
-      type="email"
-      placeholder="Votre email"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-      required
-    />
-    <button type="submit">S'inscrire</button>
-  </form>
-  {error && <p className="error-msg">{error}</p>}
-  {submitted && !error && <p className="success-msg">Merci pour votre inscription !</p>}
-  <hr /> {/* ligne longue ajoutée */}
-</div>
-
+        <h3>Recevez nos nouveautés & offres 🍰</h3>
+        <p>Inscrivez-vous à notre newsletter pour recevoir les dernières promotions et nouveautés.</p>
+        <form className="newsletter-form-footer" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Votre email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <button type="submit">S'inscrire</button>
+        </form>
+        {error && <p className="error-msg">{error}</p>}
+        {submitted && !error && <p className="success-msg">Merci pour votre inscription !</p>}
+        <hr />
+      </div>
 
       {/* ===== CATEGORIES ET LIENS ===== */}
       <div className="footer-top">
