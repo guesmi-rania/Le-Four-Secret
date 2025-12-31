@@ -147,7 +147,7 @@ const Navbar = ({ cart = [], wishlist = [] }) => {
         </Link>
 
         <div className="search-bar">
-          <FaBars className="menu-icon" onClick={() => setShowCategories(!showCategories)} />
+          
           <input
             type="text"
             placeholder="Rechercher un produit, catégories ..."

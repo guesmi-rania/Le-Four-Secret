@@ -243,6 +243,7 @@ img {
   border-radius: 6px;
   user-select: none;
   transition: background-color 0.3s, color 0.3s;
+  
 }
 
 /* CATEGORIES LIST */
@@ -257,6 +258,7 @@ img {
   z-index: 3000;
   width: 300px;
   color: #222;
+  
 }
 
 /* INFO BAR */
