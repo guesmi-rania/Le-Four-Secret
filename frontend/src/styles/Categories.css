@@ -5,18 +5,28 @@
   padding: 10px 0;
   background-color: #fff;
   border: 1px solid #e5e5e5;
-  border-radius: 8px;
   width: 240px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   position: absolute;
   top: 100%;
   left: 0;
   z-index: 3000;
+
+  /* Coins arrondis seulement en bas si besoin, pas en haut */
+  border-radius: 0 0 8px 8px; /* haut gauche, haut droit, bas droit, bas gauche */
 }
 
-/* ================= ITEM ================= */
+/* ================= SEPARATEUR ENTRE CATEGORIES ================= */
 .dropdown-item {
-  margin: 2px 0;
+  margin: 0;
+  border-bottom: 1px solid #e5e5e5;
+  position: relative;
+  padding: 1px 0; /* crée la "taille" sans solidifier */
+  
+}
+/* Supprimer le séparateur du dernier item */
+.dropdown-item:last-child {
+  border-bottom: none;
 }
 
 /* ================= LIEN / BOUTON ================= */
@@ -43,10 +53,11 @@
   color: #00bcd4;
 }
 
+
 /* ================= ICONE ================= */
 .icon {
   font-size: 1.3rem;
-  color: #00ade2;
+  color: #000000;
   flex-shrink: 0;
 }
 

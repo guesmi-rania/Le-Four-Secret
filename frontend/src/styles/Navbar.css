@@ -80,17 +80,15 @@ img {
 
 
 
-/* Pour un style spécifique au séparateur dans la navbar */
+/* Séparateur sous toute la navbar */
 .navbar-separator {
   border: none;
-  border-top: 1px solid #dbdbdb;
-  margin: 10px 0; /* Ajuste la marge selon besoin, 10px est un bon compromis */
+  border-top: 1px solid #dbdbdb; /* simple ligne grise */
   height: 1px;
-  padding: 0;
   width: 100%;
+  margin: 0; /* ou margin: 0 0 8px 0; pour espacer un peu */
+  padding: 0;
 }
-
-
 
 /* MAIN NAV */
 .main-nav {
@@ -220,38 +218,39 @@ img {
   color: #005763;
 }
 
-/* CATEGORIES BUTTON */
 .categories-toggle-btn {
   background: #ffffff;
-  border: 1px solid #cacaca;
+  border: 1px solid #cacaca; /* épaisseur augmentée de 1px à 3px */
+  border-bottom: 0 !important; /* supprime le bas */
+  box-shadow: none;
   color: #000b0f;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 20px;
-  border-radius: 6px;
+  padding: 10px 30px;
+  border-radius: 6px 6px 0 0;
   user-select: none;
   transition: background-color 0.3s, color 0.3s;
-  
 }
+
+
 
 /* CATEGORIES LIST */
 .categories-list {
   position: absolute;
-  top: 57px;
+  top: 46px;
   left: 0;
   background-color: white;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  border-radius: 8px;
+  border-radius: 0px 0px 6 6;
   padding: 10px 20px;
   z-index: 3000;
   width: 300px;
   color: #222;
-  
 }
+
 
 /* INFO BAR */
 .info-bar {
@@ -261,10 +260,13 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 13px;
+  font-size: 15px;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 25px;
+  margin-top: 15px;    /* espace depuis le haut de la page */
+  margin-bottom: -12px; /* espace sous la barre */
 }
+
 
 /* INFO MENU LINKS */
 .info-menu-links {
@@ -281,7 +283,7 @@ img {
 
 .info-menu-links a {
   color: rgb(41, 40, 40);
-  font-size: 14px;
+  font-size: 15px;
   transition: color 0.3s ease;
 }
 
@@ -317,7 +319,7 @@ img {
   display: flex;
   flex-direction: column;
   line-height: 1.1;
-  font-size: 13px;
+  font-size: 15px;
   color: rgb(41, 40, 40);
 }
 
@@ -353,7 +355,7 @@ img {
 
 .location-dropdown p {
   margin-bottom: 12px;
-  font-size: 13px;
+  font-size: 15px;
   color: #555;
 }
 
@@ -363,7 +365,7 @@ img {
   border: 1px solid #bbb;
   border-radius: 4px;
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .location-dropdown ul {
