@@ -46,7 +46,7 @@
 /* ================= ICONE ================= */
 .icon {
   font-size: 1.3rem;
-  color: #d8d8d8;
+  color: #00ade2;
   flex-shrink: 0;
 }
 
@@ -73,7 +73,7 @@
 
 /* ================= BADGE NEW ================= */
 .badge-new {
-  background-color: #ff4081;
+  background-color: #ff40f5;
   color: #fff;
   font-size: 0.65rem;
   font-weight: 600;

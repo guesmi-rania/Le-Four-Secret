@@ -31,8 +31,8 @@ body, html {
   position: relative;
   overflow: hidden;
   border-radius: 15px;
-  width: 900px;
-  height: 400px;
+  width: 980px;
+  height: 500px;
   transform: rotateY(-5deg); /* inclinaison à droite */
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }

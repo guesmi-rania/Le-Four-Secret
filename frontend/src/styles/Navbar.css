@@ -125,7 +125,7 @@ img {
   border: 1.5px solid #ccc; /* Bordure grise claire */
   border-radius: 8px; /* bords légèrement arrondis */
   border: 1.5px solid #ccc;  padding: 6px 10px;     /* Un peu de padding intérieur */
-  background-color: #fff;
+  background-color: #F3F4F6;
 }
 
 .search-input {
@@ -137,14 +137,6 @@ img {
   border-radius: 0;      /* Assure que le champ est aussi carré */
   background-color: transparent;
 }
-
-
-.menu-icon {
-  font-size: 20px;
-  color: #333;
-  cursor: pointer;
-}
-
 
 
 .search-button {
@@ -230,16 +222,16 @@ img {
 
 /* CATEGORIES BUTTON */
 .categories-toggle-btn {
-  background: #00BCD4;
-  border: 3px solid #00BCD4;
-  color: white;
+  background: #ffffff;
+  border: 1px solid #cacaca;
+  color: #000b0f;
   font-weight: 700;
   font-size: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 15px;
+  padding: 5px 20px;
   border-radius: 6px;
   user-select: none;
   transition: background-color 0.3s, color 0.3s;
@@ -249,12 +241,12 @@ img {
 /* CATEGORIES LIST */
 .categories-list {
   position: absolute;
-  top: 60px;
+  top: 57px;
   left: 0;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   border-radius: 8px;
-  padding: 30px 20px;
+  padding: 10px 20px;
   z-index: 3000;
   width: 300px;
   color: #222;

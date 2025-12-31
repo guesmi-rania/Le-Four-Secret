@@ -45,13 +45,13 @@
 
 .welcome-text h1 {
   font-size: 2.2rem;
-  margin-bottom: 20px;
+  margin-bottom: 15px; /* réduit pour mobile */
   color: #333;
 }
 
 .welcome-text p {
   font-size: 1.1rem;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   color: #555;
 }
 
@@ -76,7 +76,7 @@
 .section-separator {
   border: none;
   border-top: 1px solid #dbdbdb;
-  margin: 30px 0;
+  margin: 15px 0; /* marge réduite pour rapprocher le haut */
   height: 1px;
   width: 100%;
 }
@@ -95,7 +95,7 @@
   text-align: center;
   font-size: 32px;
   color: #333;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .popular-products .shop-grid {
@@ -273,13 +273,13 @@
   gap: 10px;
 }
 
-/* === Responsive Styles Home === */
-@media screen and (max-width: 768px) {
+/* === Responsive Styles === */
+@media screen and (max-width: 992px) {
   .main-content {
     flex-direction: column;
     padding: 30px 20px;
     text-align: center;
-    gap: 20px;
+    gap: 25px;
   }
 
   .welcome-text, .welcome-text h1 {
@@ -291,36 +291,22 @@
   }
 
   .cta-button {
-    font-size: 1rem;
-    padding: 10px 20px;
     width: 100%;
     max-width: 260px;
-  }
-
-  .below-sections {
-    padding: 15px;
+    font-size: 1rem;
+    padding: 10px 20px;
   }
 
   .section-separator {
-    margin: 20px 0;
+    margin: 15px 0;
   }
 
-  .home-page {
-    font-size: 15px;
+  .popular-products .shop-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
   }
 
-  .popular-products {
-    padding: 40px 15px;
-  }
-
-  .shop-card img { height: 140px; }
-
-  .shop-card h2 { font-size: 16px; }
-
-  .shop-card .price-box .price,
-  .shop-card .price-box .old-price { font-size: 13px; }
-
-  .right-buttons button { font-size: 12px; padding: 6px 4px; }
+  .shop-card img { height: 160px; }
 }
 
 @media screen and (max-width: 576px) {
@@ -334,20 +320,20 @@
   .cta-button { font-size: 0.9rem; padding: 10px 16px; }
 
   .popular-products h2 { font-size: 24px; }
-  .popular-products .shop-grid { grid-template-columns: 1fr; gap: 20px; }
+  .popular-products .shop-grid { grid-template-columns: 1fr; gap: 15px; }
 
-  .shop-card { padding: 16px; }
+  .shop-card { padding: 12px; }
   .shop-card img { height: 120px; }
   .shop-card h2 { font-size: 15px; line-height: 1.3; }
   .shop-card .price-box .price,
   .shop-card .price-box .old-price { font-size: 12px; }
 
-  .right-buttons { flex-direction: column; gap: 10px; }
-  .right-buttons button { width: 100%; font-size: 14px; padding: 10px; }
+  .right-buttons { flex-direction: column; gap: 8px; }
+  .right-buttons button { width: 100%; font-size: 13px; padding: 8px; }
 
   .features-container { gap: 15px; }
   .feature-item { width: 100%; max-width: 360px; }
 
-  .section-separator { margin: 20px 0; }
+  .section-separator { margin: 12px 0; }
   .home-page { font-size: 14px; }
 }
