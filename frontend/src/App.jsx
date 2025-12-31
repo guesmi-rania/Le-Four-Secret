@@ -99,15 +99,16 @@ function App() {
           />
         } />
 
-        <Route path="/produits/:category" element={
-          <ProductsByCategory
-            onAddToCart={handleAddToCart}
-            wishlist={wishlist}
-            onToggleWishlist={handleToggleWishlist}
-            onAddToCompare={handleAddToCompare}
-            openQuickView={openQuickView}
-          />
-        } />
+<Route path="/produits/:category" element={
+  <ProductsByCategory
+    onAddToCart={handleAddToCart}
+    wishlist={wishlist}
+    onToggleWishlist={handleToggleWishlist}
+    onAddToCompare={handleAddToCompare}
+    openQuickView={openQuickView} // <-- important
+  />
+} />
+
 
         <Route path="/produits/detail/:id" element={
           <ProtectedRoute>

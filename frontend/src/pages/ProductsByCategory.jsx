@@ -10,20 +10,21 @@ export default function ProductsByCategory({
   compareList = [],
   onToggleWishlist,
   onAddToCompare,
+  openQuickView,
 }) {
   const { category } = useParams();
   const [products, setProducts] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
-  const [quickViewProduct, setQuickViewProduct] = useState(null);
+
   const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     axios.get(`${BASE_URL}/api/products`)
       .then(res => {
+        // Filtrer par catégorie et prix
         const filtered = res.data
-          .map(p => ({ ...p, price: p.price || Math.floor(Math.random() * 50) + 10 })) // prix aléatoire si absent
-          .filter(p => p.categories.includes(category) && p.price >= minPrice && p.price <= maxPrice);
+          .filter(p => p.categories?.includes(category) && p.price >= minPrice && p.price <= maxPrice);
         setProducts(filtered);
       })
       .catch(err => console.error("Erreur récupération produits :", err));
@@ -51,13 +52,15 @@ export default function ProductsByCategory({
         </aside>
 
         <div className="products-list">
+          {products.length === 0 && <p>Aucun produit trouvé pour cette catégorie.</p>}
+
           {products.map(product => {
             const isInWishlist = wishlist.some(i => i._id === product._id);
             const isInCompare = compareList.some(i => i._id === product._id);
 
             return (
               <div key={product._id} className="product-card">
-                <Link to={`/produits/${product._id}`} className="product-link">
+                <Link to={`/produits/detail/${product._id}`} className="product-link">
                   <img src={product.imageUrl} alt={product.name} />
                   <h3>{product.name}</h3>
                 </Link>
@@ -70,7 +73,7 @@ export default function ProductsByCategory({
                   <button className="wishlist-btn" onClick={() => onToggleWishlist(product)}>
                     {isInWishlist ? <FaHeart /> : <FaRegHeart />}
                   </button>
-                  <button className="quickview-btn" onClick={() => setQuickViewProduct(product)}>
+                  <button className="quickview-btn" onClick={() => openQuickView(product)}>
                     <FaEye />
                   </button>
                   <button className="compare-btn" onClick={() => onAddToCompare(product)} disabled={isInCompare}>
@@ -82,18 +85,6 @@ export default function ProductsByCategory({
           })}
         </div>
       </div>
-
-      {quickViewProduct && (
-        <div className="quickview-modal" onClick={() => setQuickViewProduct(null)}>
-          <div className="quickview-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={() => setQuickViewProduct(null)}>×</button>
-            <img src={quickViewProduct.imageUrl} alt={quickViewProduct.name} />
-            <h2>{quickViewProduct.name}</h2>
-            <p>Prix: {quickViewProduct.price.toFixed(2)} TND</p>
-            <button onClick={() => onAddToCart(quickViewProduct)}>Ajouter au panier</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
