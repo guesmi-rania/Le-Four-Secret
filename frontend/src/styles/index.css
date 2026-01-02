@@ -1,142 +1,70 @@
+/* ================= TAILWIND ================= */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Barre de navigation */
-.navbar {
-    display: flex;
-    justify-content: space-between; /* Espacer les éléments de la barre de menu */
-    align-items: center;
-    background-color: #f7f7f7;
-    padding: 10px 20px; /* Espacement */
-    width: 100%; /* Prendre toute la largeur */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce */
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-  }
-  
-  /* Logo centré */
-  .navbar .logo {
-    flex-grow: 1; /* Le logo occupe l'espace restant */
-    display: flex;
-    justify-content: center; /* Centrer le logo */
-    align-items: center;
-  }
-  
-  .navbar .logo img {
-    width: 120px; /* Ajustez la taille du logo */
-    height: auto;
-  }
-  
-  /* Liste de navigation */
-  .navbar ul {
-    display: flex;
-    gap: 30px; /* Espacement entre les éléments du menu */
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .navbar ul li {
-    font-size: 18px;
-    font-weight: 600;
-  }
-  
-  .navbar ul li a {
-    text-decoration: none;
-    color: #333;
-    transition: color 0.3s ease;
-  }
-  
-  .navbar ul li a:hover {
-    color: #376ba3;
-  }
-  
-  /* Icônes de droite (panier et compte) */
-  .menu-right {
-    display: flex;
-    gap: 20px; /* Espacement entre les icônes */
-  }
-  
-  .menu-right a {
-    font-size: 24px;
-    color: #333;
-    transition: color 0.3s ease;
-  }
-  
-  .menu-right a:hover {
-    color: #0081cc;
-  }
-  
-  /* Contenu principal : catégorie et slider */
-  .main-content {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
-    width: 80%;
-    margin-top: 70px; /* Laissez de l'espace sous la barre de navigation */
-  }
-  
-  /* Sidebar des catégories */
-  .categories-sidebar {
-    width: 220px;
-    background-color: #f7f7f7;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Slider */
-  .slider-container {
-    width: 100%; /* Largeur 100% */
-    height: 400px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  /* Sections sous le slider */
-  .below-sections {
-    margin-top: 40px;
-    width: 80%;
-    text-align: center;
-  }
-  
-  /* Responsivité pour petit écran */
-  @media screen and (max-width: 768px) {
-    .navbar {
-      flex-direction: column;
-      text-align: center;
-      padding: 10px;
-    }
-  
-    .main-content {
-      flex-direction: column;
-      gap: 20px;
-      align-items: center;
-      width: 90%;
-    }
-  
-    .categories-sidebar {
-      width: 100%;
-      margin-bottom: 20px;
-    }
-  
-    .slider-container {
-      width: 100%;
-      height: 300px;
-    }
-  
-    .navbar ul {
-      flex-direction: column;
-      gap: 15px;
-    }
-  
-    .navbar .logo {
-      margin-bottom: 10px;
-    }
-  }
-  
+/* ================= GLOBAL RESET ================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ================= HTML / BODY ================= */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* ================= LINKS ================= */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ================= IMAGES ================= */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ================= BUTTONS ================= */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ================= LISTS ================= */
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ================= FORM ELEMENTS ================= */
+input,
+textarea,
+select,
+button {
+  outline: none;
+}
+
+/* ================= UTILITAIRES GLOBAUX ================= */
+/* évite le scroll horizontal accidentel */
+body {
+  overflow-x: hidden;
+}
+
+/* animation douce globale */
+.transition-default {
+  transition: all 0.3s ease;
+}
